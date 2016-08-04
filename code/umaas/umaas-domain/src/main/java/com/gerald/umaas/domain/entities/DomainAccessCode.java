@@ -15,7 +15,7 @@ public class DomainAccessCode extends Resource{
 	 */
 	private static final long serialVersionUID = 1136783221457394596L;
 	@Indexed(unique = true)
-	private String value;
+	private String code;
 	private LocalDateTime expiryDate;
 
 }

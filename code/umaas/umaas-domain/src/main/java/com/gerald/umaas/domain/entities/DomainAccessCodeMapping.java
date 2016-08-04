@@ -1,5 +1,7 @@
 package com.gerald.umaas.domain.entities;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -21,6 +23,7 @@ public class DomainAccessCodeMapping extends Resource{
 	 */
 	private static final long serialVersionUID = 9167212043221438461L;
 	@DBRef
+	@NotNull
 	private DomainAccessCode accessCode;
 	@DBRef
 	private Domain domain;
