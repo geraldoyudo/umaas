@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @CompoundIndexes({
-    @CompoundIndex(name = "code_domain_aspect_priviledge", 
-    		def = "{'accessCode.$id' : 1, 'domain.$id' : 1, "
-    				+ "'aspect' : 1, 'priviledge' : 1}", 
+    @CompoundIndex(name = "code_type_id_priviledge", 
+    		def = "{'accessCode.$id' : 1, 'entityType' : 1, "
+    				+ "'entityId' : 1, 'priviledge' : 1}", 
     				unique = true)
 })
 public class DomainAccessCodeMapping extends Resource{
@@ -25,19 +25,11 @@ public class DomainAccessCodeMapping extends Resource{
 	@DBRef
 	@NotNull
 	private DomainAccessCode accessCode;
-	@DBRef
-	private Domain domain;
-	private Aspect aspect;
+	private String entityType;
+	private String entityId;
 	private Priviledge priviledge;
+	private boolean enforced = true;
 	
-	public enum Aspect {
-		ALL,
-		FIELD,
-		USER,
-		ROLE,
-		GROUP,
-		ADMIN
-	}
 	public enum Priviledge {
 		ALL,
 		VIEW,

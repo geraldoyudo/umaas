@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainAccessCode;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
-import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Aspect;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 
 @RunWith(SpringRunner.class)
@@ -64,25 +63,18 @@ public class DomainAccessCodeMappingTest {
 		
 		assertNotNull(m.getId());
 		assertThat(codeMappingRepository
-				.findByAccessCodeAndDomain(
+				.findByAccessCodeAndEntityType(
 						m.getAccessCode(),
-						m.getDomain()).size()).isEqualTo(1);
-		assertThat(codeMappingRepository
-				.findByAccessCodeAndDomainAndAspect(
-						m.getAccessCode(),
-						m.getDomain(),m.getAspect()).size()).isEqualTo(1);
-		assertThat(codeMappingRepository
-				.findByAccessCodeAndDomainAndAspect(
-						m.getAccessCode(),
-						m.getDomain(),Aspect.FIELD).size()).isEqualTo(0);
+						Domain.class.getSimpleName()).size()).isEqualTo(1);
+		
 	}
 	
 	private DomainAccessCodeMapping createMapping() {
 		DomainAccessCode code = creatAccessCode();
 		DomainAccessCodeMapping m = new DomainAccessCodeMapping();
 		m.setAccessCode(code);
-		m.setDomain(domain);
-		m.setAspect(Aspect.ALL);
+		m.setEntityType(domain.getClass().getSimpleName());
+		m.setEntityId(domain.getId());
 		m.setPriviledge(Priviledge.ALL);
 		m = codeMappingRepository.save(m);
 		return m;
