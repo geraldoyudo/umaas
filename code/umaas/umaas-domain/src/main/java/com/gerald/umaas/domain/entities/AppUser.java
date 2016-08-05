@@ -1,6 +1,8 @@
 package com.gerald.umaas.domain.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
@@ -39,5 +41,9 @@ public class AppUser extends DomainResource {
     private boolean phoneNumberVerified;
     @Transient
     private Map<String,Object> properties = new HashMap<>();
+    @Transient
+    private List<String> groups = new ArrayList<>();
+    @Transient
+    private List<String> roles = new ArrayList<>();
 
 }
