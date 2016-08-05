@@ -27,15 +27,11 @@ public class DomainAccessCode extends Resource implements UserDetails{
 	private boolean notExpired = true;
 	private boolean notLocked = true;
 	private boolean enabled = true;
-	@Transient
-	private List<String> accessRoles = new ArrayList<>();
+
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		for(String role: accessRoles){
-			authorities.add(new SimpleGrantedAuthority("Role_" + role));
-		}
 		return authorities;
 	}
 	@Override
@@ -48,12 +44,14 @@ public class DomainAccessCode extends Resource implements UserDetails{
 	}
 	@Override
 	public boolean isAccountNonExpired() {
-		return expiryDate.isAfter(LocalDateTime.now());
+		if(expiryDate == null)
+			return true;
+		else
+			return expiryDate.isAfter(LocalDateTime.now());
 	}
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return notLocked;
 	}
 	@Override
 	public boolean isCredentialsNonExpired() {
