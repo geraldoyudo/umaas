@@ -10,6 +10,7 @@ public interface DomainAccessCodeMappingRepository extends ResourceRepository<Do
 	public List<DomainAccessCodeMapping> findByAccessCodeAndEntityType(DomainAccessCode accessCode, String entityType);
 	public DomainAccessCodeMapping findByAccessCodeAndEntityTypeAndEntityId(DomainAccessCode accesscode,
 			String entityType, String entityId);
+	public List<DomainAccessCodeMapping> findByAccessCode(DomainAccessCode accessCode);
 	
 	
 }

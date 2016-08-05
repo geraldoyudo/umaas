@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 public interface DomainAccessCodeRepository extends ResourceRepository<DomainAccessCode, String>{
-	@RestResource(exported = false)
-	public List<DomainAccessCode> findByCode(String code);
-    public Page<Domain> findByCode(@Param("code") String code, Pageable p );
+
+	public DomainAccessCode findByCode(String code);
 }

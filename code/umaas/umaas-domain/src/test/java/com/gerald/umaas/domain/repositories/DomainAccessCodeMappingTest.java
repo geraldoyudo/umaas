@@ -66,7 +66,10 @@ public class DomainAccessCodeMappingTest {
 				.findByAccessCodeAndEntityType(
 						m.getAccessCode(),
 						Domain.class.getSimpleName()).size()).isEqualTo(1);
-		
+		DomainAccessCode code = accessCodeRepository.findByCode(ACCESS_CODE);
+		code = accessCodeRepository.findOne(code.getId());
+		assertThat(code.getAccessRoles().size()).isEqualTo(1);
+		System.out.println(code);
 	}
 	
 	private DomainAccessCodeMapping createMapping() {
