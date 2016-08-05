@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.gerald.umaas.domain.entities.RoleMapping.RoleMappingType;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,7 +25,7 @@ import lombok.EqualsAndHashCode;
     @CompoundIndex(name = "domain_username", def = "{'domain.$id' : 1, 'username' : 1}", unique = true),
     @CompoundIndex(name = "domain_email", def = "{'domain.$id' : 1, 'email' : 1}", unique = true)
 })
-public class AppUser extends DomainResource {
+public class AppUser extends DomainResource implements Affiliate{
 	/**
 	 * 
 	 */
@@ -45,5 +47,13 @@ public class AppUser extends DomainResource {
     private List<String> groups = new ArrayList<>();
     @Transient
     private List<String> roles = new ArrayList<>();
+	@Override
+	public String key() {
+		return getId();
+	}
+	@Override
+	public RoleMappingType type() {
+		return RoleMappingType.USER;
+	}
 
 }

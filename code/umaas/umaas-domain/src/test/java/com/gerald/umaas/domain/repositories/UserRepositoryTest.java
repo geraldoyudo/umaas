@@ -4,9 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
+import org.assertj.core.internal.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +19,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.gerald.umaas.domain.entities.Affiliate;
 import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.Field;
 import com.gerald.umaas.domain.entities.Group;
+import com.gerald.umaas.domain.entities.Role;
+import com.gerald.umaas.domain.entities.RoleMapping;
 import com.gerald.umaas.domain.entities.UserField;
 import com.gerald.umaas.domain.entities.UserGroup;
 @RunWith(SpringRunner.class)
@@ -40,6 +46,10 @@ public class UserRepositoryTest {
 	private GroupRepository groupRepository;
 	@Autowired
 	private UserGroupRepository userGroupsRepository;
+	@Autowired
+	private RoleRepository roleRepository;
+	@Autowired
+	private RoleMappingRepository roleMappingRepository;
 	
 	
 	@Before
@@ -52,6 +62,10 @@ public class UserRepositoryTest {
 		userFieldRepository.deleteAll();
 		userRepository.deleteAll();
 		fieldRepository.deleteAll();
+		groupRepository.deleteAll();
+		userGroupsRepository.deleteAll();
+		roleRepository.deleteAll();
+		roleMappingRepository.deleteAll();
 	}
 	
 	@Test
@@ -70,8 +84,15 @@ public class UserRepositoryTest {
 		Group g = createGroup();
 		UserGroup ug = createUserGroup(user, g);
 		assertNotNull(ug);
+		Role userRole = createRole();
+		Role groupRole = createRole();
+		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
+		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
 		user = userRepository.findOne(user.getId());
 		assertNotNull(user);
+		assertThat(user.getProperties().keySet().size()).isEqualTo(1);
+		assertThat(user.getGroups().size()).isEqualTo(1);
+		assertThat(user.getRoles().size()).isEqualTo(2);
 		System.out.println(user);
 	}
 	@Test
@@ -84,9 +105,14 @@ public class UserRepositoryTest {
 		Group g = createGroup();
 		UserGroup ug = createUserGroup(user, g);
 		assertNotNull(ug);
+		Role userRole = createRole();
+		Role groupRole = createRole();
+		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
+		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
 		List<AppUser> users = userRepository.findAll();
 		assertThat(users.get(0).getProperties().keySet().size()).isEqualTo(1);
 		assertThat(users.get(0).getGroups().size()).isEqualTo(1);
+		assertThat(users.get(0).getRoles().size()).isEqualTo(2);
 		System.out.println(users.get(0));
 	}
 	@Test
@@ -99,10 +125,15 @@ public class UserRepositoryTest {
 		Group g = createGroup();
 		UserGroup ug = createUserGroup(user, g);
 		assertNotNull(ug);
+		Role userRole = createRole();
+		Role groupRole = createRole();
+		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
+		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
 		PageRequest p = new PageRequest(0, 10);
 		Page<AppUser> users = userRepository.findAll(p);
 		assertThat(users.getContent().get(0).getProperties().keySet().size()).isEqualTo(1);
 		assertThat(users.getContent().get(0).getGroups().size()).isEqualTo(1);
+		assertThat(users.getContent().get(0).getRoles().size()).isEqualTo(2);
 		System.out.println(users.getContent().get(0));
 	}
 	
@@ -130,7 +161,18 @@ public class UserRepositoryTest {
 		System.out.println(uf.getField().getName());
 		System.out.println(ug.getGroup().getName());
 	}
-
+	
+	@Test
+	public void testGroupQueryMethodsSave(){
+		Group g = createGroup();	
+		Role groupRole = createRole();
+		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
+		g = groupRepository.findOne(g.getId());
+		assertNotNull(g);
+		
+		assertThat(g.getRoles().size()).isEqualTo(1);
+		System.out.println(g);
+	}
 	private UserField createUserField(AppUser user, Field f) {
 		UserField uf = new UserField();
 		uf.setField(f);
@@ -172,7 +214,24 @@ public class UserRepositoryTest {
 		return groupRepository.save(g);
 		
 	}
+	private int roleCount =0;
 	
+	private Role createRole() {
+		Role r = new Role();
+		r.setName("role " + roleCount ++);
+		r.setDomain(domain);;
+		return roleRepository.save(r);
+		
+	}
+	private RoleMapping createRoleMapping(Affiliate affiliate, List<Role> roles) {
+		
+		RoleMapping rm = new RoleMapping();
+		rm.setKey(affiliate.key());
+		rm.setType(affiliate.type());
+		rm.setRoles(new HashSet<>(roles));
+		rm.setDomain(domain);
+		return roleMappingRepository.save(rm);
+	}
 	
 	
 }
