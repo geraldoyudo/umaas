@@ -110,7 +110,11 @@ public class LocalPermissionManager implements PermissionManager{
 		mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, DOMAIN_ITEMS);
 		if(mapping == null){
-			return false;
+			mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
+					ALL_ITEMS, DOMAIN_ITEMS);
+			if(mapping == null){
+				return false;
+			}
 		}
 		Object domainList = mapping.meta(META_DOMAINS);
 		if(domainList == null)
