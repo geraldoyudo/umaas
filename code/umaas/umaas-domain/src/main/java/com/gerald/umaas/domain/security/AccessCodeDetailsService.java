@@ -17,7 +17,10 @@ public class AccessCodeDetailsService implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-		return accessCodeRepository.findOne(id);
+		UserDetails ud =  accessCodeRepository.findOne(id);
+		if(ud == null)throw new UsernameNotFoundException("Username not found");
+		return ud;
+		 
 	}
 
 }

@@ -37,7 +37,7 @@ public class ApiSecurityChecker {
 		String entityType = ResourceEntityMapper.getEntityName( segments[0]);
 		if(entityType == null){
 			System.out.println("Collection cannot be mapped to an entity name");
-			return false;
+			return true;
 		}
 		String entityId = "ALL";
 		if(segments.length > 1){
@@ -46,6 +46,17 @@ public class ApiSecurityChecker {
 		System.out.println(entityType);
 		System.out.println(entityId);
 		Priviledge priviledge = getPriviledge(request);
+		if(entityId.equals("search")){
+			String domainId = request.getParameter("domain");
+			if(domainId == null){
+				domainId = request.getParameter("domainId");
+			}
+			if(domainId != null){
+				return permissionManager.hasDomainCollectionPermission(domainId, entityType, priviledge);
+			}else{
+				return permissionManager.hasPermission(entityType, "ALL", priviledge);
+			}
+		}
 		if(priviledge.equals(Priviledge.ADD) && entityId.equals("ALL")){
 			try{
 			String body = (String) request.getAttribute(PostDataPersisterFilter.POST_DATA);
@@ -76,6 +87,7 @@ public class ApiSecurityChecker {
 			case "post": return Priviledge.ADD;
 			case "patch": return Priviledge.UPDATE;
 			case "delete": return Priviledge.DELETE;
+			case "put": return Priviledge.UPDATE;
 			default: return Priviledge.VIEW;
 		}
 	}

@@ -14,6 +14,5 @@ import java.util.List;
  * @author Dev7
  */
 public interface GroupRepository extends DomainResourceRepository<Group, String>{
-    public List<Group> findByDomain(Domain domain);
     public Group findByDomainAndName(Domain domain, String name);
 }

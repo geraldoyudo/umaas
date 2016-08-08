@@ -25,14 +25,8 @@ public interface RoleRepository extends DomainResourceRepository<Role, String>{
      public List<Role> findByName(String name);
      @Query("{ 'name' : ?0, 'domain.id': '?1' }")
      public Role findByNameAndDomain(String name, String domain);
-     @RestResource(path = "findAllByDomain", rel = "findAllByDomain")
-     @Override
-     @Query("{ 'domain.id': '?0' }")
-     public List<Role> findByDomain( @Param("domain") String domain);
-     
-     @Query("{ 'domain.id': '?0' }")
-     public Page<Role> findByDomain( @Param("domain") String domain, Pageable p);
      public Page<Role> findByName(@Param("name") String name, Pageable p );
+    
  
    
 }

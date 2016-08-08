@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -110,6 +109,26 @@ public class RestApiAccessTest {
    			 restTemplate.exchange("/domain/appUsers/", HttpMethod.POST, request, String.class);
     	assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     	
+    	
+    }
+    
+    @Test
+    public void testSearchFunction() throws Exception {
+    	AppUser user = createUser();
+ 		HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
+    	 ResponseEntity<String> response =
+    			 restTemplate.exchange("/domain/appUsers/search/findByUsernameAndDomain?username=" 
+    	 + user.getUsername() + "&domain=" + domain.getId(),
+    	 HttpMethod.GET, request, String.class);
+    	assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+    	DomainAccessCodeMapping mapping = createMapping(AppUser.class.getSimpleName(), "domain",Priviledge.UPDATE);
+    	mapping.meta("domains", Arrays.asList(domain.getId()));
+    	codeMappingRepository.save(mapping);
+    	response =
+	   			 restTemplate.exchange("/domain/appUsers/search/findByUsernameAndDomain?username=" 
+	   	 + user.getUsername() + "&domain=" + domain.getId(),
+	   	 HttpMethod.GET, request, String.class);
+    	assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     	
     }
 	//@Test
