@@ -18,6 +18,7 @@ import com.gerald.umaas.domain.entities.DomainResource;
 import com.gerald.umaas.domain.entities.Resource;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
+import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.services.GeneralResourceManager;
 
 @Component
@@ -29,6 +30,8 @@ public class LocalPermissionManager implements PermissionManager{
 	private DomainAccessCodeMappingRepository codeMappingRepository;
 	@Autowired
 	private DomainAccessCodeRepository accessCodeRepository;
+	@Autowired
+	private DomainRepository domainRepository;
 	private static final String ENTITY_PACKAGE = AppUser.class.getPackage().getName();
 	@Autowired
 	private GeneralResourceManager resourceManager;
@@ -61,7 +64,7 @@ public class LocalPermissionManager implements PermissionManager{
 			// get domain information
 			DomainResource domainResource = (DomainResource) resourceManager.getObjectById(entityId,entityType );
 			Domain d = domainResource.getDomain();
-			if(checkForDomainEntry(d, accessCode, entityType, entityId, priviledge)) return true;
+			if(checkForDomainEntry(d, accessCode, entityType,priviledge)) return true;
 			if(checkEntry(accessCode, entityType, ALL_ITEMS,priviledge)) return true;
 			if(checkEntry(accessCode, Domain.class.getSimpleName(), d.getId(), priviledge)) return true;
 			if(checkEntry(accessCode, Domain.class.getSimpleName(),ALL_ITEMS, priviledge)) return true;
@@ -101,7 +104,7 @@ public class LocalPermissionManager implements PermissionManager{
 		return false;
 	}
 	private boolean checkForDomainEntry(Domain d, DomainAccessCode accessCode, 
-			String entityType, String entityId, Priviledge priviledge){
+			String entityType, Priviledge priviledge){
 		DomainAccessCodeMapping mapping;
 		
 		mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
@@ -132,6 +135,16 @@ public class LocalPermissionManager implements PermissionManager{
 		}
 		return false;
 	}
+	private boolean checkForDomainEntry(String domainId, DomainAccessCode accessCode, 
+			String entityType,  Priviledge priviledge){
+		Domain d = domainRepository.findOne(domainId);
+		if(d == null) {
+			System.out.println("No domain found");
+			return false;
+		}
+			
+		return checkForDomainEntry(d, accessCode, entityType, priviledge);
+	}
 	
 	public Class<?> findEntityClassByName(String name) {
 		System.out.println(name);
@@ -145,5 +158,19 @@ public class LocalPermissionManager implements PermissionManager{
 	    //nothing found: return null or throw ClassNotFoundException
 	    return null;
 	  }
+
+	@Override
+	public boolean hasDomainCollectionPermission(String domainId, String entityType, Priviledge priviledge) {
+		System.out.println("has permission called");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(auth.getName());
+		DomainAccessCode accessCode = accessCodeRepository.findOne(auth.getName());
+		if(accessCode == null){
+			System.out.println("Access code not found");
+			return false;
+		}
+		System.out.println("Domain access code retrieved");
+		return checkForDomainEntry(domainId, accessCode, entityType, priviledge);
+	}
 
 }

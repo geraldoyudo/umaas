@@ -4,4 +4,5 @@ import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 
 public interface PermissionManager {
 	public boolean hasPermission(String entityType, String entityId, Priviledge priviledge);
+	public boolean hasDomainCollectionPermission(String domainId, String entityType, Priviledge priviledge);
 }
