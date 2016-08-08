@@ -39,6 +39,11 @@ public abstract class Resource implements Serializable{
     public Resource() {
         externalId = UUID.randomUUID().toString();
     }
+    public void meta(String key, Object value){
+        meta.put(key, value);
+    }
     
-  
+    public Object meta(String key){
+        return meta.get(key);
+    }
 }
