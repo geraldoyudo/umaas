@@ -5,6 +5,8 @@
  */
 package com.gerald.umaas.file.repositories.projections;
 
+import java.util.Map;
+
 import org.springframework.data.rest.core.config.Projection;
 
 import com.gerald.umaas.file.entities.File;
@@ -18,5 +20,5 @@ public interface FileProjection {
     public String getName();
     public String getMimeType();
     public String getDirectory();
-    public String getMeta();
+    public Map<String,Object> getMeta();
 }

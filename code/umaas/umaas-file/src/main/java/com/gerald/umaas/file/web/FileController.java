@@ -67,7 +67,7 @@ public class FileController {
 
         return new ResponseEntity<>(fileMapping, HttpStatus.OK);
     }
-   @RequestMapping(value = "/files/upload/single}",method = RequestMethod.POST)
+   @RequestMapping(value = "/files/upload/single", method = RequestMethod.POST)
     public ResponseEntity uploadSingleFile(@RequestParam("directory") String directory,
             @RequestPart("file") MultipartFile file) {
         Map<String,String> fileMapping = new HashMap<>();
@@ -82,15 +82,17 @@ public class FileController {
             e.printStackTrace();
             return new ResponseEntity<>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
+        System.out.println("Returning ");
         return new ResponseEntity<>(fileMapping, HttpStatus.OK);
     }
 
 	private File uploadFile(String directory, MultipartFile file) throws IOException {
+		System.out.println("uploading file");
 		File newFile;
 		String mimeType = file.getContentType();
 		String filename = file.getOriginalFilename();
 		byte[] bytes = file.getBytes();
+		System.out.println("Creating file to " + directory);
 		newFile = fileRepository.findByDirectoryAndName(directory, filename);
 		if(newFile == null){
 		    newFile = new File();
