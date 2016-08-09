@@ -35,6 +35,7 @@ public class DomainAccessCodeMapping extends Resource{
 		VIEW,
 		UPDATE,
 		DELETE,
-		ADD
+		ADD,
+		NONE
 	}
 }

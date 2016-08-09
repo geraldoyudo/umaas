@@ -132,6 +132,17 @@ public class PermissionManagerTest {
 		assertTrue(permissionManager.hasPermission(AppUser.class.getSimpleName(), "ALL", Priviledge.VIEW));
 
 	}
+	
+	@Test
+	@WithMockUser(username = "0000", password = "4212")
+	public void testByAllExceptUser(){
+		createMapping("ALL", "ALL", Priviledge.UPDATE);
+		createMapping(AppUser.class.getSimpleName(), appUser.getId(), Priviledge.NONE);
+		assertFalse(permissionManager.hasPermission(AppUser.class.getSimpleName(), appUser.getId(), Priviledge.UPDATE));
+		assertFalse(permissionManager.hasPermission(AppUser.class.getSimpleName(), appUser.getId(), Priviledge.VIEW));
+		assertTrue(permissionManager.hasPermission(AppUser.class.getSimpleName(), "ALL", Priviledge.VIEW));
+
+	}
 	private DomainAccessCodeMapping createMapping(String entityType ,
 			String entityId, Priviledge priviledge) {
 		DomainAccessCodeMapping m = new DomainAccessCodeMapping();

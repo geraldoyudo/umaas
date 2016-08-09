@@ -23,9 +23,9 @@ import com.gerald.umaas.domain.services.GeneralResourceManager;
 
 @Component
 public class LocalPermissionManager implements PermissionManager{
-	private static final String META_DOMAINS = "domains";
-	private static final String DOMAIN_ITEMS = "domain";
-	private static final String ALL_ITEMS = "ALL";
+	public static final String META_DOMAINS = "domains";
+	public static final String DOMAIN_ITEMS = "domain";
+	public static final String ALL_ITEMS = "ALL";
 	@Autowired
 	private DomainAccessCodeMappingRepository codeMappingRepository;
 	@Autowired
@@ -47,6 +47,7 @@ public class LocalPermissionManager implements PermissionManager{
 			return false;
 		}
 		System.out.println("Domain access code retrieved");
+		try{
 		if(entityClass == null){
 			System.out.println("Entity Type not a class");
 		}else if(entityId.equals(ALL_ITEMS)){
@@ -80,17 +81,23 @@ public class LocalPermissionManager implements PermissionManager{
 		}else{
 			System.out.println("Entity Type not a resource");
 		}
+		}catch(PriviledgeDeniedException ex){
+			//do nothing
+		}
 	
 		return false;
 	}
 	
 	private boolean checkEntry(DomainAccessCode accessCode, 
-			String entityType, String entityId, Priviledge priviledge){
+			String entityType, String entityId, Priviledge priviledge) throws PriviledgeDeniedException{
 		DomainAccessCodeMapping mapping = 
 				codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, entityId);
 		if(mapping == null){
 			return false;
+		}
+		if(mapping.getPriviledge().equals(Priviledge.NONE)){
+			throw new PriviledgeDeniedException();
 		}
 		if(mapping.getPriviledge().equals(priviledge)){
 			return true;
@@ -104,7 +111,7 @@ public class LocalPermissionManager implements PermissionManager{
 		return false;
 	}
 	private boolean checkForDomainEntry(Domain d, DomainAccessCode accessCode, 
-			String entityType, Priviledge priviledge){
+			String entityType, Priviledge priviledge) throws PriviledgeDeniedException{
 		DomainAccessCodeMapping mapping;
 		
 		mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
@@ -115,6 +122,9 @@ public class LocalPermissionManager implements PermissionManager{
 			if(mapping == null){
 				return false;
 			}
+		}
+		if(mapping.getPriviledge().equals(Priviledge.NONE)){
+			throw new PriviledgeDeniedException();
 		}
 		Object domainList = mapping.meta(META_DOMAINS);
 		if(domainList == null)
@@ -140,7 +150,7 @@ public class LocalPermissionManager implements PermissionManager{
 		return false;
 	}
 	private boolean checkForDomainEntry(String domainId, DomainAccessCode accessCode, 
-			String entityType,  Priviledge priviledge){
+			String entityType,  Priviledge priviledge) throws PriviledgeDeniedException{
 		Domain d = domainRepository.findOne(domainId);
 		if(d == null) {
 			System.out.println("No domain found");
@@ -174,7 +184,13 @@ public class LocalPermissionManager implements PermissionManager{
 			return false;
 		}
 		System.out.println("Domain access code retrieved");
-		return checkForDomainEntry(domainId, accessCode, entityType, priviledge);
+		boolean okay = false;
+		try{
+		 okay = checkForDomainEntry(domainId, accessCode, entityType, priviledge);
+		} catch(PriviledgeDeniedException ex){
+			//do nothing
+		}
+		return okay;
 	}
 
 }
