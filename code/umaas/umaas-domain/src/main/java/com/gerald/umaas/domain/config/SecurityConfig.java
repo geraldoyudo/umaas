@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 	
 	 @Bean
-	    public FilterRegistrationBean domainSessionIdFilter(HttpSession session) {
+	    public FilterRegistrationBean postDataPeristerFilter(HttpSession session) {
 	      FilterRegistrationBean registration = new FilterRegistrationBean();
 	      registration.setFilter(new PostDataPersisterFilter());
 	      registration.addUrlPatterns("/domain/*");

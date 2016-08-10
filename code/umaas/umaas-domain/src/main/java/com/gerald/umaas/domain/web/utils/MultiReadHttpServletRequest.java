@@ -14,13 +14,16 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
  private String _body;
  
 public MultiReadHttpServletRequest(HttpServletRequest request) throws IOException {
- super(request);
- _body = "";
- BufferedReader bufferedReader = request.getReader();
- String line;
- while ((line = bufferedReader.readLine()) != null){
- _body += line;
- }
+	 super(request);
+	 _body = "";
+	 BufferedReader bufferedReader = request.getReader();
+	 if(bufferedReader == null){
+		 return;
+	 }
+	 String line;
+	 while ((line = bufferedReader.readLine()) != null){
+	 _body += line;
+	 }
  }
 
 @Override

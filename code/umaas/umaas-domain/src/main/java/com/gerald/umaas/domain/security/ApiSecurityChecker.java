@@ -27,6 +27,7 @@ public class ApiSecurityChecker {
 	private ObjectMapper objectMapper;
 	
 	public boolean check(Authentication auth, HttpServletRequest request){
+		try{
 		System.out.println("checking security");
 		System.out.println(auth);
 		System.out.println("Evaluating access");
@@ -79,6 +80,9 @@ public class ApiSecurityChecker {
 		}
 		System.out.println(priviledge);
 		return permissionManager.hasPermission(entityType, entityId, priviledge);
+		}catch(ArrayIndexOutOfBoundsException | NullPointerException ex){
+			return true;
+		}
 	}
 	
 	public boolean checkFilePropertyAccess(Authentication auth, HttpServletRequest request){

@@ -34,8 +34,6 @@ extends ResourceRepository<T,V>{
     @Query("{'domain.id': '?0' }")
     public Page<T> findByDomain(@Param("domain") V domain, Pageable p );
      @Query("{ 'domain.id': '?0', 'externalId': '?1'}")
-    @RestResource(exported = false)
-    public List<T> findByDomainAndExternalId( V domain, String externalid);
-    @Query("{'domain.id': '?0', 'externalId': '?1'}")
-    public Page<T> findByDomainAndExternalId(@Param("domain") V domain,@Param("externalId") String externalId, Pageable p );
+    public T findByDomainAndExternalId( @Param("domain") V domain, @Param("externalId") String externalid);
+   
 }

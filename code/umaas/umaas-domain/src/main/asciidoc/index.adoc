@@ -1,0 +1,140 @@
+= UmaaS Getting Started Guide
+Oyudo Gerald;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[introduction]
+= Introduction
+
+UmaaS is a user management service aimed at taking all the trouble of managing users, roles and groups from the developer.
+
+[overview]
+= Overview
+
+[overview-http-verbs]
+== HTTP verbs
+UmaaS tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
+|===
+| Verb | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PATCH`
+| Used to update an existing resource, including partial updates
+
+| `PUT`
+| Used to update an existing resource, full updates only
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+UmaaS tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request, the response will contain an entity describing or containing the result of the action.
+
+| `201 Created`
+| The request has been fulfilled and resulted in a new resource being created.
+
+| `204 No Content`
+| The server successfully processed the request, but is not returning any content.
+
+| `400 Bad Request`
+| The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).
+
+| `404 Not Found`
+| The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
+|===
+
+[[resources]]
+= Resources
+
+[[resources-index]]
+== Getting Api Index
+A 'Get' request will show you all the resources that UmaaS has.
+  
+=== Example request
+
+include::{snippets}/index/curl-request.adoc[]
+  
+=== Example reponse
+
+include::{snippets}/index/http-response.adoc[]
+
+=== Links in Response
+
+include::{snippets}/index/links.adoc[]
+
+[[resources-user]]
+== Users
+The AppUser resource is used to create, modify and list users. The client must have the required permission to access this resource.
+
+[[resources-user-get-all]]
+=== Getting Users Across Domains
+A 'GET' request will return all users regardless of domain.
+
+==== Example request
+include::{snippets}/get-users-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-users-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-users-example/links.adoc[]
+
+[[resources-user-get-by-domain]]
+=== Getting Users in a Domain
+A 'GET' request will all users in a domain.
+
+==== Example request
+include::{snippets}/get-users-by-domain-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-users-by-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-users-by-domain-example/links.adoc[]
+
+[[resources-user-get-user-by-id]]
+=== Getting A user by ID
+A 'GET' request a user with the specified id.
+
+include::{snippets}/get-user-example/path-parameters.adoc[]
+
+==== Example request
+include::{snippets}/get-user-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-user-example/http-response.adoc[]
+
+[[resources-user-get-user-by-domain-and-external-id]]
+=== Getting a User by Domain and External Id
+A 'GET' request will get a specific user
+
+==== Example request
+include::{snippets}/get-user-by-domain-and-external-id-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-user-by-domain-and-external-id-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-user-by-domain-and-external-id-example/links.adoc[]
