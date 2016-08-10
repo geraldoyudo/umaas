@@ -16,6 +16,7 @@ import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 import com.gerald.umaas.domain.entities.DomainResource;
 import com.gerald.umaas.domain.entities.Resource;
+import com.gerald.umaas.domain.entities.UserField;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
 import com.gerald.umaas.domain.repositories.DomainRepository;
@@ -61,6 +62,17 @@ public class LocalPermissionManager implements PermissionManager{
 		}
 		else if(DomainResource.class.isAssignableFrom(entityClass)){
 			System.out.println("Evaluating domain resource");
+			if(entityType.equals(UserField.class.getSimpleName())){
+				String userEntityType = AppUser.class.getSimpleName();
+				String userEntityId = entityId;
+				if(!userEntityId.equals("domain")){
+					UserField uf = (UserField) resourceManager.getObjectById(entityId, UserField.class.getSimpleName());
+					if(uf == null) return true;
+					userEntityId = uf.getUser().getId();
+					if(hasPermission(userEntityType, userEntityId, priviledge)) return true;
+				}
+				
+			}
 			if(checkEntry(accessCode, entityType, entityId,priviledge)) return true;
 			// get domain information
 			DomainResource domainResource = (DomainResource) resourceManager.getObjectById(entityId,entityType );
