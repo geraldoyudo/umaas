@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
 
@@ -31,7 +32,7 @@ public class ApiSecurityChecker {
 		System.out.println("Evaluating access");
 	
 		System.out.println(basePath);
-		String path = request.getServletPath().replaceFirst(basePath + "/", "");
+		String path = request.getRequestURI().split(basePath + "/")[1];
 		System.out.println(path);
 		String[] segments = path.split("/");
 		String entityType = ResourceEntityMapper.getEntityName( segments[0]);
@@ -80,6 +81,24 @@ public class ApiSecurityChecker {
 		return permissionManager.hasPermission(entityType, entityId, priviledge);
 	}
 	
+	public boolean checkFilePropertyAccess(Authentication auth, HttpServletRequest request){
+		System.out.println("Checking file property access");
+		try{
+			String path = request.getRequestURI().split("/files/")[1];
+			System.out.println("Path = " + path);
+			String[] segments = path.split("/");
+			String userId = segments[2];
+			String mode = segments[1];
+			Priviledge priviledge = Priviledge.VIEW;
+			if(mode.equals("upload")){
+				priviledge = Priviledge.UPDATE;
+			}
+			String entityType = AppUser.class.getSimpleName();
+			return permissionManager.hasPermission(entityType, userId, priviledge);
+		} catch(ArrayIndexOutOfBoundsException ex){
+			return true;
+		}
+	}
 	private Priviledge getPriviledge(HttpServletRequest request) {
 		System.out.println("Request Method " + request.getMethod());
 		switch(request.getMethod().toLowerCase()){

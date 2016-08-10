@@ -37,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/domain/**")
 		.access("@apiSecurityChecker.check(authentication,request)")
+		.antMatchers("/files/user/*/*/*")
+		.access("@apiSecurityChecker.checkFilePropertyAccess(authentication,request)")
 		.anyRequest()
 		.permitAll();
 	}
