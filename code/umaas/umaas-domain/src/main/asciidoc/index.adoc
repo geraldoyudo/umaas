@@ -158,3 +158,237 @@ include::{snippets}/put-user-example/curl-request.adoc[]
   
 ==== Example reponse
 include::{snippets}/put-user-example/http-response.adoc[]
+
+[[resources-group]]
+== Groups
+The Group resource is used to create, modify and list groups. The client must have the required permission to access this resource.
+
+[[resources-group-get-all]]
+=== Getting groups Across Domains
+A 'GET' request will return all groups regardless of domain.
+
+==== Example request
+include::{snippets}/get-groups-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-groups-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-groups-example/links.adoc[]
+
+[[resources-group-get-by-domain]]
+=== Getting groups in a Domain
+A 'GET' request will all groups in a domain.
+
+==== Example request
+include::{snippets}/get-groups-by-domain-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-groups-by-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-groups-by-domain-example/links.adoc[]
+
+[[resources-group-get-group-by-id]]
+=== Getting A group by ID
+A 'GET' request a group with the specified id.
+
+include::{snippets}/get-group-example/path-parameters.adoc[]
+
+==== Example request
+include::{snippets}/get-group-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-group-example/http-response.adoc[]
+
+[[resources-group-get-group-by-domain-and-external-id]]
+=== Getting a group by Domain and External Id
+A 'GET' request will get a specific group
+
+==== Example request
+include::{snippets}/get-groups-by-domain-and-external-id-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-groups-by-domain-and-external-id-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-groups-by-domain-and-external-id-example/links.adoc[]
+
+[[resources-group-patch-group]]
+=== Partially updating a group
+A 'PATCH' request will partially update a specific group.
+
+==== Example request
+include::{snippets}/patch-group-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/patch-group-example/http-response.adoc[]
+
+[[resources-group-patch-group]]
+=== Fully updating a group
+A 'PUT' request will full update a specific group. Fields that are not present will be marked as null;
+
+==== Example request
+include::{snippets}/put-group-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/put-group-example/http-response.adoc[]
+
+[[resources-field]]
+== Fields
+The Group resource is used to create, modify and list fields. The client must have the required permission to access this resource.
+
+[[resources-field-get-all]]
+=== Getting Fields Across Domains
+A 'GET' request will return all fields regardless of domain.
+
+==== Example request
+include::{snippets}/get-fields-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-fields-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-fields-example/links.adoc[]
+
+[[resources-field-get-by-domain]]
+=== Getting Fields in a Domain
+A 'GET' request will all fields in a domain.
+
+==== Example request
+include::{snippets}/get-fields-by-domain-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-fields-by-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-fields-by-domain-example/links.adoc[]
+
+[[resources-field-get-field-by-id]]
+=== Getting A Field by ID
+A 'GET' request a field with the specified id.
+
+include::{snippets}/get-field-example/path-parameters.adoc[]
+
+==== Example request
+include::{snippets}/get-field-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-field-example/http-response.adoc[]
+
+[[resources-field-get-field-by-domain-and-external-id]]
+=== Getting a Field by Domain and External Id
+A 'GET' request will get a specific field
+
+==== Example request
+include::{snippets}/get-fields-by-domain-and-external-id-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-fields-by-domain-and-external-id-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-fields-by-domain-and-external-id-example/links.adoc[]
+
+[[resources-field-patch-field]]
+=== Partially updating a Field
+A 'PATCH' request will partially update a specific field.
+
+==== Example request
+include::{snippets}/patch-field-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/patch-field-example/http-response.adoc[]
+
+[[resources-field-patch-field]]
+=== Fully updating a Field
+A 'PUT' request will full update a specific field. Fields that are not present will be marked as null;
+
+==== Example request
+include::{snippets}/put-field-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/put-field-example/http-response.adoc[]
+
+[[resources-role]]
+== Roles
+The Group resource is used to create, modify and list roles. The client must have the required permission to access this resource.
+
+[[resources-role-get-all]]
+=== Getting Roles Across Domains
+A 'GET' request will return all roles regardless of domain.
+
+==== Example request
+include::{snippets}/get-roles-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-roles-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-roles-example/links.adoc[]
+
+[[resources-role-get-by-domain]]
+=== Getting Roles in a Domain
+A 'GET' request will all roles in a domain.
+
+==== Example request
+include::{snippets}/get-roles-by-domain-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-roles-by-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-roles-by-domain-example/links.adoc[]
+
+[[resources-role-get-role-by-id]]
+=== Getting A Role by ID
+A 'GET' request a role with the specified id.
+
+include::{snippets}/get-role-example/path-parameters.adoc[]
+
+==== Example request
+include::{snippets}/get-role-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-role-example/http-response.adoc[]
+
+[[resources-role-get-role-by-domain-and-external-id]]
+=== Getting a Role by Domain and External Id
+A 'GET' request will get a specific role
+
+==== Example request
+include::{snippets}/get-roles-by-domain-and-external-id-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/get-roles-by-domain-and-external-id-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-roles-by-domain-and-external-id-example/links.adoc[]
+
+[[resources-role-patch-role]]
+=== Partially updating a Role
+A 'PATCH' request will partially update a specific role.
+
+==== Example request
+include::{snippets}/patch-role-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/patch-role-example/http-response.adoc[]
+
+[[resources-role-patch-role]]
+=== Fully updating a Role
+A 'PUT' request will full update a specific role. Roles that are not present will be marked as null;
+
+==== Example request
+include::{snippets}/put-role-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/put-role-example/http-response.adoc[]
