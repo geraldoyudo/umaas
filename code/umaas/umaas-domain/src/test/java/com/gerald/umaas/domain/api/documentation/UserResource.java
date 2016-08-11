@@ -5,10 +5,11 @@ import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.li
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -113,6 +114,64 @@ public class UserResource extends AbstractResource{
     			linkWithRel("self").description("link to resource"),
     			linkWithRel("appUser").description("same as self"),
     			linkWithRel("domain").description("link to the user's domain"))));
+    }
+    
+    @Test
+    public void updateUser() throws Exception {
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.UPDATE); 
+		initializeListOfUsers();
+		createField("nickname", "string");
+		AppUser u = userRepository.findAll().get(0);
+		Map<String,Object> user = new HashMap<>();
+    	Map<String,Object> properties = new HashMap<>();
+    	properties.put("nickname", "micky");
+    	user.put("username", "smith_o");
+    	user.put("password", "4321");
+    	user.put("email", "smith_0@mail.com");
+    	user.put("phoneNumber", "+2348078229931");    
+    	user.put("properties", properties);
+    	user.put("domain", "/domain/domains/" + domain.getId());   
+		this.mvc.perform(RestDocumentationRequestBuilders.patch("/domain/appUsers/{userId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers)
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.content(mapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andDo(document("patch-user-example",pathParameters(
+                		parameterWithName("userId").description("The user's id"))
+                		
+                		));
+    }
+    
+    @Test
+    public void updateUserFull() throws Exception {
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.UPDATE); 
+		initializeListOfUsers();
+		createField("nickname", "string");
+		AppUser u = userRepository.findAll().get(0);
+		Map<String,Object> user = new HashMap<>();
+    	Map<String,Object> properties = new HashMap<>();
+    	properties.put("nickname", "micky");
+    	user.put("externalId", "myCustomId0000");
+    	user.put("username", "smith_o");
+    	user.put("password", "4321");
+    	user.put("email", "smith_0@mail.com");
+    	user.put("phoneNumber", "+2348078229931");  
+    	user.put("emailVerified", "true");  
+    	user.put("phoneNumberVerified", "true");  
+    	Map<String,Object> meta = new HashMap<>();
+    	meta.put("serialNo", 000);
+    	user.put("meta", meta);
+    	user.put("properties", properties);
+    	user.put("domain", "/domain/domains/" + domain.getId());   
+		this.mvc.perform(RestDocumentationRequestBuilders.put("/domain/appUsers/{userId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers)
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.content(mapper.writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andDo(document("put-user-example",pathParameters(
+                		parameterWithName("userId").description("The user's id"))
+                		
+                		));
     }
     
     private AppUser makeUser(){

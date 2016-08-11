@@ -138,3 +138,23 @@ include::{snippets}/get-user-by-domain-and-external-id-example/http-response.ado
 ==== Links in Response
 
 include::{snippets}/get-user-by-domain-and-external-id-example/links.adoc[]
+
+[[resources-user-patch-user]]
+=== Partially updating a user
+A 'PATCH' request will partially update a specific user.
+
+==== Example request
+include::{snippets}/patch-user-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/patch-user-example/http-response.adoc[]
+
+[[resources-user-patch-user]]
+=== Fully updating a user
+A 'PUT' request will full update a specific user. Fields that are not present will be marked as null;
+
+==== Example request
+include::{snippets}/put-user-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/put-user-example/http-response.adoc[]

@@ -81,6 +81,8 @@ public class UserPropertiesPopulator {
 			 populateProperties(u);
 			 populateGroups(u);
 			 populateRoles(u);
+			 System.out.println("After populating");
+			 System.out.println(u);
 			 return u;
 		}else if( retVal instanceof List){
 			System.out.println(" User properties list populating ");

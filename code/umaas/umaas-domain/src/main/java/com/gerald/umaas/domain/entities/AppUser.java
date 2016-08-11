@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -41,11 +40,8 @@ public class AppUser extends DomainResource implements Affiliate{
     private String phoneNumber;
     private boolean emailVerified;
     private boolean phoneNumberVerified;
-    @Transient
     private Map<String,Object> properties = new HashMap<>();
-    @Transient
     private List<String> groups = new ArrayList<>();
-    @Transient
     private List<String> roles = new ArrayList<>();
 	@Override
 	public String key() {
@@ -54,6 +50,25 @@ public class AppUser extends DomainResource implements Affiliate{
 	@Override
 	public RoleMappingType type() {
 		return RoleMappingType.USER;
+	}
+	
+	public void setProperties(Map<String,Object> properties){
+		if (properties == null){
+			return;
+		}
+		this.properties = properties;
+	}
+	public void setGroups(List<String> groups){
+		if(groups == null){
+			return;
+		}
+		this.groups = groups;
+	}
+	public void setRoles(List<String> roles){
+		if(roles == null){
+			return;
+		}
+		this.roles = roles;
 	}
 
 }
