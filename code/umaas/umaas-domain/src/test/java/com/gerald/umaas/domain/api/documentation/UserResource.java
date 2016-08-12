@@ -16,18 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
-import com.gerald.umaas.domain.repositories.UserRepository;
 
 
 public class UserResource extends AbstractResource{
-	@Autowired
-	private UserRepository userRepository;
 
 	//@Before
 	public void initializeMapping(){

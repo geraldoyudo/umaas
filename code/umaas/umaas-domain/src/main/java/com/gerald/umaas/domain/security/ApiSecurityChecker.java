@@ -53,11 +53,22 @@ public class ApiSecurityChecker {
 			if(domainId == null){
 				domainId = request.getParameter("domainId");
 			}
+			String externalId = request.getParameter("externalId");
+			if (externalId != null){
+				return permissionManager.hasPermissionWithExternalId(domainId, entityType, externalId, priviledge);
+			}
 			if(domainId != null){
 				return permissionManager.hasDomainCollectionPermission(domainId, entityType, priviledge);
-			}else{
-				return permissionManager.hasPermission(entityType, "ALL", priviledge);
 			}
+			String userId = request.getParameter("user");
+			if(userId == null){
+				userId = request.getParameter("userId");
+			}
+			if(userId != null){
+				return permissionManager.hasPermission(AppUser.class.getSimpleName(), userId, priviledge);
+			}
+			return permissionManager.hasPermission(entityType, "ALL", priviledge);
+			
 		}
 		if(priviledge.equals(Priviledge.ADD) && entityId.equals("ALL")){
 			try{

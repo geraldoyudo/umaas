@@ -141,7 +141,8 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 	
 	private void saveUserProperties(Map<String,Object> properties, AppUser user) {
 		//System.out.println(user);
-		List<Field> fields = fieldRepository.findByDomain(user.getDomain().getId());
+		Domain d = user.getDomain();
+		List<Field> fields = fieldRepository.findByDomain(d.getId());
 		ArrayList<String> keySet = new ArrayList<>(user.getProperties().keySet());
 		
 		UserField userField;
@@ -152,6 +153,7 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 					userField = new UserField();
 					userField.setUser(user);
 					userField.setField(field);
+					userField.setDomain(d);
 				}
 				userField.setValue(properties.get(field.getName()));
 				userFieldRepository.save(userField);

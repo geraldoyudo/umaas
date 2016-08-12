@@ -6,9 +6,13 @@ import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.li
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Base64Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainAccessCode;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
@@ -31,6 +36,7 @@ import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.FieldRepository;
+import com.gerald.umaas.domain.repositories.UserRepository;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureRestDocs("target/generated-snippets")
@@ -57,6 +63,11 @@ public abstract class AbstractResource {
 	protected FieldRepository fieldRepository;
 	protected ObjectMapper mapper = new ObjectMapper();
 	protected long resourceCount = 0;
+	@Autowired
+	protected UserRepository userRepository;
+	
+	@Rule 
+	public ResourceRule resourceRule = new ResourceRule();
 	
 	protected final LinksSnippet collectionLinks = links(
 			linkWithRel("self").description("Link to the resource"),
@@ -66,8 +77,8 @@ public abstract class AbstractResource {
 			linkWithRel("self").description("Link to the resource")
     		);
 	
-	@Before
 	public void setUp(){
+		System.out.println( "Setting up");
 		mongoTemplate.getDb().dropDatabase();
 		domain = new Domain();
 		domain.setCode(DOMAIN_CODE);
@@ -123,4 +134,61 @@ public abstract class AbstractResource {
 			return fieldRepository.save(f);
 			
 	}
+	
+	protected AppUser createUser(){
+		long value = resourceCount ++;
+		AppUser u = new AppUser();
+		u.setDomain(domain);
+		u.setEmail(String.format("sample%s@email.com", value));
+		u.setUsername(String.format("sample%s", value));
+		u.setPassword(String.format("password%s", value));
+		u.setPhoneNumber(String.format("+234808323232%s", value));
+		u.setEmailVerified(true);
+		u.setPhoneNumberVerified(true);
+		return userRepository.save(u);
+	}
+	
+	protected AppUser createUser(Map<String,Object> properties){
+		AppUser u = createUser();
+		if(properties != null){
+			u.setProperties(properties);
+		}
+		return userRepository.save(u);
+	}
+	 public class ResourceRule implements TestRule{
+			@Override
+			public Statement apply(Statement base, Description description) {
+				return new ResourceStatement(base);
+			}
+	    	
+	    }
+	    
+	    public class ResourceStatement extends Statement{
+	    	
+	    	private Statement base;
+	    	
+	    	public ResourceStatement(Statement base) {
+				this.base = base;
+			}
+			@Override
+			public void evaluate() throws Throwable {
+				try{
+					AbstractResource.this.setUp();
+					AbstractResource.this.beforeResourceTest();
+					base.evaluate();
+				}catch(Exception ex ){
+					AbstractResource.this.afterResourceTest();
+					throw ex;
+				}
+				AbstractResource.this.afterResourceTest();
+			}
+	    	
+	    }
+	    
+	    protected void beforeResourceTest(){
+	    	System.out.println( "Before Resource Test");
+	    }
+	    protected void afterResourceTest(){
+	    	System.out.println( "After Resource Test");
+	    }
 }
