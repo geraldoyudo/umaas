@@ -211,15 +211,18 @@ public class UserPropertiesPopulator {
 		}
         affiliates.add(u);
         HashSet<Role> roles = new HashSet<>();
-        RoleMapping mapping;
+        List<RoleMapping> mapping;
         Affiliate affiliate;
         String domain = u.getDomain().getId();
         Group group;
         do{
             affiliate = affiliates.pop();
             mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-            if(mapping != null) 
-               roles.addAll(mapping.getRoles());
+            if(mapping != null && !mapping.isEmpty()){
+               	for(RoleMapping map: mapping){
+               		roles.add(map.getRole());
+               	}
+               }
             if(affiliate.type() == RoleMapping.RoleMappingType.GROUP){
                group = (Group) affiliate;
                while(group.getParent() != null){
@@ -227,8 +230,11 @@ public class UserPropertiesPopulator {
                    affiliate = group;
                    affiliates.remove(affiliate);
                    mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-                   if(mapping != null) 
-                      roles.addAll(mapping.getRoles());
+                   if(mapping != null && !mapping.isEmpty()){
+                      	for(RoleMapping map: mapping){
+                      		roles.add(map.getRole());
+                      	}
+                      }
                }
                
             }
@@ -247,15 +253,18 @@ public class UserPropertiesPopulator {
 	
         affiliates.add(g);
         HashSet<Role> roles = new HashSet<>();
-        RoleMapping mapping;
+        List<RoleMapping> mapping;
         Affiliate affiliate;
         String domain = g.getDomain().getId();
         Group group;
         do{
             affiliate = affiliates.pop();
             mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-            if(mapping != null) 
-               roles.addAll(mapping.getRoles());
+            if(mapping != null && !mapping.isEmpty()){
+               	for(RoleMapping map: mapping){
+               		roles.add(map.getRole());
+               	}
+               }
             if(affiliate.type() == RoleMapping.RoleMappingType.GROUP){
                group = (Group) affiliate;
                while(group.getParent() != null){
@@ -263,8 +272,11 @@ public class UserPropertiesPopulator {
                    affiliate = group;
                    affiliates.remove(affiliate);
                    mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-                   if(mapping != null) 
-                      roles.addAll(mapping.getRoles());
+                   if(mapping != null && !mapping.isEmpty()){
+                      	for(RoleMapping map: mapping){
+                      		roles.add(map.getRole());
+                      	}
+                      }
                }
                
             }

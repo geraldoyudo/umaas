@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import org.assertj.core.internal.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,8 +93,8 @@ public class UserRepositoryTest {
 		assertNotNull(ug);
 		Role userRole = createRole();
 		Role groupRole = createRole();
-		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
-		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
+		createRoleMapping(user,Arrays.asList(userRole));
+		createRoleMapping(g, Arrays.asList(groupRole) );
 		user = userRepository.findOne(user.getId());
 		assertNotNull(user);
 		assertThat(user.getProperties().keySet().size()).isEqualTo(1);
@@ -115,8 +114,8 @@ public class UserRepositoryTest {
 		assertNotNull(ug);
 		Role userRole = createRole();
 		Role groupRole = createRole();
-		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
-		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
+		createRoleMapping(user,Arrays.asList(userRole));
+		createRoleMapping(g, Arrays.asList(groupRole) );
 		List<AppUser> users = userRepository.findAll();
 		assertThat(users.get(0).getProperties().keySet().size()).isEqualTo(1);
 		assertThat(users.get(0).getGroups().size()).isEqualTo(1);
@@ -135,8 +134,8 @@ public class UserRepositoryTest {
 		assertNotNull(ug);
 		Role userRole = createRole();
 		Role groupRole = createRole();
-		RoleMapping userRm = createRoleMapping(user,Arrays.asList(userRole));
-		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
+		createRoleMapping(user,Arrays.asList(userRole));
+		createRoleMapping(g, Arrays.asList(groupRole) );
 		PageRequest p = new PageRequest(0, 10);
 		Page<AppUser> users = userRepository.findAll(p);
 		assertThat(users.getContent().get(0).getProperties().keySet().size()).isEqualTo(1);
@@ -174,7 +173,7 @@ public class UserRepositoryTest {
 	public void testGroupQueryMethodsSave(){
 		Group g = createGroup();	
 		Role groupRole = createRole();
-		RoleMapping groupRm = createRoleMapping(g, Arrays.asList(groupRole) );
+		createRoleMapping(g, Arrays.asList(groupRole) );
 		g = groupRepository.findOne(g.getId());
 		assertNotNull(g);
 		
@@ -231,14 +230,18 @@ public class UserRepositoryTest {
 		return roleRepository.save(r);
 		
 	}
-	private RoleMapping createRoleMapping(Affiliate affiliate, List<Role> roles) {
+	private void createRoleMapping(Affiliate affiliate, List<Role> roles) {
+		RoleMapping rm;
+		for(Role r: roles){
+			rm = new RoleMapping();
+			rm.setKey(affiliate.key());
+			rm.setType(affiliate.type());
+			rm.setRole(r);
+			rm.setDomain(domain);
+			roleMappingRepository.save(rm);
+		}
 		
-		RoleMapping rm = new RoleMapping();
-		rm.setKey(affiliate.key());
-		rm.setType(affiliate.type());
-		rm.setRoles(new HashSet<>(roles));
-		rm.setDomain(domain);
-		return roleMappingRepository.save(rm);
+	
 	}
 	
 	

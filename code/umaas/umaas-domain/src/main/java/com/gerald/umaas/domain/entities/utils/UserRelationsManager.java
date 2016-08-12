@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.AfterConvertEvent;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
@@ -85,15 +84,18 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 		}
         affiliates.add(u);
         HashSet<Role> roles = new HashSet<>();
-        RoleMapping mapping;
+        List<RoleMapping> mapping;
         Affiliate affiliate;
         String domain = u.getDomain().getId();
         Group group;
         do{
             affiliate = affiliates.pop();
             mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-            if(mapping != null) 
-               roles.addAll(mapping.getRoles());
+            if(mapping != null && !mapping.isEmpty()){
+            	for(RoleMapping map: mapping){
+            		roles.add(map.getRole());
+            	}
+            }
             if(affiliate.type() == RoleMapping.RoleMappingType.GROUP){
                group = (Group) affiliate;
                while(group.getParent() != null){
@@ -101,8 +103,11 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
                    affiliate = group;
                    affiliates.remove(affiliate);
                    mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
-                   if(mapping != null) 
-                      roles.addAll(mapping.getRoles());
+                   if(mapping != null && !mapping.isEmpty()){
+                   	for(RoleMapping map: mapping){
+                   		roles.add(map.getRole());
+                   	}
+                   }
                }
                
             }

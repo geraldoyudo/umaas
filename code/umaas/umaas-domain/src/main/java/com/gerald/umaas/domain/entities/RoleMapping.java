@@ -5,9 +5,6 @@
  */
 package com.gerald.umaas.domain.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -24,7 +21,7 @@ import lombok.EqualsAndHashCode;
  */
 @Document
 @CompoundIndexes({
-    @CompoundIndex(name = "domain_key_type", def = "{'domain.$id' : 1, 'key' : 1, 'type' : 1}", unique = true)
+    @CompoundIndex(name = "domain_key_type", def = "{'domain.$id' : 1, 'key' : 1, 'type' : 1, 'role.$id' : 1}", unique = true)
 })
 @Data
 @EqualsAndHashCode(callSuper=true)
@@ -40,15 +37,7 @@ public class RoleMapping extends DomainResource{
     @NotNull
     private String key;
     @DBRef
-    private Set<Role> roles = new HashSet<>();
-
-    public void removeRole(Role r){
-        this.roles.remove(r);
-    }
-    
-    public void addRole(Role r){
-        this.roles.add(r);
-    }
-    
-    
+    @NotNull
+    private Role role;
+   
 }

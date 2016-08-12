@@ -21,7 +21,7 @@ import com.gerald.umaas.domain.repositories.projection.RoleMappingProjection;
 @RepositoryRestResource(excerptProjection = RoleMappingProjection.class)
 public interface RoleMappingRepository extends  DomainResourceRepository<RoleMapping, String>{
     @Query("{'domain.id': '?0','key': ?1,'type': ?2 }")
-    public RoleMapping findByDomainAndKeyAndType(
+    public List<RoleMapping> findByDomainAndKeyAndType(
             String domain, String key, RoleMapping.RoleMappingType type);
 
 	public List<RoleMapping> findByKeyAndType(String id, RoleMappingType type);
