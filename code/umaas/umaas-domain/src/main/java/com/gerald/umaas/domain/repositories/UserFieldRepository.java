@@ -18,4 +18,5 @@ import com.gerald.umaas.domain.entities.UserField;
 public interface UserFieldRepository extends ResourceRepository<UserField, String>{
    public UserField findByUserAndField(AppUser user, Field field);
    public List<UserField> findByUser(AppUser user);
+   public List<UserField> findByField(Field f);
 }

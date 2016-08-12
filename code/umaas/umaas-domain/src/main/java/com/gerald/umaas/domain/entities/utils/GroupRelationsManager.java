@@ -53,7 +53,7 @@ public class GroupRelationsManager extends AbstractMongoEventListener<Group>{
 		String id = (String) event.getDBObject().get("id");
 		Group g = groupRepository.findOne(id);
 		roleMappingRepository.delete(roleMappingRepository.findByKeyAndType(g.getId(),g.type()));
-		
+		userGroupRepository.delete(userGroupRepository.findByGroup(g));
 	}
 	
 	private void populateRoles(Group g){

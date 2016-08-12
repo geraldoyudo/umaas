@@ -18,4 +18,5 @@ import com.gerald.umaas.domain.entities.UserGroup;
 public interface UserGroupRepository extends ResourceRepository<UserGroup, String>{
    public UserGroup findByUserAndGroup(AppUser user, Group group);
    public List<UserGroup> findByUser(AppUser user);
+   public List<UserGroup> findByGroup(Group g);
 }
