@@ -149,7 +149,7 @@ include::{snippets}/patch-user-example/curl-request.adoc[]
 ==== Example reponse
 include::{snippets}/patch-user-example/http-response.adoc[]
 
-[[resources-user-patch-user]]
+[[resources-user-put-user]]
 === Fully updating a user
 A 'PUT' request will full update a specific user. Fields that are not present will be marked as null;
 
@@ -158,6 +158,16 @@ include::{snippets}/put-user-example/curl-request.adoc[]
   
 ==== Example reponse
 include::{snippets}/put-user-example/http-response.adoc[]
+
+[[resources-user-delete-user]]
+=== Removing Users
+A 'DELETE' request will delete the user from the domain. This will also delete resources associated to the user.
+
+==== Example request
+include::{snippets}/delete-user-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/delete-user-example/http-response.adoc[]
 
 [[resources-group]]
 == Groups
@@ -227,7 +237,7 @@ include::{snippets}/patch-group-example/curl-request.adoc[]
 ==== Example reponse
 include::{snippets}/patch-group-example/http-response.adoc[]
 
-[[resources-group-patch-group]]
+[[resources-group-put-group]]
 === Fully updating a group
 A 'PUT' request will full update a specific group. Fields that are not present will be marked as null;
 
@@ -236,6 +246,16 @@ include::{snippets}/put-group-example/curl-request.adoc[]
   
 ==== Example reponse
 include::{snippets}/put-group-example/http-response.adoc[]
+
+[[resources-group-delete-group]]
+=== Removing a Group
+A 'DELETE' request will permanently delete a group from a domain;
+
+==== Example request
+include::{snippets}/delete-group-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/delete-group-example/http-response.adoc[]
 
 [[resources-field]]
 == Fields
@@ -305,7 +325,7 @@ include::{snippets}/patch-field-example/curl-request.adoc[]
 ==== Example reponse
 include::{snippets}/patch-field-example/http-response.adoc[]
 
-[[resources-field-patch-field]]
+[[resources-field-put-field]]
 === Fully updating a Field
 A 'PUT' request will full update a specific field. Fields that are not present will be marked as null;
 
@@ -314,6 +334,16 @@ include::{snippets}/put-field-example/curl-request.adoc[]
   
 ==== Example reponse
 include::{snippets}/put-field-example/http-response.adoc[]
+
+[[resources-field-delete-field]]
+=== Removing a Field
+A 'DELETE' request will permanently remove a field from the domain. All properties relating to the field will be deleted.
+
+==== Example request
+include::{snippets}/delete-field-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/delete-field-example/http-response.adoc[]
 
 [[resources-role]]
 == Roles
@@ -383,7 +413,7 @@ include::{snippets}/patch-role-example/curl-request.adoc[]
 ==== Example reponse
 include::{snippets}/patch-role-example/http-response.adoc[]
 
-[[resources-role-patch-role]]
+[[resources-role-put-role]]
 === Fully updating a Role
 A 'PUT' request will full update a specific role. Roles that are not present will be marked as null;
 
@@ -392,3 +422,13 @@ include::{snippets}/put-role-example/curl-request.adoc[]
   
 ==== Example reponse
 include::{snippets}/put-role-example/http-response.adoc[]
+
+[[resources-role-delete-role]]
+=== Removing a role
+A 'DELETE' request will remove a role from a domain. All associations with the role are also removed.
+
+==== Example request
+include::{snippets}/delete-role-example/curl-request.adoc[]
+  
+==== Example reponse
+include::{snippets}/delete-role-example/http-response.adoc[]
