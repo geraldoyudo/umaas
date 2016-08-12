@@ -150,6 +150,17 @@ public class FieldResource extends AbstractResource{
                 		));
     }
     
+    @Test
+    public void deleteField() throws Exception {
+		createMapping(Field.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.DELETE); 
+		initializeListOfFields();
+		Field u = fieldRepository.findAll().get(0);
+		this.mvc.perform(RestDocumentationRequestBuilders.delete("/domain/fields/{fieldId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers))
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-field-example",pathParameters(
+                		parameterWithName("fieldId").description("The field id")) ));
+    }
     private Field makeField(){
     	long value = resourceCount++;
     	Field g = new Field();

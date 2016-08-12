@@ -185,6 +185,17 @@ public class UserResource extends AbstractResource{
     	return userRepository.save(u);
     }
     
+    @Test
+    public void deleteUser() throws Exception {
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.DELETE); 
+		initializeListOfUsers();
+		AppUser u = userRepository.findAll().get(0);
+		this.mvc.perform(RestDocumentationRequestBuilders.delete("/domain/appUsers/{userId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers))
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-user-example",pathParameters(
+                		parameterWithName("userId").description("The user's id")) ));
+    }
     private void initializeListOfUsers(){
     	for(int i=0; i<10; ++i){
     		makeUser();

@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
+import com.gerald.umaas.domain.entities.Field;
 import com.gerald.umaas.domain.entities.Role;
 import com.gerald.umaas.domain.repositories.RoleRepository;
 
@@ -141,6 +142,17 @@ public class RoleResource extends AbstractResource{
                 		));
     }
     
+    @Test
+    public void deleteRole() throws Exception {
+		createMapping(Role.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.DELETE); 
+		initializeListOfRoles();
+		Role u = roleRepository.findAll().get(0);
+		this.mvc.perform(RestDocumentationRequestBuilders.delete("/domain/roles/{roleId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers))
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-role-example",pathParameters(
+                		parameterWithName("roleId").description("The role id")) ));
+    }
     private Role makeRole(){
     	long value = resourceCount++;
     	Role g = new Role();

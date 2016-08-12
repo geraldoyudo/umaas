@@ -144,6 +144,17 @@ public class GroupResource extends AbstractResource{
                 		));
     }
     
+    @Test
+    public void deleteGroup() throws Exception {
+		createMapping(Group.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.DELETE); 
+		initializeListOfGroups();
+		Group u = groupRepository.findAll().get(0);
+		this.mvc.perform(RestDocumentationRequestBuilders.delete("/domain/groups/{groupId}", u.getId()).accept(APPLICATION_HAL)
+        		.headers(headers))
+                .andExpect(status().isNoContent())
+                .andDo(document("delete-group-example",pathParameters(
+                		parameterWithName("groupId").description("The group id")) ));
+    }
     private Group makeGroup(){
     	long value = resourceCount++;
     	Group g = new Group();
