@@ -32,10 +32,12 @@ import com.gerald.umaas.domain.entities.DomainAccessCode;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 import com.gerald.umaas.domain.entities.Field;
+import com.gerald.umaas.domain.entities.Group;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.FieldRepository;
+import com.gerald.umaas.domain.repositories.GroupRepository;
 import com.gerald.umaas.domain.repositories.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -65,6 +67,8 @@ public abstract class AbstractResource {
 	protected long resourceCount = 0;
 	@Autowired
 	protected UserRepository userRepository;
+	@Autowired
+	protected GroupRepository groupRepository;
 	
 	@Rule 
 	public ResourceRule resourceRule = new ResourceRule();
@@ -132,6 +136,14 @@ public abstract class AbstractResource {
 			f.setType(type);
 			f.setName(name);
 			return fieldRepository.save(f);
+			
+	}
+	
+	protected Group createGroup(String name) {
+		   Group  g = new Group();
+			g.setDomain(domain);
+			g.setName(name);
+			return groupRepository.save(g);
 			
 	}
 	

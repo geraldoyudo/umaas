@@ -182,6 +182,7 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 			UserGroup userGroup = new UserGroup();
 			userGroup.setUser(user);
 			userGroup.setGroup(g);
+			userGroup.setDomain(d);
 			userGroupRepository.save(userGroup);
 		}
 		

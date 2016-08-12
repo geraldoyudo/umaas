@@ -248,4 +248,14 @@ public class LocalPermissionManager implements PermissionManager{
 		
 		return hasPermission(entityType, id, priviledge);
 	}
+
+	@Override
+	public boolean hasUserDomainPermission(String entityType, String userId, Priviledge priviledge) {
+		System.out.println("has user domain permission");
+		System.out.println(entityType);
+		DomainResource user = (DomainResource) domainResourceManager.getObjectById(userId, AppUser.class.getSimpleName());
+		if(user == null ) return false;
+		System.out.println(user);
+		return hasDomainCollectionPermission(user.getDomain().getId(), entityType, priviledge);
+	}
 }

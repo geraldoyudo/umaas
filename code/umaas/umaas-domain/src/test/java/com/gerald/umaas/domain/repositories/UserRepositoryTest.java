@@ -192,6 +192,7 @@ public class UserRepositoryTest {
 		UserGroup ug = new UserGroup();
 		ug.setGroup(g);
 		ug.setUser(user);
+		ug.setDomain(domain);
 		return userGroupsRepository.save(ug);
 	}
 	private Field createField() {

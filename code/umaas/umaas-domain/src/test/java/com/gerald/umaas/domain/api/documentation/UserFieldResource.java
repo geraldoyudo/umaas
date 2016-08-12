@@ -30,13 +30,7 @@ import com.gerald.umaas.domain.repositories.UserRepository;
 import com.gerald.umaas.domain.utils.MapBuilder;
 
 
-public class UserFieldResource extends AbstractResource{
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private FieldRepository fieldRepository;
-	
+public class UserFieldResource extends AbstractResource{	
 	@Autowired
 	private UserFieldRepository userFieldRepository;
 	

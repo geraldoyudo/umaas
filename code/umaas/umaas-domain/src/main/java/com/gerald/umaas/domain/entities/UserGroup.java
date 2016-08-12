@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
     @CompoundIndex(name = "user_group", def = "{'user.$id' : 1, 'group.$id' : 1}", unique = true)
 })
 @EqualsAndHashCode(callSuper=true)
-public class UserGroup extends Resource {
+public class UserGroup extends DomainResource {
 	
 	/**
 	 * 
