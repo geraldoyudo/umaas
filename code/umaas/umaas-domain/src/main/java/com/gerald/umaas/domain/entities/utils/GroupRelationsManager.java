@@ -32,15 +32,11 @@ import com.gerald.umaas.domain.repositories.UserGroupRepository;
 @Component
 public class GroupRelationsManager extends AbstractMongoEventListener<Group>{
 	@Autowired
-	private UserFieldRepository userFieldRepository;
-	@Autowired
 	private UserGroupRepository userGroupRepository;
 	@Autowired
 	private RoleMappingRepository roleMappingRepository;
 	@Autowired
 	private GroupRepository groupRepository;
-	@Autowired
-	private FieldRepository fieldRepository;
 	
 	
 	
@@ -54,6 +50,10 @@ public class GroupRelationsManager extends AbstractMongoEventListener<Group>{
 	public void onBeforeDelete(BeforeDeleteEvent<Group> event) {
 		// TODO Auto-generated method stub\
 		System.out.println("On Before Delete");
+		String id = (String) event.getDBObject().get("id");
+		Group g = groupRepository.findOne(id);
+		roleMappingRepository.delete(roleMappingRepository.findByKeyAndType(g.getId(),g.type()));
+		
 	}
 	
 	private void populateRoles(Group g){
