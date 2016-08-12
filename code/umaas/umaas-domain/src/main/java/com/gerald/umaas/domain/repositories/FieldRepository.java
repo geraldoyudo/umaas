@@ -12,5 +12,5 @@ import com.gerald.umaas.domain.entities.Field;
  * @author Dev7
  */
 public interface FieldRepository extends DomainResourceRepository<Field, String>{
-    
+
 }

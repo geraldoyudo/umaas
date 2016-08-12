@@ -7,14 +7,11 @@ package com.gerald.umaas.domain.repositories;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.gerald.umaas.domain.entities.RoleMapping;
+import com.gerald.umaas.domain.entities.RoleMapping.RoleMappingType;
 import com.gerald.umaas.domain.repositories.projection.RoleMappingProjection;
 
 /**
@@ -26,4 +23,6 @@ public interface RoleMappingRepository extends  DomainResourceRepository<RoleMap
     @Query("{'domain.id': '?0','key': ?1,'type': ?2 }")
     public RoleMapping findByDomainAndKeyAndType(
             String domain, String key, RoleMapping.RoleMappingType type);
+
+	public List<RoleMapping> findByKeyAndType(String id, RoleMappingType type);
 }

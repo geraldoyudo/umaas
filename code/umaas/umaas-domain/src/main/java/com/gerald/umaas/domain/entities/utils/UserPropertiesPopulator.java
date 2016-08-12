@@ -31,7 +31,7 @@ import com.gerald.umaas.domain.repositories.RoleMappingRepository;
 import com.gerald.umaas.domain.repositories.UserFieldRepository;
 import com.gerald.umaas.domain.repositories.UserGroupRepository;
 
-@Component
+
 @Aspect
 public class UserPropertiesPopulator {
 	@Autowired

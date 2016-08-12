@@ -72,6 +72,14 @@ public class UserRepositoryTest {
 	public void testUserSave(){
 		AppUser user = createUser();
 		assertNotNull(user.getId());
+		user = userRepository.findOne(user.getId());
+		assertNotNull(user);
+	}
+	@Test
+	public void testUserDelete(){
+		AppUser user = createUser();
+		assertNotNull(user.getId());
+		userRepository.delete(user);
 	}
 	
 	@Test
