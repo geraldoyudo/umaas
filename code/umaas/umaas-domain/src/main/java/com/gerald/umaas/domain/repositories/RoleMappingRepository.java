@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import com.gerald.umaas.domain.entities.Role;
 import com.gerald.umaas.domain.entities.RoleMapping;
 import com.gerald.umaas.domain.entities.RoleMapping.RoleMappingType;
 import com.gerald.umaas.domain.repositories.projection.RoleMappingProjection;
@@ -25,4 +26,6 @@ public interface RoleMappingRepository extends  DomainResourceRepository<RoleMap
             String domain, String key, RoleMapping.RoleMappingType type);
 
 	public List<RoleMapping> findByKeyAndType(String id, RoleMappingType type);
+
+	public List<RoleMapping> findByRole(Role role);
 }

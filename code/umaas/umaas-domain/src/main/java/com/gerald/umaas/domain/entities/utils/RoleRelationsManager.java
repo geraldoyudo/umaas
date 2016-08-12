@@ -25,6 +25,7 @@ public class RoleRelationsManager extends AbstractMongoEventListener<Field>{
 		System.out.println("On Before Delete");
 		String id = (String) event.getDBObject().get("id");
 		Role role = roleRepository.findOne(id);
+		roleMappingRepository.delete(roleMappingRepository.findByRole(role));
 		
 	}
 	
