@@ -1,6 +1,7 @@
 package com.gerald.umaas.domain.security;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.text.html.parser.Entity;
 
@@ -59,8 +60,7 @@ public class LocalPermissionManager implements PermissionManager{
 				
 			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
 			return false;
-		}
-		else if(DomainResource.class.isAssignableFrom(entityClass)){
+		}else if(DomainResource.class.isAssignableFrom(entityClass)){
 			System.out.println("Evaluating domain resource");
 			if(entityType.equals(UserField.class.getSimpleName())){
 				String userEntityType = AppUser.class.getSimpleName();
@@ -102,29 +102,29 @@ public class LocalPermissionManager implements PermissionManager{
 	
 	private boolean checkEntry(DomainAccessCode accessCode, 
 			String entityType, String entityId, Priviledge priviledge) throws PriviledgeDeniedException{
-		DomainAccessCodeMapping mapping = 
+		List<DomainAccessCodeMapping> mapping = 
 				codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, entityId);
 		if(mapping == null){
 			return false;
 		}
-		if(mapping.getPriviledge().equals(Priviledge.NONE)){
+		if(containsPriviledge(mapping,Priviledge.NONE)){
 			throw new PriviledgeDeniedException();
 		}
-		if(mapping.getPriviledge().equals(priviledge)){
+		if(containsPriviledge(mapping, priviledge)){
 			return true;
 		}
-		if(mapping.getPriviledge().equals(Priviledge.ALL)){
+		if(containsPriviledge(mapping,Priviledge.ALL)){
 			return true;
 		}
-		if(mapping.getPriviledge().equals(Priviledge.UPDATE) && priviledge.equals(Priviledge.VIEW)){
+		if(containsPriviledge(mapping,Priviledge.UPDATE) && priviledge.equals(Priviledge.VIEW)){
 			return true;
 		}
 		return false;
 	}
 	private boolean checkForDomainEntry(Domain d, DomainAccessCode accessCode, 
 			String entityType, Priviledge priviledge) throws PriviledgeDeniedException{
-		DomainAccessCodeMapping mapping;
+		List<DomainAccessCodeMapping> mapping;
 		
 		mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, DOMAIN_ITEMS);
@@ -135,28 +135,17 @@ public class LocalPermissionManager implements PermissionManager{
 				return false;
 			}
 		}
-		if(mapping.getPriviledge().equals(Priviledge.NONE)){
+		if(containsPriviledge(mapping,Priviledge.NONE)){
 			throw new PriviledgeDeniedException();
 		}
-		Object domainList = mapping.meta(META_DOMAINS);
-		if(domainList == null)
-			return false;
-		if(! (domainList instanceof List)){
-			return false;
-		}
-		List<String> domains = (List<String>) domainList;
 		
-		if(!domains.contains(d.getId())){
-			return false;
+		if(priviledge.equals(Priviledge.VIEW)){
+			if(containsPriviledgeForDomain(mapping, Priviledge.UPDATE, d.getId())) return true;
 		}
-		
-		if(mapping.getPriviledge().equals(priviledge)){
+		if(containsPriviledgeForDomain(mapping, priviledge, d.getId())){
 			return true;
 		}
-		if(mapping.getPriviledge().equals(Priviledge.ALL)){
-			return true;
-		}
-		if(mapping.getPriviledge().equals(Priviledge.UPDATE) && priviledge.equals(Priviledge.VIEW)){
+		if(containsPriviledge(mapping, Priviledge.ALL)){
 			return true;
 		}
 		return false;
@@ -204,5 +193,33 @@ public class LocalPermissionManager implements PermissionManager{
 		}
 		return false;
 	}
-
+	private boolean containsPriviledge(List<DomainAccessCodeMapping> mappings, Priviledge priviledge ){
+		if(mappings == null) return false;
+		for(DomainAccessCodeMapping mapping: mappings){
+			if(mapping.getPriviledge().equals(priviledge)){
+				return true;
+			}
+		}
+		return false;
+	}
+	private boolean containsPriviledgeForDomain(List<DomainAccessCodeMapping> mappings, 
+			Priviledge priviledge, String domainId){
+		if(mappings == null) return false;
+		List<String> domains;
+		for(DomainAccessCodeMapping mapping: mappings){
+			if(!mapping.getEntityId().equals(DOMAIN_ITEMS))
+				continue;
+			if(mapping.getPriviledge().equals(priviledge)){
+				try{
+				domains = (List<String> ) mapping.getMeta().get(META_DOMAINS);
+				if(domains.contains(domainId)){
+					return true;
+				}
+				}catch(NullPointerException | ClassCastException ex) {
+					continue;
+				}
+			}
+		}
+		return false;
+	}
 }
