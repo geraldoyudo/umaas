@@ -72,6 +72,10 @@ public class ApiSecurityChecker {
 					return permissionManager.hasUserDomainPermission(entityType, userId, priviledge);
 				}
 			}
+			String key = request.getParameter("key");
+			if(key != null){
+				return permissionManager.hasAffiliateDomainPermission(entityType, key, priviledge);
+			}
 			return permissionManager.hasPermission(entityType, "ALL", priviledge);
 			
 		}

@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.Base64Utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gerald.umaas.domain.entities.Affiliate;
 import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainAccessCode;
@@ -33,11 +34,15 @@ import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 import com.gerald.umaas.domain.entities.Field;
 import com.gerald.umaas.domain.entities.Group;
+import com.gerald.umaas.domain.entities.Role;
+import com.gerald.umaas.domain.entities.RoleMapping;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.FieldRepository;
 import com.gerald.umaas.domain.repositories.GroupRepository;
+import com.gerald.umaas.domain.repositories.RoleMappingRepository;
+import com.gerald.umaas.domain.repositories.RoleRepository;
 import com.gerald.umaas.domain.repositories.UserRepository;
 
 @RunWith(SpringRunner.class)
@@ -69,6 +74,10 @@ public abstract class AbstractResource {
 	protected UserRepository userRepository;
 	@Autowired
 	protected GroupRepository groupRepository;
+	@Autowired
+	protected RoleRepository roleRepository;
+	@Autowired
+	protected RoleMappingRepository roleMappingRepository;
 	
 	@Rule 
 	public ResourceRule resourceRule = new ResourceRule();
@@ -146,6 +155,13 @@ public abstract class AbstractResource {
 			return groupRepository.save(g);
 			
 	}
+	protected Role createRole(String name) {
+		   Role  r = new Role();
+			r.setDomain(domain);
+			r.setName(name);
+			return roleRepository.save(r);
+			
+	}
 	
 	protected AppUser createUser(){
 		long value = resourceCount ++;
@@ -166,6 +182,14 @@ public abstract class AbstractResource {
 			u.setProperties(properties);
 		}
 		return userRepository.save(u);
+	}
+	
+	protected RoleMapping createRoleMapping(Affiliate affiliate, Role r){
+		RoleMapping rm = new RoleMapping();
+		rm.setDomain(domain);
+		rm.setKey(affiliate.key());
+		rm.setRole(r);
+		return roleMappingRepository.save(rm);
 	}
 	 public class ResourceRule implements TestRule{
 			@Override

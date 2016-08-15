@@ -15,6 +15,7 @@ import com.gerald.umaas.domain.entities.DomainAccessCode;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
 import com.gerald.umaas.domain.entities.DomainResource;
+import com.gerald.umaas.domain.entities.Group;
 import com.gerald.umaas.domain.entities.Resource;
 import com.gerald.umaas.domain.entities.UserField;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
@@ -257,5 +258,18 @@ public class LocalPermissionManager implements PermissionManager{
 		if(user == null ) return false;
 		System.out.println(user);
 		return hasDomainCollectionPermission(user.getDomain().getId(), entityType, priviledge);
+	}
+
+	@Override
+	public boolean hasAffiliateDomainPermission(String entityType, String key, Priviledge priviledge) {
+		System.out.println("has affiliate domain permission");
+		System.out.println(entityType);
+		DomainResource affiliate = (DomainResource) domainResourceManager.getObjectById(key, AppUser.class.getSimpleName());
+		if(affiliate == null ){
+			affiliate = (DomainResource) domainResourceManager.getObjectById(key, Group.class.getSimpleName());
+			if(affiliate == null) return false;
+		}
+		System.out.println(affiliate);
+		return hasDomainCollectionPermission(affiliate.getDomain().getId(), entityType, priviledge);
 	}
 }
