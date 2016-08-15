@@ -138,6 +138,13 @@ public abstract class AbstractResource {
 		code = accessCodeRepository.save(code);
 		return code;
 	}
+	protected DomainAccessCode createRandomAccessCode() {
+		long value = resourceCount ++;
+	    DomainAccessCode code =  new DomainAccessCode();
+		code.setCode("1234" + value);
+		code = accessCodeRepository.save(code);
+		return code;
+	}
 	 
 	protected Field createField(String name, String type) {
 		   Field  f = new Field();
@@ -182,6 +189,14 @@ public abstract class AbstractResource {
 			u.setProperties(properties);
 		}
 		return userRepository.save(u);
+	}
+	
+	protected Domain createDomain(){
+		long count = resourceCount ++;
+		Domain d = new Domain();
+		d.setCode("1234" + count);
+		d.setName("domain" + count);
+		return domainRepository.save(d);
 	}
 	
 	protected RoleMapping createRoleMapping(Affiliate affiliate, Role r){

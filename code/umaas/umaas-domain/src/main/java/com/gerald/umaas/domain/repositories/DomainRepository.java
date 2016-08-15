@@ -5,13 +5,8 @@
  */
 package com.gerald.umaas.domain.repositories;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.gerald.umaas.domain.entities.Domain;
 
@@ -22,10 +17,6 @@ import com.gerald.umaas.domain.entities.Domain;
 
 @RepositoryRestResource
 public interface DomainRepository extends ResourceRepository<Domain, String>{
-    @RestResource(exported = false)
-    public List<Domain> getDomainByCode(String code);
-    public Page<Domain> getDomainByCode(@Param("code") String code, Pageable p );
-    @RestResource(exported = false)
-    public List<Domain> getDomainByName(String domain);
-    public Page<Domain> getDomainByName(@Param("name") String domain, Pageable p);
+    public Domain findByCode(@Param("code") String code );
+    public Domain findByName(@Param("name") String name);
 }

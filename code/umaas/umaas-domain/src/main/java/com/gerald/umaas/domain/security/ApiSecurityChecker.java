@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gerald.umaas.domain.entities.AppUser;
-import com.gerald.umaas.domain.entities.UserField;
+import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
+import com.gerald.umaas.domain.entities.UserField;
+import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
 
 @Component
@@ -26,6 +28,8 @@ public class ApiSecurityChecker {
 	private String basePath;
 	@Autowired
 	private ObjectMapper objectMapper;
+	@Autowired
+	private DomainRepository domainRepository;
 	
 	public boolean check(Authentication auth, HttpServletRequest request){
 		try{
@@ -50,6 +54,26 @@ public class ApiSecurityChecker {
 		System.out.println(entityId);
 		Priviledge priviledge = getPriviledge(request);
 		if(entityId.equals("search")){
+			if(entityType.equals(Domain.class.getSimpleName())){
+				String searchCommand = segments[2];
+				System.out.println("Search command " + searchCommand );
+				String domainId = null;
+				if(searchCommand.equals("findByCode")){
+					String code = request.getParameter("code");
+					if(code != null){
+						domainId = domainRepository.findByCode(code).getId();		
+					}
+				}else if(searchCommand.equals("findByName")){
+					String name = request.getParameter("name");
+					if( name!= null){
+						domainId = domainRepository.findByName(name).getId();		
+					}
+				}
+				if(domainId == null)
+					return true;
+				else
+					return permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge);
+			}
 			String domainId = request.getParameter("domain");
 			if(domainId == null){
 				domainId = request.getParameter("domainId");

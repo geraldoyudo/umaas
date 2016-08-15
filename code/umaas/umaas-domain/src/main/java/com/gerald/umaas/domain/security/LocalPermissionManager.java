@@ -2,8 +2,6 @@ package com.gerald.umaas.domain.security;
 
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -88,7 +86,7 @@ public class LocalPermissionManager implements PermissionManager{
 			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
 			return false;
 			
-		}else if(Resource.class.isAssignableFrom(Entity.class)){
+		}else if(Resource.class.isAssignableFrom(entityClass)){
 			System.out.println("Evaluating resource");
 			if(checkEntry(accessCode, entityType, entityId, priviledge)) return true;
 			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
