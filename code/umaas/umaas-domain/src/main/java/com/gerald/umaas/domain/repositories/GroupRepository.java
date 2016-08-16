@@ -5,14 +5,17 @@
  */
 package com.gerald.umaas.domain.repositories;
 
-import com.gerald.umaas.domain.entities.Group;
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import com.gerald.umaas.domain.entities.Domain;
-import java.util.List;
+import com.gerald.umaas.domain.entities.Group;
 
 /**
  *
  * @author Dev7
  */
 public interface GroupRepository extends DomainResourceRepository<Group, String>{
-    public Group findByDomainAndName(Domain domain, String name);
+    public Group findByDomainIdAndName(String domain, String name);
+    @RestResource(exported = false)
+	public Group findByDomainAndName(Domain d, String groupName);
 }

@@ -31,5 +31,4 @@ public interface UserRepository extends DomainResourceRepository<AppUser, String
     public Page<AppUser> findByEmailAndDomain(String email, String domain, Pageable p);
     @RestResource(exported = false)
     public Page<AppUser> findByPhoneNumberAndDomain(String phoneNumber, String domain, Pageable p);
-  
 }

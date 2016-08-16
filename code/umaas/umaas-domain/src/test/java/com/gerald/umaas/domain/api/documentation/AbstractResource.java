@@ -36,6 +36,8 @@ import com.gerald.umaas.domain.entities.Field;
 import com.gerald.umaas.domain.entities.Group;
 import com.gerald.umaas.domain.entities.Role;
 import com.gerald.umaas.domain.entities.RoleMapping;
+import com.gerald.umaas.domain.entities.UserField;
+import com.gerald.umaas.domain.entities.UserGroup;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeMappingRepository;
 import com.gerald.umaas.domain.repositories.DomainAccessCodeRepository;
 import com.gerald.umaas.domain.repositories.DomainRepository;

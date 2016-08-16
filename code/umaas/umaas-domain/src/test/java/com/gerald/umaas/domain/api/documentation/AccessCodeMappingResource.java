@@ -122,21 +122,21 @@ public class AccessCodeMappingResource extends AbstractResource{
         		.contentType(MediaType.APPLICATION_JSON)
         		.content(mapper.writeValueAsString(domain)))
                 .andExpect(status().isOk())
-                .andDo(document("put-access-code-example",pathParameters(
+                .andDo(document("put-access-code-mapping-example",pathParameters(
                 		parameterWithName("accessCodeMappingId").description("The access code mapping id"))
                 		
                 		));
     }
     
     @Test
-    public void deleteAccessCodes() throws Exception {
+    public void deleteAccessCodeMapping() throws Exception {
 		initializeListOfAccessCodes();
 		DomainAccessCodeMapping d = codeMappingRepository.findAll().get(0);
 		createMapping(DomainAccessCodeMapping.class.getSimpleName(),d.getId(),Priviledge.DELETE); 
 		this.mvc.perform(RestDocumentationRequestBuilders.delete("/domain/domainAccessCodeMappings/{accessCodeMappingId}", d.getId()).accept(APPLICATION_HAL)
         		.headers(headers))
                 .andExpect(status().isNoContent())
-                .andDo(document("delete-access-code-example",pathParameters(
+                .andDo(document("delete-access-code-mapping-example",pathParameters(
                 		parameterWithName("accessCodeMappingId").description("The access code mapping id")) ));
     }
     private void initializeListOfAccessCodes(){
