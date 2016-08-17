@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.gerald.umaas.domain.security.MyCorsFilter;
 import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
 
 
@@ -26,6 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	      registration.addUrlPatterns("/domain/*");
 	      registration.setOrder(-100);
 	      return registration;
+	    }
+	 @Bean
+	    public FilterRegistrationBean corFilterRegistration() {
+	      FilterRegistrationBean corFilterReg = new FilterRegistrationBean();
+	      corFilterReg.setFilter(new MyCorsFilter());
+	      corFilterReg.addUrlPatterns("/*");
+	      corFilterReg.setOrder(-500);
+	      return corFilterReg;
 	    }
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

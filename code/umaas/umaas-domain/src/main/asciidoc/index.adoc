@@ -66,14 +66,14 @@ use of HTTP status codes.
 = Resources
 
 [[resources-index]]
-== Getting Api Index
-A 'Get' request will show you all the resources that UmaaS has.
+== Viewing Index
+A 'GET' http request will show you all the resources that UmaaS has.
   
-=== Example request
+===  An Example request
 
 include::{snippets}/index/curl-request.adoc[]
   
-=== Example reponse
+=== An Example response
 
 include::{snippets}/index/http-response.adoc[]
 
@@ -87,12 +87,12 @@ The Domain resource is used to create, modify and list domains. The client must 
 
 [[resources-domain-get-all]]
 === Getting domains
-A 'GET' request will return all domains.
+A 'GET' http request will return all domains in the resource.
 
-==== Example request
+====  An Example request
 include::{snippets}/get-domains-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-domains-example/http-response.adoc[]
 
 ==== Links in Response
@@ -101,44 +101,44 @@ include::{snippets}/get-domains-example/links.adoc[]
 
 [[resources-domain-get-domain-by-id]]
 === Getting A domain by ID
-A 'GET' request a domain with the specified id.
+A 'GET' http requests a domain with the id specified.
 
 include::{snippets}/get-domain-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-domain-example/http-response.adoc[]
 
 [[resources-domain-patch-domain]]
 === Partially updating a domain
-A 'PATCH' request will partially update a specific domain.
+A 'PATCH' http request will partially update a specific domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-domain-example/http-response.adoc[]
 
 [[resources-domain-put-domain]]
 === Fully updating a domain
-A 'PUT' request will full update a specific domain. Fields that are not present will be marked as null;
+A 'PUT' http request will fully update a specific domain. Fields that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-domain-example/http-response.adoc[]
 
 [[resources-domain-delete-domain]]
 === Removing a Group
-A 'DELETE' request will permanently delete a domain from a domain;
+A 'DELETE' http request will permanently delete a group from a domain;
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-domain-example/http-response.adoc[]
 
 [[resources-user]]
@@ -147,12 +147,12 @@ The AppUser resource is used to create, modify and list users. The client must h
 
 [[resources-user-get-all]]
 === Getting Users Across Domains
-A 'GET' request will return all users regardless of domain.
+A 'GET' http request will return all users regardless of domain.
 
-==== Example request
+====  An Example request
 include::{snippets}/get-users-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-users-example/http-response.adoc[]
 
 ==== Links in Response
@@ -161,12 +161,12 @@ include::{snippets}/get-users-example/links.adoc[]
 
 [[resources-user-get-by-domain]]
 === Getting Users in a Domain
-A 'GET' request will all users in a domain.
+A 'GET' http request will select all users in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-users-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-users-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -175,24 +175,24 @@ include::{snippets}/get-users-by-domain-example/links.adoc[]
 
 [[resources-user-get-user-by-id]]
 === Getting A user by ID
-A 'GET' request a user with the specified id.
+A 'GET' http requests a user with the id specified.
 
 include::{snippets}/get-user-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-user-example/http-response.adoc[]
 
 [[resources-user-get-user-by-domain-and-external-id]]
 === Getting a User by Domain and External Id
-A 'GET' request will get a specific user
+A 'GET' http request will get a specific user
 
-==== Example request
+==== An Example request
 include::{snippets}/get-user-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-user-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -201,32 +201,32 @@ include::{snippets}/get-user-by-domain-and-external-id-example/links.adoc[]
 
 [[resources-user-patch-user]]
 === Partially updating a user
-A 'PATCH' request will partially update a specific user.
+A 'PATCH' http request will partially update a specific user.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-user-example/http-response.adoc[]
 
 [[resources-user-put-user]]
 === Fully updating a user
-A 'PUT' request will full update a specific user. Fields that are not present will be marked as null;
+A 'PUT' http request will fully update a specific user. Fields that are not present will be marked as null;
 
-==== Example request
+====  An Example request
 include::{snippets}/put-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-user-example/http-response.adoc[]
 
 [[resources-user-delete-user]]
 === Removing Users
-A 'DELETE' request will delete the user from the domain. This will also delete resources associated to the user.
+A 'DELETE' http request will delete the user from the domain. This will also delete resources associated to the user.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== Example response
 include::{snippets}/delete-user-example/http-response.adoc[]
 
 [[resources-group]]
@@ -235,12 +235,12 @@ The Group resource is used to create, modify and list groups. The client must ha
 
 [[resources-group-get-all]]
 === Getting groups Across Domains
-A 'GET' request will return all groups regardless of domain.
+A 'GET' http request will return all groups regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-groups-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-groups-example/http-response.adoc[]
 
 ==== Links in Response
@@ -249,12 +249,12 @@ include::{snippets}/get-groups-example/links.adoc[]
 
 [[resources-group-get-by-domain]]
 === Getting groups in a Domain
-A 'GET' request will all groups in a domain.
+A 'GET' http request will list all groups in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-groups-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-groups-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -263,24 +263,24 @@ include::{snippets}/get-groups-by-domain-example/links.adoc[]
 
 [[resources-group-get-group-by-id]]
 === Getting A group by ID
-A 'GET' request a group with the specified id.
+A 'GET' http requests a group for the specified id and lists them out.
 
 include::{snippets}/get-group-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-group-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-group-example/http-response.adoc[]
 
 [[resources-group-get-group-by-domain-and-external-id]]
 === Getting a group by Domain and External Id
-A 'GET' request will get a specific group
+A 'GET' http request will get a specific group by specifying the Domain and External Id
 
-==== Example request
+==== An Example request
 include::{snippets}/get-groups-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-groups-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -289,32 +289,32 @@ include::{snippets}/get-groups-by-domain-and-external-id-example/links.adoc[]
 
 [[resources-group-patch-group]]
 === Partially updating a group
-A 'PATCH' request will partially update a specific group.
+A 'PATCH' http request will partially update a group.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-group-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-group-example/http-response.adoc[]
 
 [[resources-group-put-group]]
 === Fully updating a group
-A 'PUT' request will full update a specific group. Fields that are not present will be marked as null;
+A 'PUT' http request will fully update a group. Fields that are not present will be marked as null;
 
-==== Example request
+====  An Example request
 include::{snippets}/put-group-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-group-example/http-response.adoc[]
 
 [[resources-group-delete-group]]
 === Removing a Group
-A 'DELETE' request will permanently delete a group from a domain;
+A 'DELETE' http request will permanently delete a group from a domain;
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-group-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-group-example/http-response.adoc[]
 
 [[resources-field]]
@@ -323,12 +323,12 @@ The Group resource is used to create, modify and list fields. The client must ha
 
 [[resources-field-get-all]]
 === Getting Fields Across Domains
-A 'GET' request will return all fields regardless of domain.
+A 'GET' http request will return all fields regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-fields-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-fields-example/http-response.adoc[]
 
 ==== Links in Response
@@ -337,12 +337,12 @@ include::{snippets}/get-fields-example/links.adoc[]
 
 [[resources-field-get-by-domain]]
 === Getting Fields in a Domain
-A 'GET' request will all fields in a domain.
+A 'GET' http request will all fields in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-fields-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-fields-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -351,24 +351,24 @@ include::{snippets}/get-fields-by-domain-example/links.adoc[]
 
 [[resources-field-get-field-by-id]]
 === Getting A Field by ID
-A 'GET' request a field with the specified id.
+A 'GET' http request returns a field with the specified id.
 
 include::{snippets}/get-field-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-field-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-field-example/http-response.adoc[]
 
 [[resources-field-get-field-by-domain-and-external-id]]
 === Getting a Field by Domain and External Id
-A 'GET' request will get a specific field
+A 'GET' http request will get a specific field
 
-==== Example request
+==== An Example request
 include::{snippets}/get-fields-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-fields-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -377,32 +377,32 @@ include::{snippets}/get-fields-by-domain-and-external-id-example/links.adoc[]
 
 [[resources-field-patch-field]]
 === Partially updating a Field
-A 'PATCH' request will partially update a specific field.
+A 'PATCH' http request will partially update a specific field.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-field-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-field-example/http-response.adoc[]
 
 [[resources-field-put-field]]
 === Fully updating a Field
-A 'PUT' request will full update a specific field. Fields that are not present will be marked as null;
+A 'PUT' http request will fully update a specific field. Fields that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-field-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-field-example/http-response.adoc[]
 
 [[resources-field-delete-field]]
 === Removing a Field
-A 'DELETE' request will permanently remove a field from the domain. All properties relating to the field will be deleted.
+A 'DELETE' http request will permanently remove a field from the domain. All properties relating to the field will be deleted.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-field-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-field-example/http-response.adoc[]
 
 [[resources-role]]
@@ -411,12 +411,12 @@ The Group resource is used to create, modify and list roles. The client must hav
 
 [[resources-role-get-all]]
 === Getting Roles Across Domains
-A 'GET' request will return all roles regardless of domain.
+A 'GET' http request will return all roles regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roles-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roles-example/http-response.adoc[]
 
 ==== Links in Response
@@ -425,12 +425,12 @@ include::{snippets}/get-roles-example/links.adoc[]
 
 [[resources-role-get-by-domain]]
 === Getting Roles in a Domain
-A 'GET' request will all roles in a domain.
+A 'GET' http request will return all roles in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roles-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roles-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -439,24 +439,24 @@ include::{snippets}/get-roles-by-domain-example/links.adoc[]
 
 [[resources-role-get-role-by-id]]
 === Getting A Role by ID
-A 'GET' request a role with the specified id.
+A 'GET' http requests a role for the specified id.
 
 include::{snippets}/get-role-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-role-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-role-example/http-response.adoc[]
 
 [[resources-role-get-role-by-domain-and-external-id]]
 === Getting a Role by Domain and External Id
-A 'GET' request will get a specific role
+A 'GET' http request will get a specific role
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roles-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roles-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -465,32 +465,32 @@ include::{snippets}/get-roles-by-domain-and-external-id-example/links.adoc[]
 
 [[resources-role-patch-role]]
 === Partially updating a Role
-A 'PATCH' request will partially update a specific role.
+A 'PATCH' http request will partially update a specific role.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-role-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-role-example/http-response.adoc[]
 
 [[resources-role-put-role]]
 === Fully updating a Role
-A 'PUT' request will full update a specific role. Roles that are not present will be marked as null;
+A 'PUT' http request will full update a specific role. Roles that are not present will be marked as null;
 
 ==== Example request
 include::{snippets}/put-role-example/curl-request.adoc[]
   
-==== Example reponse
+==== Example response
 include::{snippets}/put-role-example/http-response.adoc[]
 
 [[resources-role-delete-role]]
 === Removing a role
-A 'DELETE' request will remove a role from a domain. All associations with the role are also removed.
+A 'DELETE' http request will remove a role from a domain. All associations with the role are also removed.
 
 ==== Example request
 include::{snippets}/delete-role-example/curl-request.adoc[]
   
-==== Example reponse
+==== Example response
 include::{snippets}/delete-role-example/http-response.adoc[]
 
 [[resources-userField]]
@@ -499,12 +499,12 @@ The User-Fields resource is used to create, modify and list user's custom fields
 
 [[resources-userField-get-all]]
 === Getting User Fields Across Domains
-A 'GET' request will return all user-fields regardless of domain.
+A 'GET' http request will return all user-fields regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userFields-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userFields-example/http-response.adoc[]
 
 ==== Links in Response
@@ -513,12 +513,12 @@ include::{snippets}/get-userFields-example/links.adoc[]
 
 [[resources-userField-get-by-domain]]
 === Getting User Fields in a Domain
-A 'GET' request will all userFields in a domain.
+A 'GET' http request will return all userFields in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userFields-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userFields-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -527,24 +527,24 @@ include::{snippets}/get-userFields-by-domain-example/links.adoc[]
 
 [[resources-userField-get-userField-by-id]]
 === Getting A User Field by ID
-A 'GET' request a userField with the specified id.
+A 'GET' http requests a userField with the specified id.
 
 include::{snippets}/get-userField-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userField-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userField-example/http-response.adoc[]
 
 [[resources-userField-get-by-user]]
 === Getting User Fields in a Domain
-A 'GET' request will all userFields in a domain.
+A 'GET' http request will return all userFields in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userFields-by-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userFields-by-user-example/http-response.adoc[]
 
 ==== Links in Response
@@ -553,12 +553,12 @@ include::{snippets}/get-userFields-by-user-example/links.adoc[]
 
 [[resources-userField-get-userField-by-domain-and-external-id]]
 === Getting a User Field by Domain and External Id
-A 'GET' request will get a specific userField
+A 'GET' http request will return a specific userField
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userFields-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userFields-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -567,12 +567,12 @@ include::{snippets}/get-userFields-by-domain-and-external-id-example/links.adoc[
 
 [[resources-userField-get-by-user-and-field]]
 === Getting User Fields by user and field id
-A 'GET' request will a specific user field given a user and field.
+A 'GET' http request will return a specific user field given a user and field.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userFields-by-user-and-field-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userFields-by-user-and-field-example/http-response.adoc[]
 
 ==== Links in Response
@@ -581,32 +581,32 @@ include::{snippets}/get-userFields-by-user-and-field-example/links.adoc[]
 
 [[resources-userField-patch-userField]]
 === Partially updating a User Field
-A 'PATCH' request will partially update a specific userField.
+A 'PATCH' http request will partially update a specific userField.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-userField-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-userField-example/http-response.adoc[]
 
 [[resources-userField-put-userField]]
 === Fully updating a User Field
-A 'PUT' request will full update a specific userField. User Fields that are not present will be marked as null;
+A 'PUT' http request will fully update a specific userField. User Fields that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-userField-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-userField-example/http-response.adoc[]
 
 [[resources-userField-delete-userField]]
 === Removing a userField
-A 'DELETE' request will remove a userField from a domain. All associations with the userField are also removed.
+A 'DELETE' http request will remove a userField from a domain. All associations with the userField are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-userField-example/curl-request.adoc[]
   
-==== Example reponse
+====  An Example response
 include::{snippets}/delete-userField-example/http-response.adoc[]
 
 [[resources-userGroup]]
@@ -615,12 +615,12 @@ The User-Groups resource is used to create, modify and list user's custom groups
 
 [[resources-userGroup-get-all]]
 === Getting User Groups Across Domains
-A 'GET' request will return all user-groups regardless of domain.
+A 'GET' http request will return all user-groups regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userGroups-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userGroups-example/http-response.adoc[]
 
 ==== Links in Response
@@ -629,12 +629,12 @@ include::{snippets}/get-userGroups-example/links.adoc[]
 
 [[resources-userGroup-get-by-domain]]
 === Getting User Groups in a Domain
-A 'GET' request will all userGroups in a domain.
+A 'GET' http request will return all userGroups in a domain.
 
-==== Example request
+====  An Example request
 include::{snippets}/get-userGroups-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+====  An Example response
 include::{snippets}/get-userGroups-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -643,12 +643,12 @@ include::{snippets}/get-userGroups-by-domain-example/links.adoc[]
 
 [[resources-userGroup-get-by-user]]
 === Getting User-Groups
-A 'GET' request will all user-group relations belonging to a user.
+A 'GET' http request will return all user-group relations belonging to a user.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userGroups-by-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userGroups-by-user-example/http-response.adoc[]
 
 ==== Links in Response
@@ -657,24 +657,24 @@ include::{snippets}/get-userGroups-by-user-example/links.adoc[]
 
 [[resources-userGroup-get-userGroup-by-id]]
 === Getting A User Group by ID
-A 'GET' request a userGroup with the specified id.
+A 'GET' http request returns a userGroup with the specified id.
 
 include::{snippets}/get-userGroup-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userGroup-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userGroup-example/http-response.adoc[]
 
 [[resources-userGroup-get-userGroup-by-domain-and-external-id]]
 === Getting a User Group by Domain and External Id
-A 'GET' request will get a specific userGroup
+A 'GET' http request will return a specific userGroup
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userGroups-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-userGroups-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -683,12 +683,12 @@ include::{snippets}/get-userGroups-by-domain-and-external-id-example/links.adoc[
 
 [[resources-userGroup-get-by-user-and-group]]
 === Getting User Groups in a Domain
-A 'GET' request will all userGroups in a domain.
+A 'GET' http request will return all userGroups in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-userGroups-by-user-and-group-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example reponse
 include::{snippets}/get-userGroups-by-user-and-group-example/http-response.adoc[]
 
 ==== Links in Response
@@ -697,32 +697,32 @@ include::{snippets}/get-userGroups-by-user-and-group-example/links.adoc[]
 
 [[resources-userGroup-patch-userGroup]]
 === Partially updating a User Group
-A 'PATCH' request will partially update a specific userGroup.
+A 'PATCH' http request will partially update a specific userGroup.
 
-==== Example request
+====  An Example request
 include::{snippets}/patch-userGroup-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-userGroup-example/http-response.adoc[]
 
 [[resources-userGroup-put-userGroup]]
 === Fully updating a User Group
-A 'PUT' request will full update a specific userGroup. User Groups that are not present will be marked as null;
+A 'PUT' http request will fully update a specific userGroup. User Groups that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-userGroup-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-userGroup-example/http-response.adoc[]
 
 [[resources-userGroup-delete-userGroup]]
 === Removing a userGroup
-A 'DELETE' request will remove a userGroup from a domain. All associations with the userGroup are also removed.
+A 'DELETE' http request will remove a userGroup from a domain. All associations with the userGroup are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-userGroup-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-userGroup-example/http-response.adoc[]
 
 [[resources-roleMapping]]
@@ -731,12 +731,12 @@ The Role Mappings resource is used to create, modify and list user's custom Role
 
 [[resources-roleMapping-get-all]]
 === Getting Role Mappings Across Domains
-A 'GET' request will return all Role Mappings regardless of domain.
+A 'GET' http request will return all Role Mappings regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMappings-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMappings-example/http-response.adoc[]
 
 ==== Links in Response
@@ -745,12 +745,12 @@ include::{snippets}/get-roleMappings-example/links.adoc[]
 
 [[resources-roleMapping-get-by-domain]]
 === Getting Role Mappings in a Domain
-A 'GET' request will all roleMappings in a domain.
+A 'GET' http request will return all roleMappings in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMappings-by-domain-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMappings-by-domain-example/http-response.adoc[]
 
 ==== Links in Response
@@ -759,12 +759,12 @@ include::{snippets}/get-roleMappings-by-domain-example/links.adoc[]
 
 [[resources-roleMapping-get-by-key]]
 === Getting Role Mappings
-A 'GET' request will all user-Role relations belonging to a user.
+A 'GET' http request will return all user-Role relations belonging to a user.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMappings-by-user-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMappings-by-user-example/http-response.adoc[]
 
 ==== Links in Response
@@ -773,24 +773,24 @@ include::{snippets}/get-roleMappings-by-user-example/links.adoc[]
 
 [[resources-roleMapping-get-roleMapping-by-id]]
 === Getting A Role Mapping by ID
-A 'GET' request a roleMapping with the specified id.
+A 'GET' http request will return a roleMapping with the specified id.
 
 include::{snippets}/get-roleMapping-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMapping-example/http-response.adoc[]
 
 [[resources-roleMapping-get-roleMapping-by-domain-and-external-id]]
 === Getting a Role Mapping by Domain and External Id
-A 'GET' request will get a specific roleMapping
+A 'GET' http request will return a specific roleMapping
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMappings-by-domain-and-external-id-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMappings-by-domain-and-external-id-example/http-response.adoc[]
 
 ==== Links in Response
@@ -799,12 +799,12 @@ include::{snippets}/get-roleMappings-by-domain-and-external-id-example/links.ado
 
 [[resources-roleMapping-get-by-user-and-Role]]
 === Getting Role Mappings by key and role id
-A 'GET' request will all roleMappings in a domain.
+A 'GET' http request will return all roleMappings in a domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-roleMappings-by-user-and-Role-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-roleMappings-by-user-and-Role-example/http-response.adoc[]
 
 ==== Links in Response
@@ -815,30 +815,30 @@ include::{snippets}/get-roleMappings-by-user-and-Role-example/links.adoc[]
 === Partially updating a Role Mapping
 A 'PATCH' request will partially update a specific roleMapping.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-roleMapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-roleMapping-example/http-response.adoc[]
 
 [[resources-roleMapping-put-roleMapping]]
 === Fully updating a Role Mapping
-A 'PUT' request will full update a specific roleMapping. Role Mappings that are not present will be marked as null;
+A 'PUT' http request will fully update a specific roleMapping. Role Mappings that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-roleMapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-roleMapping-example/http-response.adoc[]
 
 [[resources-roleMapping-delete-roleMapping]]
 === Removing a roleMapping
-A 'DELETE' request will remove a roleMapping from a domain. All associations with the roleMapping are also removed.
+A 'DELETE' http request will remove a roleMapping from a domain. All associations with the roleMapping are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-roleMapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-roleMapping-example/http-response.adoc[]
 
 [[resources-access-code]]
@@ -847,12 +847,12 @@ The User-Roles resource is used to create, modify and list user's custom roles. 
 
 [[resources-access-code-get-all]]
 === Getting Role Mappings Across Domains
-A 'GET' request will return all user-roles regardless of domain.
+A 'GET' http request will return all user-roles regardless of domain.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-access-codes-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-codes-example/http-response.adoc[]
 
 ==== Links in Response
@@ -861,44 +861,44 @@ include::{snippets}/get-access-codes-example/links.adoc[]
 
 [[resources-access-code-get-access-code-by-id]]
 === Getting A Role Mappings by ID
-A 'GET' request a access-code with the specified id.
+A 'GET' http request a access-code with the specified id.
 
 include::{snippets}/get-access-code-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-access-code-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-code-example/http-response.adoc[]
 
 [[resources-access-code-patch-access-code]]
 === Partially updating a Role Mappings
-A 'PATCH' request will partially update a specific access-code.
+A 'PATCH' http request will partially update a specific access-code.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-access-code-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-access-code-example/http-response.adoc[]
 
 [[resources-access-code-put-access-code]]
 === Fully updating a Role Mappings
-A 'PUT' request will full update a specific access-code. Role Mappingss that are not present will be marked as null;
+A 'PUT' request will fully update a specific access-code. Role Mappingss that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-access-code-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-access-code-example/http-response.adoc[]
 
 [[resources-access-code-delete-access-code]]
 === Removing a access-code
-A 'DELETE' request will remove a access-code from a domain. All associations with the access-code are also removed.
+A 'DELETE' http request will remove a access-code from a domain. All associations with the access-code are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-access-code-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-access-code-example/http-response.adoc[]
 
 [[resources-access-code-mapping]]
@@ -907,12 +907,12 @@ The Access Code Mappings resource is used to create, modify and list access code
 
 [[resources-access-code-mapping-get-all]]
 === Getting Role Mappings Across Domains
-A 'GET' request will return all access code mappings.
+A 'GET' http request will return all access code mappings.
 
-==== Example request
+==== An Example request
 include::{snippets}/get-access-code-mappings-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-code-mappings-example/http-response.adoc[]
 
 ==== Links in Response
@@ -921,44 +921,44 @@ include::{snippets}/get-access-code-mappings-example/links.adoc[]
 
 [[resources-access-code-mapping-get-access-code-mapping-by-id]]
 === Getting A Role Mappings by ID
-A 'GET' request a access-code-mapping with the specified id.
+A 'GET' http request returns a access-code-mapping with the specified id.
 
 include::{snippets}/get-access-code-mapping-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-patch-access-code-mapping]]
 === Partially updating a Role Mappings
-A 'PATCH' request will partially update a specific access-code-mapping.
+A 'PATCH' http request will partially update a specific access-code-mapping.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/patch-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-put-access-code-mapping]]
 === Fully updating a Role Mappings
-A 'PUT' request will full update a specific access-code-mapping. Role Mappingss that are not present will be marked as null;
+A 'PUT' http request will fully update a specific access-code-mapping. Role Mappingss that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-delete-access-code-mapping]]
 === Removing a access-code-mapping
-A 'DELETE' request will remove a access-code-mapping from a domain. All associations with the access-code-mapping are also removed.
+A 'DELETE' http request will remove a access-code-mapping from a domain. All associations with the access-code-mapping are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping]]
@@ -967,12 +967,12 @@ The User-Roles resource is used to create, modify and list user's custom roles. 
 
 [[resources-access-code-mapping-get-all]]
 === Getting Role Mappingss Across Domains
-A 'GET' request will return all user-roles regardless of domain.
+A 'GET' http request will return all user-roles regardless of domain.
 
-==== Example request
+====  An Example request
 include::{snippets}/get-access-code-mappings-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-code-mappings-example/http-response.adoc[]
 
 ==== Links in Response
@@ -981,42 +981,42 @@ include::{snippets}/get-access-code-mappings-example/links.adoc[]
 
 [[resources-access-code-mapping-get-access-code-mapping-by-id]]
 === Getting A Role Mappings by ID
-A 'GET' request a access-code-mapping with the specified id.
+A 'GET' http request returns a access-code-mapping with the specified id.
 
 include::{snippets}/get-access-code-mapping-example/path-parameters.adoc[]
 
-==== Example request
+==== An Example request
 include::{snippets}/get-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/get-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-patch-access-code-mapping]]
 === Partially updating a Role Mappings
-A 'PATCH' request will partially update a specific access-code-mapping.
+A 'PATCH' http request will partially update a specific access-code-mapping.
 
-==== Example request
+==== An Example request
 include::{snippets}/patch-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== Example response
 include::{snippets}/patch-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-put-access-code-mapping]]
 === Fully updating a Role Mappings
-A 'PUT' request will full update a specific access-code-mapping. Role Mappingss that are not present will be marked as null;
+A 'PUT' http request will fully update a specific access-code-mapping. Role Mappingss that are not present will be marked as null;
 
-==== Example request
+==== An Example request
 include::{snippets}/put-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/put-access-code-mapping-example/http-response.adoc[]
 
 [[resources-access-code-mapping-delete-access-code-mapping]]
 === Removing a access-code-mapping
-A 'DELETE' request will remove a access-code-mapping from a domain. All associations with the access-code-mapping are also removed.
+A 'DELETE' http request will remove a access-code-mapping from a domain. All associations with the access-code-mapping are also removed.
 
-==== Example request
+==== An Example request
 include::{snippets}/delete-access-code-mapping-example/curl-request.adoc[]
   
-==== Example reponse
+==== An Example response
 include::{snippets}/delete-access-code-mapping-example/http-response.adoc[]

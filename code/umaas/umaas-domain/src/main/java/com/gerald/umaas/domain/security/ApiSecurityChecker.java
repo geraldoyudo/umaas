@@ -124,7 +124,7 @@ public class ApiSecurityChecker {
 		}
 		System.out.println(priviledge);
 		return permissionManager.hasPermission(entityType, entityId, priviledge);
-		}catch(ArrayIndexOutOfBoundsException | NullPointerException ex){
+		}catch(ArrayIndexOutOfBoundsException | NullPointerException | RequestNotSupportedException ex){
 			return true;
 		}
 	}
@@ -155,7 +155,7 @@ public class ApiSecurityChecker {
 			case "patch": return Priviledge.UPDATE;
 			case "delete": return Priviledge.DELETE;
 			case "put": return Priviledge.UPDATE;
-			default: return Priviledge.VIEW;
+			default: throw new RequestNotSupportedException();
 		}
 	}
 	private HttpServletRequest getAsHttpRequest(ServletRequest request)
