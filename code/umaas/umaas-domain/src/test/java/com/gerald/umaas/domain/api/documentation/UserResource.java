@@ -129,24 +129,7 @@ public class UserResource extends AbstractResource{
     	this.mvc.perform( post("/domain/appUsers").accept(APPLICATION_HAL)
     			.contentType(MediaType.APPLICATION_JSON)
     			.content(json).headers(headers))
-    	.andExpect(status().isCreated())
-    	.andDo(document("add-user-example", responseFields(
-    			fieldWithPath("username").description("the user's username"),
-    			fieldWithPath("password").description("the user's password"),
-    			fieldWithPath("email").description("the user's email"),
-    			fieldWithPath("phoneNumber").description("the user's phoneNumber"),
-    			fieldWithPath("properties").description("an object holding custom properties specified by the domain"),
-    			fieldWithPath("meta").description("additional meta-data for the user"),
-    			fieldWithPath("externalId").description("A fully customizable, unique field user id that can be used for search queries"),
-    			fieldWithPath("roles").description("Domain defined roles that the user has."),
-    			fieldWithPath("groups").description("Domain defined groups that the user is assigned to."),
-    			fieldWithPath("emailVerified").description("Whether user's email has been verified"),
-    			fieldWithPath("phoneNumberVerified").description("Whether user's phone number has been verified"),
-    			fieldWithPath("_links").description("Resource links"))
-    			, links(
-    			linkWithRel("self").description("link to resource"),
-    			linkWithRel("appUser").description("same as self"),
-    			linkWithRel("domain").description("link to the user's domain"))));
+    	.andExpect(status().isCreated());
     }
     @Test
     public void updateUser() throws Exception {
