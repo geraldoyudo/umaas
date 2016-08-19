@@ -64,6 +64,60 @@ public class UserResource extends AbstractResource{
                 		linkWithRel("domain").description("Link to the user's domain"))));
     }
     @Test
+    public void getUserByUsernameAndDomain() throws Exception {
+    	initializeListOfUsers();
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.VIEW); 
+		AppUser u = userRepository.findAll().get(0);
+		this.mvc.perform(get("/domain/appUsers/search/findByUsernameAndDomain").accept(APPLICATION_HAL)
+        		.headers(headers)
+        		.param("domain", domain.getId())
+        		.param("username", u.getUsername()))
+                .andExpect(status().isOk())
+                .andDo(document("get-user-by-username-and-domain-example",selfLink.and(
+                		linkWithRel("appUser").description("Link to the user"),
+                		linkWithRel("domain").description("Link to the user's domain"))));
+    }
+    
+    @Test
+    public void getUserByEmailAndDomain() throws Exception {
+    	initializeListOfUsers();
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.VIEW); 
+		AppUser u = userRepository.findAll().get(0);
+		this.mvc.perform(get("/domain/appUsers/search/findByEmailAndDomain").accept(APPLICATION_HAL)
+        		.headers(headers)
+        		.param("domain", domain.getId())
+        		.param("email", u.getEmail()))
+                .andExpect(status().isOk())
+                .andDo(document("get-user-by-email-and-domain-example",selfLink.and(
+                		linkWithRel("appUser").description("Link to the user"),
+                		linkWithRel("domain").description("Link to the user's domain"))));
+    }
+    
+    @Test
+    public void getUserByPhoneNumberAndDomain() throws Exception {
+    	initializeListOfUsers();
+		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.VIEW); 
+		AppUser u = userRepository.findAll().get(0);
+		this.mvc.perform(get("/domain/appUsers/search/findByPhoneNumberAndDomain").accept(APPLICATION_HAL)
+        		.headers(headers)
+        		.param("domain", domain.getId())
+        		.param("phoneNumber", u.getPhoneNumber()))
+                .andExpect(status().isOk())
+                .andDo(document("get-user-by-phoneNumber-and-domain-example",selfLink.and(
+                		linkWithRel("appUser").description("Link to the user"),
+                		linkWithRel("domain").description("Link to the user's domain"))));
+    }
+    
+    @Test
+    public void getUserByPhoneNumberAndDomain2() throws Exception {
+    	initializeListOfUsers();
+		createMapping("ALL","ALL",Priviledge.VIEW); 
+		AppUser u = userRepository.findAll().get(0);
+		this.mvc.perform(get("/domain/appUsers/search/findByPhoneNumberAndDomain").accept(APPLICATION_HAL)
+        		.headers(headers))
+                .andExpect(status().isNotFound());
+    }
+    @Test
     public void getUser() throws Exception {
 		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.VIEW); 
 		initializeListOfUsers();

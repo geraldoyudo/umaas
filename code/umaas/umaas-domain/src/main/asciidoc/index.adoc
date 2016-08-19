@@ -259,6 +259,59 @@ include::{snippets}/patch-user-example/curl-request.adoc[]
 ==== An Example response
 include::{snippets}/patch-user-example/http-response.adoc[]
 
+[[resources-user-get-user-by-username-and-domain]]
+=== Getting a User by username and domain
+A 'GET' http request will get a specific user by username
+
+==== An Example request
+include::{snippets}/get-user-by-username-and-domain-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/get-user-by-username-and-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-user-by-username-and-domain-example/links.adoc[]
+
+[[resources-user-get-user-by-email-and-domain]]
+=== Getting a User by email and domain
+A 'GET' http request will get a specific user by email
+
+==== An Example request
+include::{snippets}/get-user-by-email-and-domain-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/get-user-by-email-and-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-user-by-email-and-domain-example/links.adoc[]
+
+[[resources-user-get-user-by-phoneNumber-and-domain]]
+=== Getting a User by phone number and domain
+A 'GET' http request will get a specific user by phone number
+
+==== An Example request
+include::{snippets}/get-user-by-phoneNumber-and-domain-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/get-user-by-phoneNumber-and-domain-example/http-response.adoc[]
+
+==== Links in Response
+
+include::{snippets}/get-user-by-phoneNumber-and-domain-example/links.adoc[]
+
+[[resources-user-patch-user]]
+=== Partially updating a user
+A 'PATCH' http request will partially update a specific user.
+
+==== An Example request
+include::{snippets}/patch-user-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/patch-user-example/http-response.adoc[]
+
+
 [[resources-user-put-user]]
 === Fully updating a user
 A 'PUT' http request will fully update a specific user. Fields that are not present will be marked as null;

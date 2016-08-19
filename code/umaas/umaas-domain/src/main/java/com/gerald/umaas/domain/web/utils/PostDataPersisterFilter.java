@@ -2,6 +2,8 @@ package com.gerald.umaas.domain.web.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,25 +20,30 @@ public class PostDataPersisterFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		try{
-			System.out.println("Post data persist filter");
-			MultiReadHttpServletRequest requestWrapper= new MultiReadHttpServletRequest((HttpServletRequest)request);
-			
-			String body = "";
-			   BufferedReader bufferedReader = requestWrapper.getReader();           
-			   String line;
-			   while ((line = bufferedReader.readLine()) != null){
-			       body += line;
-			   }
-			 System.out.println(body);
-			 request.setAttribute(POST_DATA, body);
-			 chain.doFilter(requestWrapper, response);
-		}catch( IOException ex){
-				System.out.println("Cannot read data");
-				System.out.println(ex.getMessage());
-				chain.doFilter(request, response);;
+		String method = ((HttpServletRequest)request).getMethod();
+		List<String> allowedMethods = Arrays.asList("post", "put", "patch");
+		if(!allowedMethods.contains(method.toLowerCase()))
+			chain.doFilter(request, response);
+		else{
+			try{
+				System.out.println("Post data persist filter");
+				MultiReadHttpServletRequest requestWrapper= new MultiReadHttpServletRequest((HttpServletRequest)request);
+				
+				String body = "";
+				   BufferedReader bufferedReader = requestWrapper.getReader();           
+				   String line;
+				   while ((line = bufferedReader.readLine()) != null){
+				       body += line;
+				   }
+				 System.out.println(body);
+				 request.setAttribute(POST_DATA, body);
+				 chain.doFilter(requestWrapper, response);
+			}catch( IOException ex){
+					System.out.println("Cannot read data");
+					System.out.println(ex.getMessage());
+					chain.doFilter(request, response);;
+			}
 		}
-		
 		
 	}
 

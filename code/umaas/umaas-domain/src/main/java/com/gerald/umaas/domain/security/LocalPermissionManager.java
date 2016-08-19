@@ -60,7 +60,9 @@ public class LocalPermissionManager implements PermissionManager{
 				if(checkEntry(accessCode, Domain.class.getSimpleName(), ALL_ITEMS, priviledge)) return true;
 			}
 				
-			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
+			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)){
+				return true;
+			}
 			return false;
 		}else if(DomainResource.class.isAssignableFrom(entityClass)){
 			System.out.println("Evaluating domain resource");

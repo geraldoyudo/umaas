@@ -13,12 +13,6 @@ public interface UserRepository extends DomainResourceRepository<AppUser, String
 	@RestResource(exported = false)
     public List<AppUser> findByUsername(String username);
     @Query("{ 'username' : ?0, 'domain.id': '?1' }")
-    @RestResource(exported = false)
-    public List<AppUser> findByUsernameAndDomain(String username, String domain);
-    @RestResource(exported = false)
-    public List<AppUser> findByEmailAndDomain(String email, String domain);
-    @RestResource(exported = false)
-    public List<AppUser> findByPhoneNumberAndDomain(String phoneNumber, String domain);
     @RestResource(path =  "/findAllInDomainContainingUsername")
     public List<AppUser> findByDomainAndUsernameContaining(
             @Param("domain")String domain,@Param("username") String username);
@@ -26,9 +20,9 @@ public interface UserRepository extends DomainResourceRepository<AppUser, String
             @Param("domain")String domain,@Param("username") String username, Pageable p);
     public Page<AppUser> findByUsername(@Param("username") String username, Pageable p );
     @Query("{ 'username' : ?0, 'domain.id': '?1'}")
-    public Page<AppUser> findByUsernameAndDomain(@Param("username") String username, @Param("domain") String domain, Pageable p );
-    @RestResource(exported = false)
-    public Page<AppUser> findByEmailAndDomain(String email, String domain, Pageable p);
-    @RestResource(exported = false)
-    public Page<AppUser> findByPhoneNumberAndDomain(String phoneNumber, String domain, Pageable p);
+    public AppUser findByUsernameAndDomain(@Param("username") String username, @Param("domain") String domain );
+    @Query("{ 'email' : ?0, 'domain.id': '?1'}")
+    public AppUser findByEmailAndDomain(@Param("email")String email,@Param("domain") String domain);
+    @Query("{ 'phoneNumber' : ?0, 'domain.id': '?1'}")
+    public AppUser findByPhoneNumberAndDomain( @Param("phoneNumber") String phoneNumber, @Param("domain")String domain);
 }
