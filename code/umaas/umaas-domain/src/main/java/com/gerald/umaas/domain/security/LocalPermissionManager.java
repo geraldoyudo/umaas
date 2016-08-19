@@ -194,7 +194,8 @@ public class LocalPermissionManager implements PermissionManager{
 		System.out.println("Domain access code retrieved");
 		try{
 		 if( checkForDomainEntry(domainId, accessCode, entityType, priviledge)) return true;
-		 if(checkEntry(accessCode, entityType, "ALL", priviledge)) return true;
+		 if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
+		 if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
 		} catch(PriviledgeDeniedException ex){
 			//do nothing
 		}

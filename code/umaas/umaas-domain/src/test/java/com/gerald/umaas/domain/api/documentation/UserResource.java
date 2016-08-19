@@ -113,6 +113,42 @@ public class UserResource extends AbstractResource{
     }
     
     @Test
+    public void addUserWithAdmin() throws Exception {
+		createMapping("ALL","ALL",Priviledge.ALL);
+    	createField("nickname", "string");
+    	Map<String,Object> user = new HashMap<>();
+    	Map<String,Object> properties = new HashMap<>();
+    	properties.put("nickname", "Jerry");
+    	user.put("username", "gerald_oyudo");
+    	user.put("password", "1234");
+    	user.put("email", "gerald_oyudo@hotmail.com");
+    	user.put("phoneNumber", "+2348078229930");
+    	user.put("properties", properties);
+    	user.put("domain", String.format("/domain/domains/%s", domain.getId()));
+    	String json = mapper.writeValueAsString(user);  
+    	this.mvc.perform( post("/domain/appUsers").accept(APPLICATION_HAL)
+    			.contentType(MediaType.APPLICATION_JSON)
+    			.content(json).headers(headers))
+    	.andExpect(status().isCreated())
+    	.andDo(document("add-user-example", responseFields(
+    			fieldWithPath("username").description("the user's username"),
+    			fieldWithPath("password").description("the user's password"),
+    			fieldWithPath("email").description("the user's email"),
+    			fieldWithPath("phoneNumber").description("the user's phoneNumber"),
+    			fieldWithPath("properties").description("an object holding custom properties specified by the domain"),
+    			fieldWithPath("meta").description("additional meta-data for the user"),
+    			fieldWithPath("externalId").description("A fully customizable, unique field user id that can be used for search queries"),
+    			fieldWithPath("roles").description("Domain defined roles that the user has."),
+    			fieldWithPath("groups").description("Domain defined groups that the user is assigned to."),
+    			fieldWithPath("emailVerified").description("Whether user's email has been verified"),
+    			fieldWithPath("phoneNumberVerified").description("Whether user's phone number has been verified"),
+    			fieldWithPath("_links").description("Resource links"))
+    			, links(
+    			linkWithRel("self").description("link to resource"),
+    			linkWithRel("appUser").description("same as self"),
+    			linkWithRel("domain").description("link to the user's domain"))));
+    }
+    @Test
     public void updateUser() throws Exception {
 		createMapping(AppUser.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.UPDATE); 
 		initializeListOfUsers();

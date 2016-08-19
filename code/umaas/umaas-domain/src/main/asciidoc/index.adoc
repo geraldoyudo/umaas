@@ -85,6 +85,21 @@ include::{snippets}/index/links.adoc[]
 == Domains
 The Domain resource is used to create, modify and list domains. The client must have the required permission to access this resource.
 
+[[resources-domain-add-domain]]
+=== Adding a Domain
+A 'POST' http request adds a domain.
+
+include::{snippets}/add-domain-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-domain-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-domain-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-domain-example/links.adoc[]
+
 [[resources-domain-get-all]]
 === Getting domains
 A 'GET' http request will return all domains in the resource.
@@ -110,6 +125,26 @@ include::{snippets}/get-domain-example/curl-request.adoc[]
   
 ==== An Example response
 include::{snippets}/get-domain-example/http-response.adoc[]
+
+[[resources-domain-get-domain-by-name]]
+=== Getting A domain by Name
+A 'GET' http requests a domain with the name specified.
+
+==== An Example request
+include::{snippets}/get-domain-by-name-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/get-domain-by-name-example/http-response.adoc[]
+
+[[resources-domain-get-domain-by-code]]
+=== Getting A domain by Code
+A 'GET' http requests a domain with the code specified.
+
+==== An Example request
+include::{snippets}/get-domain-by-code-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/get-domain-by-code-example/http-response.adoc[]
 
 [[resources-domain-patch-domain]]
 === Partially updating a domain
@@ -144,6 +179,21 @@ include::{snippets}/delete-domain-example/http-response.adoc[]
 [[resources-user]]
 == Users
 The AppUser resource is used to create, modify and list users. The client must have the required permission to access this resource.
+
+[[resources-user-add-user]]
+=== Adding a User
+A 'POST' http request adds a user to a domain.
+
+include::{snippets}/add-user-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-user-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-user-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-user-example/links.adoc[]
 
 [[resources-user-get-all]]
 === Getting Users Across Domains
@@ -233,6 +283,21 @@ include::{snippets}/delete-user-example/http-response.adoc[]
 == Groups
 The Group resource is used to create, modify and list groups. The client must have the required permission to access this resource.
 
+[[resources-group-add-group]]
+=== Adding a Group
+A 'POST' http request adds a group to a domain.
+
+include::{snippets}/add-group-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-group-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-group-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-group-example/links.adoc[]
+
 [[resources-group-get-all]]
 === Getting groups Across Domains
 A 'GET' http request will return all groups regardless of domain.
@@ -321,6 +386,21 @@ include::{snippets}/delete-group-example/http-response.adoc[]
 == Fields
 The Group resource is used to create, modify and list fields. The client must have the required permission to access this resource.
 
+[[resources-field-add-field]]
+=== Adding a Field
+A 'POST' http request adds a field to a domain.
+
+include::{snippets}/add-field-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-field-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-field-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-field-example/links.adoc[]
+
 [[resources-field-get-all]]
 === Getting Fields Across Domains
 A 'GET' http request will return all fields regardless of domain.
@@ -407,7 +487,22 @@ include::{snippets}/delete-field-example/http-response.adoc[]
 
 [[resources-role]]
 == Roles
-The Group resource is used to create, modify and list roles. The client must have the required permission to access this resource.
+The Role resource is used to create, modify and list roles. The client must have the required permission to access this resource.
+
+[[resources-role-add-role]]
+=== Adding a Role
+A 'POST' http request adds a role to a domain.
+
+include::{snippets}/add-role-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-role-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-role-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-role-example/links.adoc[]
 
 [[resources-role-get-all]]
 === Getting Roles Across Domains
@@ -496,6 +591,21 @@ include::{snippets}/delete-role-example/http-response.adoc[]
 [[resources-userField]]
 == User-Fields
 The User-Fields resource is used to create, modify and list user's custom fields. The client must have the required permission to access this resource.
+
+[[resources-userField-add-userField]]
+=== Adding a User Field
+A 'POST' http request adds a userField to a domain.
+
+include::{snippets}/add-userFields-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-userFields-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-userFields-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-userFields-example/links.adoc[]
 
 [[resources-userField-get-all]]
 === Getting User Fields Across Domains
@@ -613,6 +723,21 @@ include::{snippets}/delete-userField-example/http-response.adoc[]
 == User-Groups
 The User-Groups resource is used to create, modify and list user's custom groups. The client must have the required permission to access this resource.
 
+[[resources-userGroup-add-userGroup]]
+=== Adding a User Group
+A 'POST' http request adds a userGroup to a domain.
+
+include::{snippets}/add-userGroups-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-userGroups-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-userGroups-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-userGroups-example/links.adoc[]
+
 [[resources-userGroup-get-all]]
 === Getting User Groups Across Domains
 A 'GET' http request will return all user-groups regardless of domain.
@@ -729,6 +854,21 @@ include::{snippets}/delete-userGroup-example/http-response.adoc[]
 == Role Mappings
 The Role Mappings resource is used to create, modify and list user's custom Roles. The client must have the required permission to access this resource.
 
+[[resources-roleMapping-add-roleMapping]]
+=== Adding a User Group
+A 'POST' http request adds a roleMapping to a domain.
+
+include::{snippets}/add-roleMappings-example/response-fields.adoc[]
+
+====  An Example request
+include::{snippets}/add-roleMappings-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-roleMappings-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-roleMappings-example/links.adoc[]
+
 [[resources-roleMapping-get-all]]
 === Getting Role Mappings Across Domains
 A 'GET' http request will return all Role Mappings regardless of domain.
@@ -843,7 +983,20 @@ include::{snippets}/delete-roleMapping-example/http-response.adoc[]
 
 [[resources-access-code]]
 == Access Codes
-The User-Roles resource is used to create, modify and list user's custom roles. The client must have the required permission to access this resource.
+The Access Code resource is used to create, modify and list user's custom roles. The client must have the required permission to access this resource.
+
+[[resources-access-code-add-access-code]]
+=== Adding an Access Role
+A 'POST' http request adds an access code.
+
+====  An Example request
+include::{snippets}/add-access-code-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-access-code-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-access-code-example/links.adoc[]
 
 [[resources-access-code-get-all]]
 === Getting Role Mappings Across Domains
@@ -904,6 +1057,19 @@ include::{snippets}/delete-access-code-example/http-response.adoc[]
 [[resources-access-code-mapping]]
 == Access Code Permissions
 The Access Code Mappings resource is used to create, modify and list access code permissions. The client must have the required permission to access this resource.
+
+[[resources-access-code-mapping-add-access-code-mapping]]
+=== Adding an access code permission.
+A 'POST' http request adds a access-code-mapping.
+
+====  An Example request
+include::{snippets}/add-access-code-mapping-example/curl-request.adoc[]
+  
+==== An Example response
+include::{snippets}/add-access-code-mapping-example/http-response.adoc[]
+
+==== Links in Response
+include::{snippets}/add-access-code-mapping-example/links.adoc[]
 
 [[resources-access-code-mapping-get-all]]
 === Getting Role Mappings Across Domains
