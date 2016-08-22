@@ -80,8 +80,7 @@ public class UserGroupResource extends AbstractResource{
                 .andExpect(status().isOk())
                 .andDo(document("get-userGroups-by-user-example",selfLink));
     }
-    
-    
+        
     @Test
     public void getUserGroupByDomainAndExternalId() throws Exception {
 		createMapping(UserGroup.class.getSimpleName(),Arrays.asList(domain.getId()),Priviledge.VIEW); 
