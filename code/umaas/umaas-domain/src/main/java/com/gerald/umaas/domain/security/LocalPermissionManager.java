@@ -206,8 +206,12 @@ public class LocalPermissionManager implements PermissionManager{
 	private boolean containsPriviledge(List<DomainAccessCodeMapping> mappings, Priviledge priviledge ){
 		if(mappings == null) return false;
 		for(DomainAccessCodeMapping mapping: mappings){
-			if(mapping.getPriviledge().equals(priviledge)){
-				return true;
+			try{
+				if(mapping.getPriviledge().equals(priviledge)){
+					return true;
+				}
+			}catch(NullPointerException ex){
+				continue;
 			}
 		}
 		return false;

@@ -58,8 +58,6 @@ public class Populator {
 			RoleMapping.class.getSimpleName(),
 			DomainAccessCode.class.getSimpleName(),
 			DomainAccessCodeMapping.class.getSimpleName()};
-	@Autowired
-	private MongoTemplate mongoTemplate;
 	
 	@Value("${umaas.security.admin-code:0000}")
 	private String adminCode;
@@ -68,8 +66,7 @@ public class Populator {
 	
 	@PostConstruct
 	public void init(){
-		mongoTemplate.getDb().dropDatabase();
-		
+		if(domainRepository.findAll().isEmpty()){
 		//initialize domains
 		for(int i=0; i<10; ++i){
 			createDomain(i);
@@ -106,9 +103,10 @@ public class Populator {
 		
 		for(int i=0; i < domains.size(); ++i){
 			for(int j=0; j<entityTypes.length; ++j){
-				createMapping(createAccessCode(i), entityTypes[j], Arrays.asList(domains.get(i).getId()), Priviledge.ALL);
+				createMapping(createAccessCode(10*i + j), entityTypes[j], Arrays.asList(domains.get(i).getId()), Priviledge.ALL);
 			}
 			
+		}
 		}
 		
 	}

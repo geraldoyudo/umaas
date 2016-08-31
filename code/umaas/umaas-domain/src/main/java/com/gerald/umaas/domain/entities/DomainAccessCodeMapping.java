@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
     				+ "'entityId' : 1, 'priviledge' : 1}", 
     				unique = true)
 })
+@Document
 public class DomainAccessCodeMapping extends Resource{
 	/**
 	 * 

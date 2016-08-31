@@ -3,6 +3,7 @@ package com.gerald.umaas.domain.entities;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
     @CompoundIndex(name = "user_field", def = "{'user.$id' : 1, 'field.$id' : 1}", unique = true)
 })
 @EqualsAndHashCode(callSuper=true)
+@Document
 public class UserField extends DomainResource {
 	/**
 	 * 

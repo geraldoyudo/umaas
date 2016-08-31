@@ -89,6 +89,7 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
         String domain = u.getDomain().getId();
         Group group;
         do{
+        	try{
             affiliate = affiliates.pop();
             mapping = roleMappingRepository.findByDomainAndKeyAndType(domain, affiliate.key(),affiliate.type());
             if(mapping != null && !mapping.isEmpty()){
@@ -111,6 +112,9 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
                }
                
             }
+        	}catch(NullPointerException ex ){
+        		continue;
+        	}
            
         }while(!affiliates.isEmpty());
         
@@ -134,7 +138,11 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 		List<UserGroup> userGroups = userGroupRepository.findByUser(u);
 		List<String> groups = new ArrayList<>();
 		 for(UserGroup userGroup: userGroups){
+			 try{
 			 groups.add(userGroup.getGroup().getName());
+			 }catch(NullPointerException ex){
+				 // continue
+			 }
 		 }
 		 u.setGroups(groups);
 	}
