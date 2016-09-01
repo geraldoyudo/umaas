@@ -21,8 +21,7 @@ public class ProxyConfiguration extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		 from("servlet://core?matchOnUriPrefix=true")
-		 .log("${headers}")
-		.setHeader("X-Forwarded-Host", simple("localhost:8071"))
+		.setHeader("X-Forwarded-Host", simple("${headers.host}"))
 		.setHeader("X-Forwarded-Prefix", simple("/umaas/core"))
 		 .to(coreUrl + "?bridgeEndpoint=true&throwExceptionOnFailure=false");
 		 
