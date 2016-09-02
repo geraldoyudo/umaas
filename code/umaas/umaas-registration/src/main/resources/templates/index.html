@@ -3,22 +3,40 @@
 		<head>		
 			<title>
 			</title> 
+			 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+			  <!-- Angular Material style sheet -->
+			  <link rel="stylesheet" href="/app/webjars/angular-material/angular-material.min.css"></link>
 		</head> 
 		<body ng-app='app'>
-		<div ng-controller='SampleController'> 
+		<div ng-controller='MainCtrl'> 
 		
 	
-	
-		<button type='button' ng-click="test()">TEST</button>
-        <button type='button' ng-click="control()">CONTROL</button>
+		
+		<md-button class="md-raised md-primary" ng-click="test()">TEST</md-button>
+        <md-button class="md-raised md-warn" ng-click="control()">CONTROL</md-button>
 		</div>
-		<script src='/app/web/lib/angular/angular.js'></script>
+		<script src='/app/webjars/angularjs/angular.min.js'></script>
+		<script src='/app/webjars/angular-ui-router/angular-ui-router.min.js'></script>
+        <script src="/app/webjars/angularjs/angular-animate.min.js"></script>
+ 		<script src="/app/webjars/angularjs/angular-aria.min.js"></script>
+ 		<script src="/app/webjars/angularjs/angular-messages.min.js"></script>
+        <script src='/app/webjars/angular-material/angular-material.min.js'></script>
         <script src='/app/web/lib/traverson/browser/dist/traverson.min.js'></script>
-         <script src='/app/web/lib/traverson/browser/dist/traverson.min.js'></script>
-           <script src='/app/web/lib/traverson-hal/browser/dist/traverson-hal.min.js'></script>
-          <script src='/app/web/lib/traverson-angular/browser/dist/traverson-angular.min.js'></script>
-          <script src='/app/web/lib/umaas-client/umaas-client.js'></script>
-          <script src='/app/web/js/app.js'></script>
+        <script src='/app/web/lib/traverson/browser/dist/traverson.min.js'></script>
+        <script src='/app/web/lib/traverson-hal/browser/dist/traverson-hal.min.js'></script>
+        <script src='/app/web/lib/traverson-angular/browser/dist/traverson-angular.min.js'></script>
+        <script src='/app/web/lib/umaas-client/umaas-client.js'></script>
+        <script src='/app/web/js/app.js'></script>
+        <script src='/app/web/js/utils/umaas-client-angular.js'></script>
+        <script src='/app/web/js/controllers/main-controller.js'></script>
+        <script>
+        	angular.module("app")
+        	.run(function(umaas){
+        		console.log("Configuring umaas client");
+        		umaas.setAccessCode({id:"0000", code:"0000"});
+        		umaas.setBaseUrl("/umaas/core");
+        	});
+        </script>
 		
 		</body> 
 </html>
