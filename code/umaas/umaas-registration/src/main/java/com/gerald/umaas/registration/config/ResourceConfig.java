@@ -19,6 +19,8 @@ public class ResourceConfig extends WebMvcConfigurerAdapter{
      @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) { 
         registry.addResourceHandler("/web/**").addResourceLocations("classpath:web/");
-    }
+        registry.addResourceHandler("/partials/**").addResourceLocations("classpath:partials/");
+
+     }
    
 }

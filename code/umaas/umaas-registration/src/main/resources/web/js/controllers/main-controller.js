@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('MainCtrl', function($scope, umaas){
+.controller('MainCtrl', function($scope, umaas, $state){
 	console.log("Successfully Loaded");
 	$scope.domain = new umaas.Domain();
 	console.log($scope.domain);
@@ -12,4 +12,8 @@ angular.module('app')
 			console.log(domains);
 		}
 	})
+	
+	$scope.go = function(stateStr){
+		$state.go(stateStr);
+	}
 })
