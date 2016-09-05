@@ -12,10 +12,6 @@
 		
 		<div ui-view=""></div>
 		
-		<md-button class="md-raised md-primary" ng-click="go('form')">Entrance</md-button>
-        <md-button class="md-raised md-warn" ng-click="go('form.details')">Details</md-button>
-        	<md-button class="md-raised md-primary" ng-click="go('form.validation')">Validation</md-button>
-        <md-button class="md-raised md-warn" ng-click="go('form.success')">Success</md-button>
 		</div>
 		<script src='/app/webjars/angularjs/angular.min.js'></script>
 		<script src='/app/webjars/angular-ui-router/angular-ui-router.min.js'></script>
@@ -23,6 +19,7 @@
  		<script src="/app/webjars/angularjs/angular-aria.min.js"></script>
  		<script src="/app/webjars/angularjs/angular-messages.min.js"></script>
         <script src='/app/webjars/angular-material/angular-material.min.js'></script>
+        <script src="/app/webjars/angular-material-icons/angular-material-icons.js"></script>
         <script src='/app/web/lib/traverson/browser/dist/traverson.min.js'></script>
         <script src='/app/web/lib/traverson/browser/dist/traverson.min.js'></script>
         <script src='/app/web/lib/traverson-hal/browser/dist/traverson-hal.min.js'></script>
@@ -31,6 +28,8 @@
         <script src='/app/web/js/app.js'></script>
         <script src='/app/web/js/utils/umaas-client-angular.js'></script>
         <script src='/app/web/js/utils/routes.js'></script>
+        <script src='/app/web/js/utils/stage-config.js'></script>      
+        <script src='/app/web/js/services/stage-manager.js'></script>
         <script src='/app/web/js/controllers/main-controller.js'></script>
         <script src='/app/web/js/controllers/registration-controller.js'></script>
         <script>

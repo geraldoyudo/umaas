@@ -1,5 +1,24 @@
-Form Entrance
-<form id="signup-form" ng-submit="processForm()">
-<!-- our nested state views will be injected here -->
-<div id="form-views" ui-view=""></div>
+<form layout="row" layout-align="center center" id="signup-form" ng-submit="processForm()">
+<md-card style="width:70%">
+	<div>
+		Registration
+	</div>
+	<h3>{{display.title}}</h3>
+	<p>{{display.description}}</p>
+	<div layout="row">
+		<div flex="10%"></div>
+		<div flex="80%" id="form-views" ui-view=""></div>
+		<div flex="10%"></div>
+	
+	</div>
+	<div layout="row" layout-align="center"> 
+	
+	<md-button ng-show="!display.hideNav && hasPrevious" class="md-raised md-fab md-primary" ng-click="previous()">
+	<ng-md-icon icon="arrow_back" style="fill:white" size="56"></ng-md-icon> 
+	</md-button>
+	<md-button ng-show="!display.hideNav && hasNext" class="md-raised md-fab md-warn" ng-click="next()">
+	<ng-md-icon icon="arrow_forward"  style="fill:white" size="56" class=></ng-md-icon> 
+	</md-button>
+	</div>
+</md-card>
 </form>

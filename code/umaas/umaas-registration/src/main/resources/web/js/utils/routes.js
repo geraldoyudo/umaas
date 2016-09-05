@@ -20,7 +20,7 @@ angular.module('app')
         })
         
         // url will be /form/interests
-        .state('form.validation', {
+        .state('form.verification', {
             url: '/validation',
             templateUrl: '/app/partials/form-validation.htm'
         })

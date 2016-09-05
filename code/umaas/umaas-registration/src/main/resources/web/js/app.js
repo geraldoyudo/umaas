@@ -1,1 +1,1 @@
-angular.module('app', ['ngMaterial','ui.router'])
+angular.module('app', ['ngMaterial','ui.router', 'ngMdIcons'])
