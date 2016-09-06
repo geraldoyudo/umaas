@@ -88,6 +88,28 @@
 			    <artifactId>angular-material-icons</artifactId>
 			    <version>0.7.0</version>
 			</dependency>
+			<dependency>
+			    <groupId>org.webjars.bower</groupId>
+			    <artifactId>lf-ng-md-file-input</artifactId>
+			    <version>1.4.8</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.webjars.bower</groupId>
+			    <artifactId>angular-formly</artifactId>
+			    <version>8.2.1</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.webjars.bower</groupId>
+			    <artifactId>angular-formly-material</artifactId>
+			    <version>0.12.0</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.webjars.bower</groupId>
+			  <artifactId>api-check</artifactId>
+			  <version>7.5.5</version>
+			</dependency>
+			
+
 			
 	</dependencies>
 

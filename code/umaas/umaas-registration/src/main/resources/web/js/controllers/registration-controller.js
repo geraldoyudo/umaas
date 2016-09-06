@@ -32,4 +32,30 @@ angular.module('app')
 		$scope.display.description = state.description;
 		$scope.display.hideNav = state.hideNav;
 	})
+	$scope.fields = [ {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        type: 'email',
+        label: 'Email address',
+        placeholder: 'Enter email'
+      }
+    },
+    {
+      key: 'password',
+      type: 'input',
+      templateOptions: {
+        type: 'password',
+        label: 'Password',
+        placeholder: 'Password'
+      }
+    },
+    {
+        key: 'myFile',
+        type: 'file-input',
+        templateOptions: {
+          label: 'File',
+          placeholder: 'File'
+        }
+      }];
 })
