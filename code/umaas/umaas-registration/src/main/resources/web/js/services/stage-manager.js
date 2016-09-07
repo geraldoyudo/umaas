@@ -53,12 +53,13 @@ angular.module('app')
 		}
 		return highest;
 	}
-	var applyStage = function(stage){
+	var applyStage = function(stage, data){
 		self.currentStage = stage;
 		$state.go(stage.state);
 		console.log("Applying stage");
 		console.log(stage);
-		$rootScope.$broadcast("Stage.Changed", stage);
+		console.log(data);
+		$rootScope.$broadcast("Stage.Start", stage, data);
 	}
 	
 	self.start = function(){
@@ -73,14 +74,20 @@ angular.module('app')
 		}
 	}
 	
-	self.next = function(){
+	self.next = function(data){
 		if(!self.currentStage){
 			return;
 		}
-		var stage = getNextStage(
-				self.currentStage.index,
-				self.currentStage.subIndex);
-		applyStage(stage);
+		if(self.currentStage.listener){
+			self.currentStage.listener(data, function(retVal){
+				console.log("After listener");
+				console.log(retVal);
+				var stage = getNextStage(
+						self.currentStage.index,
+						self.currentStage.subIndex);
+				applyStage(stage, retVal);
+			});
+		}	
 	}
 	
 	self.previous = function(){

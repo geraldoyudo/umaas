@@ -1,5 +1,6 @@
 angular.module('app')
-.controller('RegistrationCtrl', function($scope,$rootScope, stageManager){
+.controller('RegistrationCtrl', function($scope,$rootScope, 
+		stageManager, fieldManager,umaas){
 	console.log("Registration controller");
 	var refresh = function(){
 		$scope.hasPrevious = stageManager.hasPrevious();
@@ -11,14 +12,15 @@ angular.module('app')
 		refresh();
 	};
 	start();
+	$scope.user = new umaas.AppUser();
 	$scope.display.title = stageManager.currentStage.title;
 	$scope.display.description = stageManager.currentStage.description;
 	$scope.display.hideNav = stageManager.currentStage.hideNav;
 
 
-	$scope.next = function(){
+	$scope.next = function(data){
 		console.log("Next pressed");
-		stageManager.next();
+		stageManager.next(data);
 		refresh();		
 	}
 	$scope.previous = function(){
@@ -26,36 +28,14 @@ angular.module('app')
 		stageManager.previous();
 		refresh();
 	}
-	$scope.$on('Stage.Changed', function(event, state){
+	$scope.$on('Stage.Start', function(event, stage, data){
 		console.log("State Changed");
-		$scope.display.title = state.title;
-		$scope.display.description = state.description;
-		$scope.display.hideNav = state.hideNav;
+		$scope.display.title = stage.title;
+		$scope.display.description = stage.description;
+		$scope.display.hideNav = stage.hideNav;
+		if(data){
+			$scope.user = data;
+		}
 	})
-	$scope.fields = [ {
-      key: 'email',
-      type: 'input',
-      templateOptions: {
-        type: 'email',
-        label: 'Email address',
-        placeholder: 'Enter email'
-      }
-    },
-    {
-      key: 'password',
-      type: 'input',
-      templateOptions: {
-        type: 'password',
-        label: 'Password',
-        placeholder: 'Password'
-      }
-    },
-    {
-        key: 'myFile',
-        type: 'file-input',
-        templateOptions: {
-          label: 'File',
-          placeholder: 'File'
-        }
-      }];
+	$scope.fields = fieldManager.getFields();
 })

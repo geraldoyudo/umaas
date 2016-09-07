@@ -1213,6 +1213,15 @@ var roles = function(){
     }
 
   }
+  
+  
+  this.find = function(options,callback){
+      if(currentDomain && currentDomain.id){
+        return this.findByDomain(options, currentDomain.id,callback);
+      }else{
+        callback();
+      }
+  }
 }
 
 var groups = function(){
@@ -1273,7 +1282,6 @@ var groups = function(){
            return callback(undefined, new Group(resource));
       });
     }
-
   }
 
 
@@ -1286,7 +1294,14 @@ var groups = function(){
           return callback(undefined, new Group(resource));
     });
   }
-
+	
+ this.find = function(options,callback){
+	  if(currentDomain && currentDomain.id){
+		return this.findByDomain(options, currentDomain.id,callback);
+	  }else{
+		callback();
+	  }
+  }
 }
 
 
@@ -1365,6 +1380,13 @@ var fields = function(){
     });
   }
 
+   this.find = function(options,callback){
+		  if(currentDomain && currentDomain.id){
+			return this.findByDomain(options, currentDomain.id,callback);
+		  }else{
+			callback();
+		  }
+	}
 }
 
 

@@ -10,6 +10,7 @@ angular.module('app')
 		}else{
 			console.log("Success");
 			console.log(domains);
+			umaas.setDomain(domains.content[0]);
 		}
 	})
 	
