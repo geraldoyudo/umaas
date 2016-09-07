@@ -8,10 +8,12 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@Document
 @Data
 @EqualsAndHashCode(callSuper=true)
 @CompoundIndexes({
@@ -30,4 +32,10 @@ public class Field extends DomainResource{
     @NotNull
 	private String type = "string";
     private Map<String,Object> properties = new HashMap<>();
+    public Object get(String key){
+    	return properties.get("key");
+    }
+    public void set(String key, Object value){
+    	properties.put(key, value);
+    }
 }

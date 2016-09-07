@@ -1,6 +1,6 @@
 angular.module('app')
 .controller('RegistrationCtrl', function($scope,$rootScope, 
-		stageManager, fieldManager,umaas){
+		stageManager,umaas, fieldManager){
 	console.log("Registration controller");
 	var refresh = function(){
 		$scope.hasPrevious = stageManager.hasPrevious();
@@ -37,5 +37,10 @@ angular.module('app')
 			$scope.user = data;
 		}
 	})
-	$scope.fields = fieldManager.getFields();
+	fieldManager.getFields().then(function(fields){
+		console.log("Fields loaded");
+		console.log(fields);
+		$scope.fields = fields;
+	})
+	
 })

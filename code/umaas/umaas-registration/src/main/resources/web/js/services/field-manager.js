@@ -56,18 +56,90 @@ var defaultFields = function(){
         }];
 }
 
+var makeField = function(fieldData){
+	var field = {};
+	console.log(fieldData);
+	field.ngModelElAttrs ={
+        "ng-model": "model['properties']['".concat(fieldData.name).concat("']")
+      };
+	field.type = 'input';
+	field.templateOptions = {
+	        type: 'text',
+	        label: (fieldData.properties.label || fieldData.name),
+	        placeholder: (fieldData.properties.placeholder || fieldData.name),
+	        required: fieldData.mandatory,
+	        pattern: fieldData.properties.pattern
+	}
+	
+		if (fieldData.type === 'integer') {
+			field.templateOptions.type = 'number';
+			field.templateOptions.min = fieldData.properties.minimum;
+			field.templateOptions.max = fieldData.properties.maximum;
+		}
+		else if (fieldData.type === 'email') {
+			field.templateOptions.type = 'email';
+		}
+		else if (fieldData.type === 'date'){
+			field.type = 'datepicker';
+			field.templateOptions.minDate = new Date(fieldData.properties.minimum);
+			field.templateOptions.maxDate = new Date(fieldData.properties.maximum);
+		}
+		else if (fieldData.type === 'select'){
+			field.type = 'select';
+			var options = fieldData.properties.options;
+			var labels = fieldData.properties.labels;
+			var fieldOptions = [];
+			if(!labels){
+				labels = options;
+			}
+			for(var i=0; i< options.length; ++i){
+				
+				fieldOptions.push({label: (labels[i] || options[i]), value: options[i]});
+			}
+			field.templateOptions.multiple = fieldData.properties.multiple;
+			field.templateOptions.labelProp = "label";
+			field.templateOptions.valueProp = "value";
+			field.templateOptions.options = fieldOptions;
+			
+		}
+	
+	return field;
+}
+
 angular.module('app')
 
-.service('fieldManager', function(umaas){
+.service('fieldManager', function(umaas, $rootScope, $q){
 	var fieldLoaded = false;
 	var umaasFields;
-	umaas.fields.find({size:30}, function(fields){
-		umaasFields = fields;
-		fieldLoaded = true;
-		console.log(fields);
-	})
-	
+	console.log("initializing custom fields");
+	var getCustomFields = function(){
+		return umaasFields;
+	}
 	this.getFields = function(){
-		return defaultFields();
+		var deferred = $q.defer();
+		var fields = defaultFields();
+		if(fieldLoaded){
+			var customFields = getCustomFields();
+			fields = fields.concat(customFields);
+			deferred.resolve(fields);
+		}else{
+			umaas.fields.find({size:30}, function(error, fs){
+				if(!error){ 
+					console.log("Found Fields");
+					umaasFields = [];
+					fs.content.forEach(function(field){
+						if(field.registrationItem){
+							umaasFields.push(makeField(field));		
+						}
+					})
+					fieldLoaded = true;
+					fields = fields.concat(umaasFields);
+					deferred.resolve(fields);
+				}
+				else throw error;
+			})
+		}
+		return deferred.promise;
 	}
 });
+

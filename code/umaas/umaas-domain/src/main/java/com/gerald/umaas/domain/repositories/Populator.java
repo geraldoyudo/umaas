@@ -2,16 +2,17 @@ package com.gerald.umaas.domain.repositories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.domain.entities.Affiliate;
@@ -48,7 +49,7 @@ public class Populator {
 	private DomainAccessCodeRepository domainAccessCodeRepository;
 	@Autowired
 	private DomainAccessCodeMappingRepository codeMappingRepository;
-	
+	Random random = new Random(System.currentTimeMillis());
 	private static String[] entityTypes = new String[]{AppUser.class.getSimpleName(),
 			Field.class.getSimpleName(),
 			Role.class.getSimpleName(),
@@ -78,14 +79,14 @@ public class Populator {
 		AppUser user;
 		Role groupRole, userRole;
 		Group group;
+		ArrayList<Field> fieldList;
 		for(Domain d: domains){
 			count = (int)d.meta("count");
-			ArrayList<Field> fieldList;
+			fieldList = new ArrayList<>();
+			for(int j=0; j<10; ++j){
+				fieldList.add(createField(d,j));
+			}
 			for(int i=0; i<20; ++i){
-				fieldList = new ArrayList<>();
-				for(int j=0; j<5; ++j){
-					fieldList.add(createField(d,j));
-				}
 				user = createUser(d,i, fieldList);
 				userRole = createRole(d,i);
 				groupRole = createRole(d, i+20);
@@ -195,7 +196,57 @@ public class Populator {
 		Field f = new Field();
 		f.setDomain(domain);
 		f.setName(String.format("%s-%s-%s",domain.getName(),"field" ,index ));
-		f.setType("string");
+		int modIndex = index %10;
+		switch(modIndex){
+			case 1:{
+				f.setType("string");
+				break;
+			}
+			case 2:{
+				f.setType("string");
+				f.set("pattern", String.format("[A-Za-z]{%d}", random.nextInt(16)+1));
+				break;
+			}
+			case 3:{
+				f.setType("date");
+				f.set("minimum", System.currentTimeMillis() - Math.abs(random.nextInt(100)*365*24*60*60*1000));
+				f.set("maximum", System.currentTimeMillis() + Math.abs(random.nextInt(100)*365*24*60*60*1000));
+				break;
+			}
+			case 4:{
+				f.setType("date");
+				f.set("minimum", System.currentTimeMillis());
+				f.set("maximum", System.currentTimeMillis() + Math.abs(random.nextInt(100)*365*24*60*60*1000));
+				break;
+			}
+			case 5:{
+				f.setType("email");
+				break;
+			}
+			case 6:{
+				f.setType("select");
+				f.set("options", Arrays.asList("option-1", "option-2", "option-3"));
+				f.set("labels", Arrays.asList("label-1", "label-2", "label-3"));
+				break;
+			}
+			case 7:{
+				f.setType("select");
+				f.set("options", Arrays.asList("option-1", "option-2", "option-3"));
+				break;
+			}
+			case 8:{
+				f.setType("integer");
+				break;
+			}
+			case 9:{
+				f.setType("integer");
+				int min = random.nextInt(100);
+				f.set("minimum", min);
+				f.set("maximum", min +random.nextInt(1000));
+				break;
+			}
+		}
+		System.out.println(f);
 		return fieldRepository.save(f);
 	}
 	
@@ -204,4 +255,5 @@ public class Populator {
 		code.setCode("1234" + index);
 		return domainAccessCodeRepository.save(code);
 	}
+	
 }

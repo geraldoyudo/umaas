@@ -832,7 +832,7 @@ var Field = function(resourceObject){
     domain =  resourceObject._links.domain.href;
     this.registrationItem = resourceObject.registrationItem;
     this.mandatory = resourceObject.mandatory;
-    this.type = 'string';
+    this.type = resourceObject.type;
   }
 
 
