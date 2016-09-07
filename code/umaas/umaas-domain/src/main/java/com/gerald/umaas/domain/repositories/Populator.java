@@ -198,6 +198,11 @@ public class Populator {
 		f.setName(String.format("%s-%s-%s",domain.getName(),"field" ,index ));
 		int modIndex = index %10;
 		switch(modIndex){
+			case 0:{
+				f.setType("file");
+				f.set("accept", "image/*");
+				break;
+			}
 			case 1:{
 				f.setType("string");
 				break;

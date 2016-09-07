@@ -90,6 +90,10 @@ var setDomain = function(domain){
 var setBaseUrl = function(baseUrl){
   apiBaseUrl = baseUrl;
 }
+
+var getBaseUrl = function(baseUrl){
+	return apiBaseUrl;
+}
 var setAccessCode = function(accessCode){
  code = accessCode;
   if(accessCode){
@@ -1447,6 +1451,7 @@ var umaas = (function () {
     //configuration
     ret.setDomain = setDomain;
     ret.setBaseUrl = setBaseUrl;
+    ret.getBaseUrl = getBaseUrl;
     ret.setAccessCode = setAccessCode;
     ret.getAccessCode = getAccessCode;
 

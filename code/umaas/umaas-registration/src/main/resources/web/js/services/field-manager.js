@@ -102,6 +102,11 @@ var makeField = function(fieldData){
 			field.templateOptions.options = fieldOptions;
 			
 		}
+		else if(fieldData.type === 'file'){
+			field.key = fieldData.id;
+			field.type = "file-input";
+			field.templateOptions.accept = fieldData.properties.accept;
+		}
 	
 	return field;
 }

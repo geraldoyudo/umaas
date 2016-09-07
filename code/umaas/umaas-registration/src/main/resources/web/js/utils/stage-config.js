@@ -1,19 +1,42 @@
 angular.module('app')
 
-.run(function(stageManager, umaas){
+.run(function(stageManager, umaas, $http){
+	var auth, code;
+	code = umaas.getAccessCode();
+	auth = 'Basic ' + btoa( code.id + ":" +code.code);
 	var handleDetailsCapture = function(user, callback){
 		console.log("Details capture");
 		console.log(user);
 		return callback(user);
 	}
 	var handleVerification = function(user, callback){
+		var files = user.files;
 		console.log("Details Verified");
 		console.log(user);
 		user.insert(function(error,updatedUser){
 			if(!error){ 
 				user = updatedUser;
 				console.log(user);
-				return callback(user);
+				if(!files)
+					return callback(user);
+				var fieldIds = Object.keys(files);
+				var formData = new FormData();
+				for(var i=0; i<fieldIds.length; ++i){
+					console.log(files[fieldIds[i]]);
+					var f = files[fieldIds[i]][0].lfFile;
+					console.log(f);
+					formData.append(fieldIds[i], f);
+				}
+				console.log(formData);
+				var url = umaas.getBaseUrl() + '/files/user/upload/' + user.id;
+				
+				 $http.post(url, formData, {
+		                headers: {'Content-Type': undefined, 'Authorization': auth}
+		            }).then(function(result){
+		                callback(user);               
+		            },function(err){
+		                throw err;
+		            });
 			}else{
 				throw error;
 			}
