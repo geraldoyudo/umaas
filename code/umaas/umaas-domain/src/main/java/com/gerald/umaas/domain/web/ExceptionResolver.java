@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MultipartException;
 
 @ControllerAdvice
 public class ExceptionResolver {
@@ -40,6 +41,14 @@ public class ExceptionResolver {
 		HashMap<String,String> values = new HashMap<>();
 		values.put("message", "A record with a unique key specified already exists");
 		values.put("error", "Data Integrity Violation");
+		return ResponseEntity.badRequest().body(values);
+	}
+	
+	@ExceptionHandler(MultipartException.class)
+	public ResponseEntity<HashMap<String,String>> handleMulltiPartException(MultipartException ex){
+		HashMap<String,String> values = new HashMap<>();
+		values.put("message",ex.getMessage());
+		values.put("error", "Multipart Exception");
 		return ResponseEntity.badRequest().body(values);
 	}
 	
