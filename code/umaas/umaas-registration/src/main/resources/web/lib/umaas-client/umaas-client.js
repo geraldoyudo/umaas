@@ -86,6 +86,9 @@ utils.insertObject = function(url, object, callback){
 var setDomain = function(domain){
   currentDomain = domain ;
 }
+var getDomain = function(){
+	  return currentDomain;
+}
 
 var setBaseUrl = function(baseUrl){
   apiBaseUrl = baseUrl;
@@ -1450,6 +1453,7 @@ var umaas = (function () {
 
     //configuration
     ret.setDomain = setDomain;
+    ret.getDomain = getDomain;
     ret.setBaseUrl = setBaseUrl;
     ret.getBaseUrl = getBaseUrl;
     ret.setAccessCode = setAccessCode;

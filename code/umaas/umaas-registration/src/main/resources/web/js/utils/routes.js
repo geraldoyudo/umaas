@@ -8,7 +8,12 @@ angular.module('app')
         .state('form', {
             url: '/form',
             templateUrl: '/app/partials/form.htm',
-            controller: 'RegistrationCtrl'
+            controller: 'RegistrationCtrl',
+            resolve: {
+            	domain: function(loader){
+            		return loader.loadDomain();
+            	}
+            }
         })
         
         // nested states 

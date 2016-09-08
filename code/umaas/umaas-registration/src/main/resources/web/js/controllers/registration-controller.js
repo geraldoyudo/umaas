@@ -1,7 +1,8 @@
 angular.module('app')
 .controller('RegistrationCtrl', function($scope,$rootScope, 
-		stageManager,umaas, fieldManager){
+		stageManager,umaas, fieldManager, domain){
 	console.log("Registration controller");
+	console.log(umaas.getDomain());
 	var refresh = function(){
 		$scope.hasPrevious = stageManager.hasPrevious();
 		$scope.hasNext = stageManager.hasNext();
