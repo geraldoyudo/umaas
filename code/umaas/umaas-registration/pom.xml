@@ -103,7 +103,15 @@
 			  <artifactId>api-check</artifactId>
 			  <version>7.5.5</version>
 			</dependency>
-			
+			<dependency>
+				<groupId>com.gerald.utils</groupId>
+				<artifactId>comm</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			  <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 
 			
 	</dependencies>

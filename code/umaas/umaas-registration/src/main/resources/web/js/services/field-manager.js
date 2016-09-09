@@ -116,6 +116,7 @@ angular.module('app')
 .service('fieldManager', function(umaas, $rootScope, $q){
 	var fieldLoaded = false;
 	var umaasFields;
+	var customFields;
 	console.log("initializing custom fields");
 	var getCustomFields = function(){
 		return umaasFields;
@@ -132,6 +133,7 @@ angular.module('app')
 				if(!error){ 
 					console.log("Found Fields");
 					umaasFields = [];
+					customFields = = fs.content;
 					fs.content.forEach(function(field){
 						if(field.registrationItem){
 							umaasFields.push(makeField(field));		
