@@ -42,6 +42,7 @@ angular.module('app')
 		console.log("Fields loaded");
 		console.log(fields);
 		$scope.fields = fields;
+		$scope.verificationFields = fieldManager.getVerificationFields();
+		console.log($scope.verificationFields);
 	})
-	
 })

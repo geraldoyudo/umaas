@@ -1,5 +1,7 @@
-Form Validation Form Here
-
+<form name="verificationForm" novalidate>
+	<formly-form model="user" fields="verificationFields" ng-if="verificationFields">
+	</formly-form>
+ </form>
 <pre>{{user | json}}</pre>
 
 <div layout="row" layout-align="center"> 

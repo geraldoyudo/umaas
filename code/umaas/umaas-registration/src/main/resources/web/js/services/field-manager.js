@@ -117,9 +117,27 @@ angular.module('app')
 	var fieldLoaded = false;
 	var umaasFields;
 	var customFields;
+	var vFields;
 	console.log("initializing custom fields");
 	var getCustomFields = function(){
 		return umaasFields;
+	}
+	var getVFields = function(){
+		return [
+		        {
+		        	 key: 'email',
+			   	      type: 'verify-item',
+			   	      templateOptions: {
+			   	    	verifier: 'email',
+			   	        label: 'Email address',
+			   	        placeholder: 'Enter email',
+			   	        required: true
+			   	      }
+		   	    }
+		        ];
+	}
+	this.getVerificationFields = function(){
+		return vFields;
 	}
 	this.getFields = function(){
 		var deferred = $q.defer();
@@ -133,7 +151,7 @@ angular.module('app')
 				if(!error){ 
 					console.log("Found Fields");
 					umaasFields = [];
-					customFields = = fs.content;
+					customFields = fs.content;
 					fs.content.forEach(function(field){
 						if(field.registrationItem){
 							umaasFields.push(makeField(field));		
@@ -141,6 +159,8 @@ angular.module('app')
 					})
 					fieldLoaded = true;
 					fields = fields.concat(umaasFields);
+					 vFields = getVFields();
+					console.log(vFields);
 					deferred.resolve(fields);
 				}
 				else throw error;
