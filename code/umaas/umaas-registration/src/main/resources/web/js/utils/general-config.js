@@ -51,6 +51,7 @@ angular.module('app')
 				console.log(data);
 				request.properties.tokenId = data.id;
 				$scope.verifyRequested = true;
+				alert("Verification code resent!!")
 			});
 		 }
 		 $scope.verify = function(){
@@ -61,9 +62,7 @@ angular.module('app')
 				 	console.log(data);
 					$scope.verified = data.verified;
 					$scope.verificationFailed = !data.verified;
-					if($scope.verified){
-						alert("Verification success");
-					}else{
+					if(!$scope.verified){
 						alert("Verification failed");
 					}
 				});

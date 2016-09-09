@@ -4,6 +4,7 @@ public abstract class AbstractVerifier implements Verifier{
 	protected abstract boolean supports(VerificationRequest request);
 	protected abstract boolean onProcess(VerificationRequest request);	
 	protected abstract String onRequest(VerificationRequest request);
+	protected abstract String onResend(VerificationRequest request);
 	@Override
 	public final boolean process(VerificationRequest request) throws VerifierNotSupportedException {
 		if(!supports(request))
@@ -18,4 +19,10 @@ public abstract class AbstractVerifier implements Verifier{
 		return onRequest(request);	
 	}
 	
+	@Override
+	public String resend(VerificationRequest request) throws VerifierNotSupportedException {
+		if(!supports(request))
+			throw new VerifierNotSupportedException();
+		return onResend(request);	
+	}
 }

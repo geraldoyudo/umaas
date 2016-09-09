@@ -29,6 +29,15 @@ public class VerificationAttendant {
 		return map;
 	}
 	
+	@RequestMapping(path= "/verify/resend", method = RequestMethod.POST)
+	public Map<String,String> resend(@RequestBody 
+			VerificationRequest request) throws VerifierNotSupportedException{
+		String id = generalVerifier.resend(request);
+		Map<String,String> map = new HashMap<>();
+		map.put("id", id);
+		return map;
+	}
+	
 	@RequestMapping(path= "/verify/process", method = RequestMethod.POST)
 	public Map<String,Boolean> processVerification(@RequestBody 
 			VerificationRequest request) throws VerifierNotSupportedException{

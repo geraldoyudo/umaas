@@ -37,4 +37,16 @@ public class VerifierFacade implements Verifier{
 		}
 		throw new VerifierNotSupportedException();
 	}
+	@Override
+	public String resend(VerificationRequest request) throws VerifierNotSupportedException {
+		if(verifiers == null) throw new VerifierNotSupportedException();
+		for(Verifier verifier: verifiers){
+			try{
+				return verifier.resend(request);
+			}catch(VerifierNotSupportedException ex){
+				continue;
+			}		
+		}
+		throw new VerifierNotSupportedException();
+	}
 }

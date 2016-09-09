@@ -47,4 +47,19 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
     protected boolean doProcess(VerificationRequest request){
     	return true;
     }
+    
+    @Override
+    protected String onResend(VerificationRequest request) {
+    	String tokenId = request.get("tokenId").toString();
+    	Token t = tokenManager.get(tokenId);
+    	if(t != null){
+    		tokenManager.delete(t);
+    	}
+    	Token newToken = tokenManager.createToken(t.getEntityType(), generateRandomCode()
+    			, t.getPurpose());
+    	request.set("code", newToken.getCode());
+		request.set("tokenId", newToken.getId());
+		doRequest(request);
+    	return newToken.getId();
+    }
 }
