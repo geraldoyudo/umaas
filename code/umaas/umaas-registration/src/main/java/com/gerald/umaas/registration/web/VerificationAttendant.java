@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gerald.umaas.registration.service.VerificationRequest;
@@ -19,7 +20,7 @@ public class VerificationAttendant {
 	@Qualifier("generalVerifier")
 	private Verifier generalVerifier;
 	
-	@RequestMapping(path= "/verify/request")
+	@RequestMapping(path= "/verify/request", method = RequestMethod.POST)
 	public Map<String,String> requestVerification(@RequestBody 
 			VerificationRequest request) throws VerifierNotSupportedException{
 		String id = generalVerifier.request(request);
@@ -28,7 +29,7 @@ public class VerificationAttendant {
 		return map;
 	}
 	
-	@RequestMapping(path= "/verify/process")
+	@RequestMapping(path= "/verify/process", method = RequestMethod.POST)
 	public Map<String,Boolean> processVerification(@RequestBody 
 			VerificationRequest request) throws VerifierNotSupportedException{
 		boolean verified = generalVerifier.process(request);
@@ -36,5 +37,6 @@ public class VerificationAttendant {
 		map.put("verified", verified);
 		return map;
 	}
+	
 	
 }

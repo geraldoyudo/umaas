@@ -2,7 +2,7 @@ package com.gerald.umaas.registration.service;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 public abstract class AbstractOneStepVerifier extends AbstractVerifier{
 	@Override
 	public final String onRequest(VerificationRequest request) {

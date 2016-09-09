@@ -51,6 +51,10 @@ public class TokenManager{
     public void setTimeToLive(long timeToLive) {
         this.timeToLive = timeToLive;
     }
+
+	public void delete(Token token) {
+		tokenRepository.delete(token);
+	}
 	    
 	   
 }

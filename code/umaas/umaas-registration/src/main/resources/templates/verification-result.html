@@ -1,0 +1,23 @@
+<!DOCTYPE	html> 
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" >
+		<head>		
+			<title>
+			</title> 
+			 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+		</head> 
+		<body>
+		<div th:if="${result.verified}">
+			Verification Success!! 
+			Field Verified : <span th:text="${request.value}"></span>
+			Please hit the Refresh on your registration page
+		</div>
+		
+		<div th:if="${!result.verified}">
+			Verification Failed!! 
+			You tried to verify the field
+			<span th:text="${request.value}"></span>
+			Please check your url and try again
+		</div>	
+		</body> 
+</html>

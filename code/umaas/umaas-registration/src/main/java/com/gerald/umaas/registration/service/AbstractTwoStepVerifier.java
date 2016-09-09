@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.gerald.umaas.registration.entities.Token;
 import com.gerald.umaas.registration.managers.TokenManager;
 
-@Component
+
 public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
 	@Autowired
 	private TokenManager tokenManager;
@@ -21,6 +21,8 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
 		String name = request.getName();
 		String code = generateRandomCode();
 		Token token = tokenManager.createToken(name, code, "verification");
+		request.set("code", code);
+		request.set("tokenId", token.getId());
 		doRequest(request);
 		return  token.getId();
 	}
@@ -38,6 +40,7 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
     		return false;
     	if(!token.getCode().equals(code))
     		return false;
+    	tokenManager.delete(token);
     	return doProcess(request);
     }
     
