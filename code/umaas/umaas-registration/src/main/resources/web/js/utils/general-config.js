@@ -14,6 +14,8 @@ angular.module('app')
 	  templateUrl: '/app/partials/templates/verify-item.htm',
 	  controller: function($scope, $parse, $http){
 		  var key = $scope.options.key;
+		  console.log($scope);
+		  $scope.form.$setValidity($scope.options.name, false);
 		  if(key){
 			  $scope.modelValue = $scope.model[key];
 		  }else{
@@ -65,6 +67,7 @@ angular.module('app')
 					if(!$scope.verified){
 						alert("Verification failed");
 					}
+					$scope.form.$setValidity($scope.options.name, true);
 				});
 		 }
 	  }

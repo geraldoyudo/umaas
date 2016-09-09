@@ -45,4 +45,10 @@ angular.module('app')
 		$scope.verificationFields = fieldManager.getVerificationFields();
 		console.log($scope.verificationFields);
 	})
+	$scope.proceedIfNoVerification = function(){
+		console.log("Checking if there are verification fields");
+		if(!$scope.verificationFields || !$scope.verificationFields.length || $scope.verificationFields.length === 0){
+			$scope.next($scope.user);
+		}
+	}
 })

@@ -123,18 +123,34 @@ angular.module('app')
 		return umaasFields;
 	}
 	var getVFields = function(){
-		return [
-		        {
+		var vfs = [];
+		var domain = umaas.getDomain();
+		if(domain.properties.verifyEmail){
+			vfs.push({
 		        	 key: 'email',
 			   	      type: 'verify-item',
+			   	      name: 'email',
 			   	      templateOptions: {
 			   	    	verifier: 'email',
 			   	        label: 'Email address',
 			   	        placeholder: 'Enter email',
 			   	        required: true
 			   	      }
-		   	    }
-		        ];
+		   	    });
+		}
+		if(domain.properties.verifyPhoneNumber){
+			vfs.push( {
+	        	 key: 'phoneNumber',
+		   	      type: 'verify-item',
+		   	      name: 'phoneNumber',
+		   	      templateOptions: {
+		   	    	verifier: 'phone',
+		   	        label: 'Phone Number',
+		   	        required: true
+		   	      }
+	   	    });
+		}
+		return vfs;
 	}
 	this.getVerificationFields = function(){
 		return vFields;
