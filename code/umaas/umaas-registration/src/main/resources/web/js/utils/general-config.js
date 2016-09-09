@@ -16,11 +16,12 @@ angular.module('app')
 		  var key = $scope.options.key;
 		  console.log($scope);
 		  $scope.form.$setValidity($scope.options.name, false);
-		  if(key){
+		  if((typeof key) === 'string'){
 			  $scope.modelValue = $scope.model[key];
 		  }else{
-			  var expression = $scope.options.ngModelELAttrs["ng-model"];
+			  var expression = $scope.options.templateOptions.key;
 			  if(!expression) throw new Error("No expression to resolve");
+			  console.log("Expression " + expression);
 			  var getter = $parse(expression);
 			  $scope.modelValue = getter($scope);
 		  }

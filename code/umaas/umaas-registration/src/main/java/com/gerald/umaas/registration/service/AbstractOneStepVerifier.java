@@ -16,4 +16,9 @@ public abstract class AbstractOneStepVerifier extends AbstractVerifier{
 	}
 	
 	protected abstract boolean doProcess(VerificationRequest request);
+	
+	@Override
+	public VerifierType getType() {
+		return VerifierType.ONE_STEP;
+	}
 }

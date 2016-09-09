@@ -4,4 +4,5 @@ public interface Verifier {
 	public boolean process(VerificationRequest request) throws VerifierNotSupportedException;
 	public String request(VerificationRequest request) throws VerifierNotSupportedException;
 	public String resend(VerificationRequest request) throws VerifierNotSupportedException;
+	public VerifierType getType();
 }

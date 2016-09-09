@@ -62,4 +62,9 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
 		doRequest(request);
     	return newToken.getId();
     }
+    
+    @Override
+    public VerifierType getType() {
+    	return VerifierType.TWO_STEP;
+    }
 }

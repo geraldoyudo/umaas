@@ -111,6 +111,27 @@ var makeField = function(fieldData){
 	return field;
 }
 
+var makeVerificationField = function(field){
+	var verifier = field.properties.verifier;
+	if(!verifier || (verifier.type !== 'TWO_STEP')){
+		return;
+	}
+
+	var vField = {
+  	      type: 'verify-item',
+  	      name: field.id,
+  	      templateOptions: {
+  	    	verifier: verifier.name ,
+  	        label: (field.properties.label || field.name),
+  	        required: true
+  	      }
+	    };
+	
+	vField.templateOptions.key = "model['properties']['".concat(field.name).concat("']");
+	return vField;
+	
+}
+
 angular.module('app')
 
 .service('fieldManager', function(umaas, $rootScope, $q){
@@ -150,6 +171,13 @@ angular.module('app')
 		   	      }
 	   	    });
 		}
+		var valField;
+		for(var i=0; i< customFields.length; ++i){
+			valField = makeVerificationField(customFields[i]);
+			if(valField){
+				vfs.push(valField);
+			}
+		}
 		return vfs;
 	}
 	this.getVerificationFields = function(){
@@ -159,7 +187,7 @@ angular.module('app')
 		var deferred = $q.defer();
 		var fields = defaultFields();
 		if(fieldLoaded){
-			var customFields = getCustomFields();
+			customFields = getCustomFields();
 			fields = fields.concat(customFields);
 			deferred.resolve(fields);
 		}else{

@@ -49,4 +49,9 @@ public class VerifierFacade implements Verifier{
 		}
 		throw new VerifierNotSupportedException();
 	}
+	
+	@Override
+	public VerifierType getType() {
+		return VerifierType.GENERAL;
+	}
 }
