@@ -54,6 +54,12 @@ public class ApiSecurityChecker {
 		System.out.println(entityType);
 		System.out.println(entityId);
 		Priviledge priviledge = getPriviledge(request);
+		if(entityType.equals("auth")){
+			String domain = request.getParameter("domain");
+			if(domain != null){
+				return permissionManager.hasDomainCollectionPermission(domain, entityType, priviledge);
+			}
+		}
 		if(entityId.equals("search")){
 			if(entityType.equals(Domain.class.getSimpleName())){
 				String searchCommand = segments[2];

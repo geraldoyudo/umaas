@@ -53,7 +53,11 @@ public class LocalPermissionManager implements PermissionManager{
 		System.out.println("Domain access code retrieved");
 		try{
 		if(entityClass == null){
-			System.out.println("Entity Type not a class");
+			System.out.println("Evaluating non-class resource");
+			if(checkEntry(accessCode, entityType, entityId, priviledge)) return true;
+			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
+			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
+			return false;
 		}else if(entityId.equals(ALL_ITEMS)){
 			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
 			if(DomainResource.class.isAssignableFrom(entityClass)){
