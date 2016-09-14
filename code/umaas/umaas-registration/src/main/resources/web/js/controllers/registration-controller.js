@@ -14,6 +14,7 @@ angular.module('app')
 	};
 	start();
 	$scope.user = new umaas.AppUser();
+	$scope.loginPage = domain.properties.loginPage || "";
 	$scope.display.title = stageManager.currentStage.title;
 	$scope.display.description = stageManager.currentStage.description;
 	$scope.display.hideNav = stageManager.currentStage.hideNav;

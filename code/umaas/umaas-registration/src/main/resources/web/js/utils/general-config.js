@@ -75,19 +75,20 @@ angular.module('app')
 	});
 })
 
-.service('loader', function($q){
+.service('loader', function($q, globalConfig){
 	this.loadDomain = function(){
 		var deferred = $q.defer();
-		umaas.domains.findAll({size:2}, function(error, domains){
+		umaas.setAccessCode(globalConfig.accessCode);
+		umaas.domains.findByName(globalConfig.domainName, function(error, domain){
 			if(error){
 				console.log("Error");
 				console.log(error);
 				deferred.reject();
 			}else{
 				console.log("Success");
-				console.log(domains);
-				umaas.setDomain(domains.content[0]);
-				deferred.resolve(domains.content[0]);
+				console.log(domain);
+				umaas.setDomain(domain);
+				deferred.resolve(domain);
 			}
 		})
 		return deferred.promise;

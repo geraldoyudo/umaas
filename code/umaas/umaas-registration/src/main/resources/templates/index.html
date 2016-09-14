@@ -1,5 +1,6 @@
 <!DOCTYPE	html> 
-	<html> 
+	<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" >
 		<head>		
 			<title>
 			</title> 
@@ -40,12 +41,14 @@
         <script src='/app/web/js/services/field-manager.js'></script>
         <script src='/app/web/js/controllers/main-controller.js'></script>
         <script src='/app/web/js/controllers/registration-controller.js'></script>
-        <script>
+        <script th:inline="javascript">
         	angular.module("app")
         	.run(function(umaas){
-        		console.log("Configuring umaas client");
-        		umaas.setAccessCode({id:"0000", code:"0000"});
         		umaas.setBaseUrl("/umaas/core");
+        	})
+        	.constant('globalConfig', {
+        		accessCode: [[${accessCode}]],
+        		domainName: [[${domainName}]]
         	});
         </script>
 		
