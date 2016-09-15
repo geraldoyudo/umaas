@@ -1,0 +1,54 @@
+<!DOCTYPE	html> 
+	<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" >
+		<head>		
+			<title>
+			</title> 
+			 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+			  <!-- Angular Material style sheet -->
+			  <link rel="stylesheet" href="/app/webjars/angular-material/angular-material.min.css"></link>
+			  <link rel="stylesheet" href="/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.min.css"></link>
+			 <!-- style sheet -->
+			<link href="/app/webjars/md-data-table/md-data-table.min.css" rel="stylesheet" type="text/css"/>
+			<link rel="stylesheet" href="/app/web/css/styles.css"></link>
+		</head> 
+		<body ng-app='app'>
+		<div ng-controller='MainCtrl'> 
+		<div>{{"Hello " + "World"}}</div>
+		<div ui-view=""></div>
+		
+		</div>
+		<script src="/app/webjars/api-check/api-check.js"></script> <!-- must appear before formly.js -->
+		<script src='/app/webjars/angularjs/angular.min.js'></script>
+		<script src='/app/webjars/angular-ui-router/angular-ui-router.min.js'></script>
+        <script src="/app/webjars/angularjs/angular-animate.min.js"></script>
+ 		<script src="/app/webjars/angularjs/angular-aria.min.js"></script>
+ 		<script src="/app/webjars/angularjs/angular-messages.min.js"></script>
+        <script src='/app/webjars/angular-material/angular-material.min.js'></script>
+        <script src="/app/webjars/angular-material-icons/angular-material-icons.js"></script>
+		<script src="/app/webjars/angular-formly/formly.js"></script>
+		<script src="/app/webjars/angular-formly-material/formly-material.min.js"></script>
+        <script src="/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.js"></script>
+        <script src='/app/webjars/traverson/traverson.min.js'></script>
+        <script src='/app/webjars/traverson-hal/traverson-hal.min.js'></script>
+        <script src='/app/webjars/traverson-angular/traverson-angular.min.js'></script>
+        <script src="/app/webjars/md-data-table/md-data-table.min.js"></script>
+        <script src='/app/web/lib/umaas-client/umaas-client.js'></script>
+        <script src='/app/web/js/app.js'></script>
+        <script src='/app/web/js/utils/umaas-client-angular.js'></script>
+        <script src='/app/web/js/utils/routes.js'></script>
+        <script src='/app/web/js/utils/general-config.js'></script>       
+        <script src='/app/web/js/controllers/main-controller.js'></script>
+        <script th:inline="javascript">
+        	angular.module("app")
+        	.run(function(umaas){
+        		umaas.setBaseUrl("/umaas/core");
+        	})
+        	.constant('globalConfig', {
+        		accessCode: [[${accessCode}]],
+        		domainName: [[${domainName}]]
+        	});
+        </script>
+		
+		</body> 
+</html>

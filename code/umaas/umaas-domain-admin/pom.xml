@@ -31,10 +31,6 @@
 			<version>2.17.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>	
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
@@ -102,15 +98,33 @@
 			  <groupId>org.webjars.bower</groupId>
 			  <artifactId>api-check</artifactId>
 			  <version>7.5.5</version>
-			</dependency>			
+			</dependency>	
+			<dependency>
+			  <groupId>org.webjars.bower</groupId>
+			  <artifactId>traverson</artifactId>
+  			  <version>3.2.0</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.webjars.bower</groupId>
+			  <artifactId>traverson-angular</artifactId>
+			  <version>3.1.1</version>
+			</dependency>
+			<dependency>
+			  <groupId>org.webjars.bower</groupId>
+			  <artifactId>traverson-hal</artifactId>
+			  <version>4.1.1</version>
+			</dependency>		
+			<!-- https://mvnrepository.com/artifact/org.webjars/md-data-table -->
+			<dependency>
+			    <groupId>org.webjars</groupId>
+			    <artifactId>md-data-table</artifactId>
+			    <version>0.10.9</version>
+			</dependency>
+			
 			  <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		   <dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
-	    </dependency>
 
 			
 	</dependencies>

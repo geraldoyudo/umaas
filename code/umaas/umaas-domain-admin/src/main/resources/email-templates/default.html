@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" >
+   <head></head>
+ <body>
+ 	<h2>Verification</h2>
+ 	<p>Your verification code is</p>
+ 	<span th:text="${request.properties.code}">1234</span>
+ 	
+ 	You can verify directly following this link
+ 	<a th:href="${verifyUrl}">Verify Here</a>
+  </body>
+</html>

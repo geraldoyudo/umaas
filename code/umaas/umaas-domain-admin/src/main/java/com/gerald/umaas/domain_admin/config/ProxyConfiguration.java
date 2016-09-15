@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProxyConfiguration extends RouteBuilder {
-	@Value("${app.registration.core}")
+	@Value("${umaas.core}")
 	private String coreUrl;
 	
 	@PostConstruct

@@ -4,20 +4,6 @@ import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -43,11 +29,6 @@ public class CamelConfig {
 	        registration.addUrlMappings("/app/*");
 	        return registration;
 	    }
-    
-    @Bean
-    public ProjectionFactory projectionFactory(){
-        return new SpelAwareProxyProjectionFactory();
-    }
     
     @Bean
     public LocalValidatorFactoryBean validator(){
