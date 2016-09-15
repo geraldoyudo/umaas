@@ -1,7 +1,28 @@
 angular.module('app')
-.controller('MainCtrl', function($scope, $state){
+.controller('MainCtrl', function($scope, $state, loader){
 	console.log("Successfully Loaded");
-	$scope.go = function(stateStr){
-		$state.go(stateStr);
-	}
+	$state.go('users');
+	loader.loadDomain().then(function(domain){
+		$scope.domain = domain;
+	});
 })
+
+           
+.controller("layoutCtrl", function($mdSidenav, $scope, $state){
+   
+    $scope.toggleSidenav =  function(menuId) {
+        $mdSidenav(menuId).toggle();
+      };
+      
+    $scope.menu = [{icon:"person", title:"Users"},
+    {icon:"group", title:"Groups"}, 
+    {icon:"work", title:"Roles"},
+     {icon:"view list", title:"Custom Fields"},
+     {icon:"settings", title:"Setting"},
+    {icon:"local_restaurant", title:"Role Mappings"}];
+    var routes=["users", "groups","roles", "customFields", "properties",
+    "roleMapping"];
+    $scope.loadContent = function(index){
+         $state.go(routes[index]);
+     };
+  });
