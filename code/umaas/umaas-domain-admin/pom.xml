@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.gerald.umaas</groupId>
-	<artifactId>umaas-registration</artifactId>
+	<artifactId>umaas-domain-admin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>umaas-registration</name>
-	<description>Registration process for users on umaas</description>
+	<name>umaas-domain-admin</name>
+	<description>UI for domain administration</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -102,31 +102,7 @@
 			  <groupId>org.webjars.bower</groupId>
 			  <artifactId>api-check</artifactId>
 			  <version>7.5.5</version>
-			</dependency>
-			<dependency>
-			  <groupId>org.webjars.bower</groupId>
-			  <artifactId>traverson</artifactId>
-  			  <version>3.2.0</version>
-			</dependency>
-			<dependency>
-			  <groupId>org.webjars.bower</groupId>
-			  <artifactId>traverson-angular</artifactId>
-			  <version>3.1.1</version>
-			</dependency>
-			<dependency>
-			  <groupId>org.webjars.bower</groupId>
-			  <artifactId>traverson-hal</artifactId>
-			  <version>4.1.1</version>
-			</dependency>
-			<dependency>
-				<groupId>com.gerald.utils</groupId>
-				<artifactId>comm</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-			  <dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-mail</artifactId>
-		</dependency>
+			</dependency>			
 			  <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-actuator</artifactId>
