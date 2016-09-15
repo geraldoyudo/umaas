@@ -1,11 +1,20 @@
 angular.module('app')
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, DomainConstants) {
     
 	$stateProvider
-	
 		.state('users', {
-	        templateUrl: '/app/partials/users.html'
+	        templateUrl: '/app/partials/users.html',
+	        controller: 'EntityCtrl',
+	        resolve: {
+            	domain: function(loader){
+            		return loader.loadDomain();
+            	},
+            	fields: function(loader){
+            		return loader.loadFields();
+            	},
+            	entityType: function(){return DomainConstants.Entity.User}
+            }
 	      })
           .state('groups',{
               templateUrl: '/app/partials/groups.html'

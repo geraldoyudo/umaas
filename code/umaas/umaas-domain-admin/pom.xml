@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>umaas-domain-admin</name>
-	<description>UI for domain administration</description>
+	<description>UI for performing domain administration processes</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
-
+ 
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
@@ -98,7 +98,7 @@
 			  <groupId>org.webjars.bower</groupId>
 			  <artifactId>api-check</artifactId>
 			  <version>7.5.5</version>
-			</dependency>	
+			</dependency>
 			<dependency>
 			  <groupId>org.webjars.bower</groupId>
 			  <artifactId>traverson</artifactId>
@@ -113,14 +113,18 @@
 			  <groupId>org.webjars.bower</groupId>
 			  <artifactId>traverson-hal</artifactId>
 			  <version>4.1.1</version>
-			</dependency>		
-			<!-- https://mvnrepository.com/artifact/org.webjars/md-data-table -->
+			</dependency>
 			<dependency>
 			    <groupId>org.webjars</groupId>
 			    <artifactId>md-data-table</artifactId>
 			    <version>0.10.9</version>
+			    <exclusions>
+		        <exclusion> 
+		          <groupId>org.webjars</groupId>
+		          <artifactId>angular-material</artifactId>
+		        </exclusion>
+		      </exclusions> 
 			</dependency>
-			
 			  <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-actuator</artifactId>

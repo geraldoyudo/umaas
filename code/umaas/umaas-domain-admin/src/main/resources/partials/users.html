@@ -1,1 +1,64 @@
-USERS
+<div layout="row">
+<md-card ng-if="domain" flex-gt-sm="90" flex-gt-md="80">
+    <md-card-content>
+    
+        <md-toolbar class="md-table-toolbar alternate">
+          <div class="md-toolbar-tools">
+              <div flex="80">
+                  <h2 >Users</h2>
+              </div>
+              <div flex="20" layout-align="center" >
+              <md-button ng-show="selectedEntities.length" 
+                         class="md-raised md-accent" 
+                         ng-click="showEntityForm($event,selectedEntities[0])">Edit</md-button>
+              </div>
+              </div>
+        </md-toolbar>
+        <md-table-container>
+        <table md-table md-row-select ng-model="selectedEntities" md-progress="loadingPromise">
+          <thead md-head md-order="asc" >
+            <tr md-row>
+              <th md-column md-order-by="username"><span>Username</span></th>
+              <th md-column md-order-by="email"><span>Email</span></th>
+               <th md-column><span>Groups</span></th>
+              <th md-column><span>Email Verified</span></th>
+              <th md-column><span>Phone Number Verified</span></th>
+              <th md-column ng-repeat="field in fields">
+                  {{field.name}}
+              </th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="user" md-on-select="onSelect" md-select-id="{{user.username}}" 
+                md-auto-select ng-repeat="user in entities.content">
+              <td md-cell>{{user.username}}</td>
+              <td md-cell>{{user.email}}</td>
+              <td md-cell> {{user.groups}}</td>
+              <td md-cell>{{user.emailVerified}}</td>
+              <td md-cell>{{user.phoneNumberVerified}}</td>
+              <td md-cell ng-repeat="field in fields">
+                  <div ng-switch="field.type">
+                    <div ng-switch-when="File">
+                        <file-resource resource-id="{{user.properties[field.name]}}"
+                                       view-url="/api/files/view"
+                                       download-url="/api/files/download"></file-resource>
+                    </div>
+                    <div ng-switch-default>{{user.properties[field.name]}}</div>
+                  </div>
+                 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      
+      </md-table-container>
+     <md-table-pagination md-limit-options="options" md-limit="paginationData.size" md-page="paginationData.page" md-total="{{entities.getTotalElements()}}" 
+                          md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" 
+                  ng-click="showEntityForm($event)">
+        <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+
+    </md-card-content>
+  </md-card>
+</div>
