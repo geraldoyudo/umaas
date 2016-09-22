@@ -1,6 +1,7 @@
 angular.module('app')
 
-.config(function($stateProvider, $urlRouterProvider, DomainConstants) {
+.config(function($stateProvider, $urlRouterProvider,
+		DomainConstants, domainFields) {
     
 	$stateProvider
 		.state('users', {
@@ -51,11 +52,15 @@ angular.module('app')
           
           })
           .state('properties',{
-              templateUrl: '/app/partials/properties.html'
-          })
-           .state('roleMapping',{
-              templateUrl: '/app/partials/role-mapping.html'
-          });;
+              templateUrl: '/app/partials/properties.html',
+              controller: 'DomainCtrl',
+	  	      resolve: {
+	              	domain: function(loader){
+	              		return loader.loadDomain();
+	              	},
+	              	fields:function(){return angular.copy(domainFields)}	  	      
+	          }
+          });
         
     // catch all route
     // send users to the form page 

@@ -399,7 +399,7 @@ var app = angular.module("app")
              }
          },
          {
-             key: 'appName',
+             key: 'name',
              type: 'input',
              templateOptions: {
                  type: 'text',
@@ -421,42 +421,13 @@ var app = angular.module("app")
          },
          {
 
-             key: 'urlMap.home',
+             key: 'loginPage',
              type: 'input',
              templateOptions: {
                  type: 'text',
-                 label: 'Url to home page',
-                 placeholder: 'Enter home page url'
-             }
-         },
-         {
-
-             key: 'urlMap.login',
-             type: 'input',
-             templateOptions: {
-                 type: 'text',
-                 label: 'Url to Redirect on Success',
-                 placeholder: 'Enter registration success url'
-             }
-         },
-         {
-
-             key: 'urlMap.registration_success',
-             type: 'input',
-             templateOptions: {
-                 type: 'text',
-                 label: 'Url to Redirect on Success',
-                 placeholder: 'Enter registration success url'
-             }
-         },
-         {
-
-             key: 'urlMap.verification_success',
-             type: 'input',
-             templateOptions: {
-                 type: 'text',
-                 label: 'Url to Redirect on Email Verification Success',
-                 placeholder: 'Enter email verification success url'
+                 label: 'Redirect to url after Registration',
+                 placeholder: 'Enter Url ',
+                 required: true
              }
          },
          {

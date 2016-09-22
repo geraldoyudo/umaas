@@ -53,6 +53,9 @@ angular.module('app')
 		}	
 		return deferred.promise;
 	}
+	this.setDomain = function(d){
+		domain = d;
+	}
 	var fields;
 	this.loadFields = function(){
 		var deferred = $q.defer();
