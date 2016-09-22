@@ -1,0 +1,21 @@
+ <md-dialog aria-label="Edit" flex="50" >
+    <md-dialog-content>
+    <div layout="" layout-fill="" layout-align="center" layout-padding="">
+        <formly-form flex model="entity" 
+        fields="fields" form="entityForm"
+        ng-if="fields"></formly-form>
+    </div>
+     </md-dialog-content>
+
+<md-dialog-actions>         
+  <md-button type="submit" data-ng-disabled="entityForm.$invalid" data-ng-click="newEntity?add(entity):update(entity)">
+             {{newEntity?'Add':'Update'}}
+             </md-button>
+             <md-button ng-if="!newEntity" type="button" data-ng-click="delete(entity)">Delete</md-button>
+             <md-button type="button"  data-ng-click="cancel()">Cancel</md-button>
+     
+  
+ </md-dialog-actions>
+        
+
+</md-dialog>

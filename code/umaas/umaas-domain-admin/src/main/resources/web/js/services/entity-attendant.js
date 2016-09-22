@@ -25,7 +25,8 @@ angular.module('app')
 	}
 	
 	this.newEntity = function(entityType){
-		if(!creatorMap[entityName]) return;
-		return new creatorMap[entityName]();
+		if(!creatorMap[entityType]) return;
+		return new creatorMap[entityType]();
 	}
 })
+

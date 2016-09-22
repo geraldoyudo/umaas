@@ -14,7 +14,6 @@ try{
    TraversonJsonHalAdapterRef = require('traverson-hal');
 }
 
-
 traversonRef.registerMediaType(TraversonJsonHalAdapterRef.mediaType,
     TraversonJsonHalAdapterRef);
 
@@ -29,11 +28,12 @@ utils.updateObject = function (url, object, callback){
    api.newRequest().from(url)
       .addRequestOptions({headers:{'Content-Type': 'application/json'}})
       .patch(object, function(error, response, traversal){
+    	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
         }
-        if(body === ''  && response.headers && response.headers.location){
+        if((body === undefined || body === '')  && response.headers && response.headers.location){
           var location = response.headers.location;
           api.newRequest().from(location)
             .getResource(function(error, resource, traversal){
@@ -42,7 +42,8 @@ utils.updateObject = function (url, object, callback){
         }else{
            //console.log(response);
           //console.log(traversal);
-          callback(error, JSON.parse(body), traversal);
+           callback(error, JSON.parse(body), traversal); 	 
+         
         } 
       });
 }
@@ -50,6 +51,7 @@ utils.deleteObject = function(url, callback){
     //console.log("deleting from " + url);
     api.newRequest().from(url)
       .delete(function(error, response, traversal){
+      	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
@@ -65,11 +67,12 @@ utils.insertObject = function(url, object, callback){
     api.newRequest().from(url)
       .addRequestOptions({headers:{'Content-Type': 'application/json'}})
       .post(object, function(error, response, traversal){
+      	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
         }
-         if(body === '' && response.headers && response.headers.location){
+         if((body === undefined || body === '') && response.headers && response.headers.location){
           var location = response.headers.location;
           api.newRequest().from(location)
             .getResource(function(error, resource, traversal){
@@ -425,6 +428,18 @@ var AppUser =  function(resourceObject){
             field.getFileProperty(userId, callback);
         })
      }
+      
+      this.getFileUrl = function(fieldName, callback, view){
+    	  var userId = this.id;
+          umaas.fields.findByName(fieldName, function(error, field){
+              if(error) return callback(error);
+              return callback(apiBaseUrl + '/files/user/'+ (view?'view':'download') + '/' + userId + "/" + fieldId) ;
+          })
+      }
+      this.getFileUrlByFieldId = function(fieldId, view){
+    	  var userId = this.id;
+    	 return apiBaseUrl + '/files/user/'+ (view?'view':'download') + '/' + userId + "/" + fieldId;
+      }
 }
 
 

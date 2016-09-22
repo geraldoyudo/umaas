@@ -1,0 +1,22 @@
+ <div>
+   <div style = "margin-bottom:10px">
+        <strong> {{to.label}}*</strong>
+   </div>
+    <md-chips ng-model="model[options.key]" md-autocomplete-snap="" md-require-match="true"
+    md-transform-chip="transform($chip)">
+    <md-autocomplete
+            md-selected-item="selectedItem"
+            md-search-text="searchText"
+            md-items="item in to.options | filter:searchObject"
+            md-item-text="item.name || item"
+            placeholder="+add">
+        <span md-highlight-text="searchText">{{item.name || item}}</span>
+    </md-autocomplete>
+    <md-chip-template>
+   <span>
+      {{$chip.name || $chip}}
+   </span>
+    </md-chip-template>
+</md-chips>
+</div>
+

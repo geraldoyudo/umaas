@@ -1,10 +1,31 @@
-angular.module('app')
+var arrayInputCtrl = function($scope){
+	var key = $scope.to.key || 'name';
+	var optionKey = $scope.to.optionKey || key;
+	$scope.searchText = '';
+	$scope.searchObject = {};
+	$scope.searchObject[optionKey] = $scope.searchText;
+	$scope.transform = function($chip){
+		if(key){
+			return $chip[key];
+		}else{
+			return $chip
+		}
+	}
+}
 
+angular.module('app')
 .run(function(formlyConfig){
+    formlyConfig.setType({
+        name: 'arrayInput',
+        templateUrl: '/app/partials/templates/array-input.htm',
+        controller: arrayInputCtrl
+    });
+  
 	formlyConfig.setType({
 	  name: 'file-input',
 	  templateUrl: '/app/partials/templates/file-input.htm'
 	});
+    
 })
 
 
@@ -48,6 +69,27 @@ angular.module('app')
 					fields = f.content;
 					console.log(fields);
 					deferred.resolve(fields);
+				}
+			})
+		}	
+		return deferred.promise;
+	}
+	var groups;
+	this.loadGroups = function(){
+		var deferred = $q.defer();
+		if(groups){
+			deferred.resolve(groups);
+		}else{
+			umaas.groups.find({size:1000}, function(error, g){
+				if(error){
+					console.log("Error");
+					console.log(error);
+					deferred.reject();
+				}else{
+					console.log("Success");
+					groups = g.content;
+					console.log(groups);
+					deferred.resolve(groups);
 				}
 			})
 		}	

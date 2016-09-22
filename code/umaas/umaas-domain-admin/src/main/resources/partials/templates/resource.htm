@@ -1,0 +1,14 @@
+ <md-dialog aria-label="File Resource" flex="50" >
+    <md-dialog-content>
+        <div layout="" layout-fill="" layout-align="center" layout-padding="">
+            <iframe ng-src="{{url}}" frameBorder="0"></iframe>
+            
+        </div>
+     </md-dialog-content>
+
+<md-dialog-actions>         
+      <md-button ng-if="!newEntity" type="button" data-ng-click="ok()">OK</md-button>
+</md-dialog-actions>
+        
+
+</md-dialog>
