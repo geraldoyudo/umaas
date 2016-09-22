@@ -421,6 +421,7 @@ var app = angular.module("app")
          },
          {
 
+             model: 'model.properties',
              key: 'loginPage',
              type: 'input',
              templateOptions: {
@@ -432,7 +433,8 @@ var app = angular.module("app")
          },
          {
 
-             key: 'properties.emailAsUsername',
+             model: 'model.properties',
+             key: 'emailAsUsername',
              type: 'checkbox',
              templateOptions: {
                 label: 'Use Email as Username'
