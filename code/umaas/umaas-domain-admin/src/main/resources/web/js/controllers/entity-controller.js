@@ -144,7 +144,6 @@ angular.module('app')
         }
         displayForm($event, entity, newE);
     };
-	
 })
 
 

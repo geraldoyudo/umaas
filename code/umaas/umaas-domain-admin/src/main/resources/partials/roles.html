@@ -1,1 +1,38 @@
-ROLES
+<div layout="row">
+<md-card flex-gt-sm="90" flex-gt-md="80">
+<md-card-content>
+  <md-toolbar class="md-table-toolbar alternate">
+          <div class="md-toolbar-tools">
+              <div flex="80">
+                  <h2 >roles</h2>
+              </div>
+              <div flex="20" layout-align="center" >
+              <md-button ng-show="selectedEntities.length" 
+                         class="md-raised md-accent" 
+                         ng-click="showEntityForm($event,selectedEntities[0])">Edit</md-button>
+              </div>
+              </div>
+        </md-toolbar>
+  <md-table-container>
+    <table md-table md-row-select ng-model="selectedEntities"  md-progress="loadingPromise">
+      <thead md-head md-order="asc" >
+        <tr md-row>
+          <th md-column md-order-by="name"><span>Name</span></th>
+                                          </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row md-select="role" md-on-select="onSelect" md-select-id="role.name" md-auto-select ng-repeat="role in entities.content">
+          <td md-cell>{{role.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+    <md-table-pagination md-limit-options="options" md-limit="paginationData.size" md-page="paginationData.page" md-total="{{entities.getTotalElements()}}" 
+                          md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+       <md-button class="md-fab md-fab-bottom-right" aria-label="Add" 
+                  ng-click="showEntityForm($event)">
+        <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+</md-card-content>
+</md-card>
+</div>

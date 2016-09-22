@@ -17,10 +17,26 @@ angular.module('app')
             }
 	      })
           .state('groups',{
-              templateUrl: '/app/partials/groups.html'
+              templateUrl: '/app/partials/groups.html',
+              controller: 'EntityCtrl',
+	  	      resolve: {
+	              	domain: function(loader){
+	              		return loader.loadDomain();
+	              	},
+	              	fields:function(){return {}},
+	              	entityType: function(){return DomainConstants.Entity.Group}
+	  	      }
           })
           .state('roles',{
-            templateUrl: '/app/partials/roles.html'
+            templateUrl: '/app/partials/roles.html',
+	    	  controller: 'EntityCtrl',
+	  	      resolve: {
+	              	domain: function(loader){
+	              		return loader.loadDomain();
+	              	},
+	              	fields:function(){return {}},
+	              	entityType: function(){return DomainConstants.Entity.Role}
+	  	      }
           })
           .state('customFields',{
             templateUrl: '/app/partials/custom-fields.html'

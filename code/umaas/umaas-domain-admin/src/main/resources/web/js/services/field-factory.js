@@ -77,7 +77,8 @@ var getFieldTemplate = function(field){
 angular.module('app')
 
 .service("EntityFormFieldsFactory", function(DomainConstants,$q,
-		umaas, $timeout, loader, userFields){
+		umaas, $timeout, loader, userFields, groupFields,
+		roleFields){
     var self = this;
     var createMap = {};
     
@@ -107,6 +108,17 @@ angular.module('app')
     		});
     	});
     	return deferred.promise;
+    };
+    var returnCopy = function(fieldTemplates){
+    	var deferred = $q.defer();
+    	deferred.resolve(angular.copy(fieldTemplates))
+    	return deferred.promise;
+    }
+    createMap[DomainConstants.Entity.Group] = function(isNew){
+    	return returnCopy(groupFields);
+    };
+    createMap[DomainConstants.Entity.Role] = function(isNew){
+    	return returnCopy(roleFields);
     };
    
     console.log(createMap);
