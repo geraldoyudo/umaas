@@ -77,9 +77,9 @@ var app = angular.module("app")
                     type: 'select',
                     templateOptions: {
                         label: 'Type',
-                        options: [ {name: "Boolean", value: "Boolean"}, {name: "Integer", value:"Integer"}, 
-                            {name: "String", value:"String"}, {name: "Decimal", value:"Decimal"}, 
-                            {name: "Date", value:"Date"},{name: "Email", value:"Email"},{name: "Pattern", value:"Pattern"},{name: "Select", value:"Select"},{name: "File", value:"File"}],      
+                        options: [ {name: "Boolean", value: "boolean"}, {name: "Integer", value:"integer"}, 
+                            {name: "String", value:"string"}, {name: "Decimal", value:"decimal"}, 
+                            {name: "Date", value:"date"},{name: "Email", value:"email"},{name: "Select", value:"select"},{name: "File", value:"file"}],      
                         required: true
                     }
                 },
@@ -99,45 +99,115 @@ var app = angular.module("app")
                     }
                 },
                  {
-                    key: 'meta.type',
+                    key: 'properties.type',
                     type: 'select',
-                    hideExpression: "model.type !== 'Select'",
+                    hideExpression: "model.type !== 'select'",
                     templateOptions: {
                         label: 'Option Type',
-                         options: [ {name: "Boolean", value: "Boolean"}, {name: "Integer", value:"Integer"}, 
-                            {name: "String", value:"String"}, {name: "Decimal", value:"Decimal"}, 
-                            {name: "Date", value:"Date"}]         
+                         options: [ {name: "Boolean", value: "boolean"}, {name: "Integer", value:"integer"}, 
+                            {name: "String", value:"string"}, {name: "Decimal", value:"decimal"}, 
+                            {name: "Date", value:"date"}]         
+                    }
+                },
+                {
+                    
+                    model: 'model.properties',
+                    key: 'maximum',
+                    type: 'input',
+                    hideExpression: "!(model.type == 'integer' || model.type =='decimal')",
+                    templateOptions: {
+                        label: 'Maximum',
+                        placeholder: 'Enter Maximum Value',
+                        type: 'number'
+                    }
+                },
+                {
+                    
+                    model: 'model.properties',
+                    key: 'minimum',
+                    type: 'input',
+                    hideExpression: "!(model.type == 'integer' || model.type =='decimal')",
+                    templateOptions: {
+                        label: 'Minimum',
+                        placeholder: 'Enter Minimum Value',
+                        type: 'number'
+                    }
+                },
+                {
+                    
+                    model: 'model.properties',
+                    key: 'maxDate',
+                    type: 'datepicker',
+                    hideExpression: "model.type !== 'date'",
+                    templateOptions: {
+                        label: 'Maximum',
+                        placeholder: 'Enter Maximum Date'
+                    }
+                },
+                {
+                    
+                    model: 'model.properties',
+                    key: 'minDate',
+                    type: 'datepicker',
+                    hideExpression: "model.type !== 'date'",
+                    templateOptions: {
+                        label: 'Minimum',
+                        placeholder: 'Enter Minimum Date'
                     }
                 },
                  {
                     
-                    model: 'model.meta',
+                    model: 'model.properties',
                     key: 'options',
                     type: 'chips',
-                    hideExpression: "model.type !== 'Select'",
+                    hideExpression: "model.type !== 'select'",
                     templateOptions: {
                         label: 'Select Options',
                         placeholder: 'Add option',
                         secondaryPlaceholder: '+option',
                         optionsKey: 'options',
-                        key: "meta.options"
+                        key: "properties.options"
                     }
                 },
                 {
-                    key: 'meta.pattern',
+                    
+                    model: 'model.properties',
+                    key: 'useLabel',
+                    type: 'checkbox',
+                    hideExpression: "model.type !== 'select'",
+                    templateOptions: {
+                        label: 'Use Label?'
+                    }
+                },
+                {
+                    
+                    model: 'model.properties',
+                    key: 'labels',
+                    type: 'chips',
+                    hideExpression: "model.type !== 'select' && !model.properties.useLabel",
+                    templateOptions: {
+                        label: 'Select Labels',
+                        placeholder: 'Add label',
+                        secondaryPlaceholder: '+label',
+                        optionsKey: 'labels',
+                        key: "properties.labels"
+                    }
+                },
+                {
+                    key: 'properties.pattern',
                     type: 'input',
-                    hideExpression: "model.type !== 'Pattern'",
+                    hideExpression: "model.type !== 'string'",
                     templateOptions: {
                         type: 'text',
                         label: 'Pattern',
                         placeholder: 'Enter allowed pattern',
-                        required: true
+                        required: false
                     }
                 },
                  {
-                    key: 'meta.title',
+                    key: 'properties.title',
                     type: 'input',
-                    hideExpression: "model.type !== 'Pattern'",
+                    hideExpression: "model.type !== 'string' ||  !model.properties.pattern",
                     templateOptions: {
                         type: 'text',
                         label: 'Pattern Mismatch Message',
@@ -146,9 +216,9 @@ var app = angular.module("app")
                     }
                 },
                 {
-                    key: 'meta.accept',
+                    key: 'properties.accept',
                     type: 'input',
-                    hideExpression: "model.type !== 'File'",
+                    hideExpression: "model.type !== 'file'",
                     templateOptions: {
                         type: 'text',
                         label: 'HTML5 Accept type (jpg, docx, video/*, application/json e.t.c)',
@@ -158,9 +228,9 @@ var app = angular.module("app")
                     }
                 },
                 {
-                    key: 'meta.extension',
+                    key: 'properties.extension',
                     type: 'input',
-                    hideExpression: "model.type !== 'File'",
+                    hideExpression: "model.type !== 'file'",
                     templateOptions: {
                         type: 'text',
                         label: 'File extension type (jpg, docx, png, pdf)',
@@ -170,9 +240,9 @@ var app = angular.module("app")
                     }
                 },
                  {
-                    key: 'meta.limit',
+                    key: 'properties.limit',
                     type: 'input',
-                    hideExpression: "model.type !== 'File'",
+                    hideExpression: "model.type !== 'file'",
                     templateOptions: {
                         type: 'number',
                         label: 'File size limit (in bytes)',

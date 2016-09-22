@@ -39,7 +39,15 @@ angular.module('app')
 	  	      }
           })
           .state('customFields',{
-            templateUrl: '/app/partials/custom-fields.html'
+            templateUrl: '/app/partials/custom-fields.html',
+            controller: 'EntityCtrl',
+	  	      resolve: {
+	              	domain: function(loader){
+	              		return loader.loadDomain();
+	              	},
+	              	fields:function(){return {}},
+	              	entityType: function(){return DomainConstants.Entity.Field}
+	  	      }
           
           })
           .state('properties',{

@@ -78,7 +78,7 @@ angular.module('app')
 
 .service("EntityFormFieldsFactory", function(DomainConstants,$q,
 		umaas, $timeout, loader, userFields, groupFields,
-		roleFields){
+		roleFields, customFieldFields){
     var self = this;
     var createMap = {};
     
@@ -120,7 +120,9 @@ angular.module('app')
     createMap[DomainConstants.Entity.Role] = function(isNew){
     	return returnCopy(roleFields);
     };
-   
+    createMap[DomainConstants.Entity.Field] = function(isNew){
+    	return returnCopy(customFieldFields);
+    };
     console.log(createMap);
     self.create = function(entityType, isNew){
     	 return createMap[entityType](isNew);
