@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartException;
 
 @ControllerAdvice
@@ -50,6 +51,14 @@ public class ExceptionResolver {
 		values.put("message",ex.getMessage());
 		values.put("error", "Multipart Exception");
 		return ResponseEntity.badRequest().body(values);
+	}
+	@ExceptionHandler(HttpClientErrorException.class)
+	public ResponseEntity<HashMap<String,String>> handleHttpClientError(HttpClientErrorException ex){
+		HashMap<String,String> values = new HashMap<>();
+		values.put("message",ex.getMessage());
+		values.put("error", ex.getStatusText());
+		return ResponseEntity.status(ex.getStatusCode()).body(values);
+		
 	}
 	
 }
