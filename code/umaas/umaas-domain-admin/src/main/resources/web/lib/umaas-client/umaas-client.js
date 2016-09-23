@@ -162,7 +162,7 @@ var LazyList = function(resourceObject, Creator, collectionName, traversal, call
      var url = resource._links.next.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback, traversalFn));
           }else{
             return callback(error, undefined);
           }
@@ -173,7 +173,7 @@ var LazyList = function(resourceObject, Creator, collectionName, traversal, call
      var url = resource._links.prev.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback, traversalFn));
           }else{
             return callback(error, undefined);
           }
@@ -645,6 +645,28 @@ var Group = function(resourceObject){
          var groupId = this.id;
          if(!pageObject) pageObject = {};
          pageObject['groupId'] = groupId;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, AppUser, "userGroups", "user", function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
+            }else{
+              return callback();
+            }
+        });
+     }
+
+     this.getUsersNotInGroup = function(pageObject, callback){
+        var url = apiBaseUrl + "/domain/userGroups/search/findByGroupIdNotAndDomainId";
+         var groupId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['groupId'] = groupId;
+         pageObject['domainId'] = umaas.getDomain().id;
         api.newRequest().from(url)
         .addRequestOptions({ qs: pageObject })
         .getResource(function(error, resource){

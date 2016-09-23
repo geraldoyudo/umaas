@@ -29,5 +29,6 @@ public interface UserGroupRepository extends DomainResourceRepository<UserGroup,
    public List<UserGroup> findByGroup(Group g);
    public Page<UserGroup> findByUserId(@Param("userId") String userId, Pageable p);
    public Page<UserGroup> findByGroupId(@Param("groupId") String groupId, Pageable p);
+   public Page<UserGroup> findByGroupIdNotAndDomainId(@Param("groupId") String groupId,@Param("domainId") String domainId, Pageable p);
    public UserGroup findByUserIdAndGroupId(@Param("userId") String userId, @Param("groupId") String groupId);
 }

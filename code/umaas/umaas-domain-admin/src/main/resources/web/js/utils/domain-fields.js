@@ -333,6 +333,10 @@ var app = angular.module("app")
                         placeholder: 'Enter Group Name',
                         required: true
                     }
+                },
+                {
+                    noFormControl: true,
+                    template: "<group-user-manager group='{{model}}'></group-user-manager>"
                 }
    ])
    

@@ -1,0 +1,54 @@
+  <div>
+  	Users In Group
+  </div>
+  <div>
+   <md-table-container>
+        <table md-table md-progress="out.loadingPromise">
+          <thead md-head >
+            <tr md-row>
+              <th md-column md-order-by="username"><span>Username</span></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="user in in.users.content">
+              <td md-cell>{{user.username}}</td>
+              <td md-cell>
+                    <md-button type="button" data-ng-click="remove(user.id)">
+                     <ng-md-icon class="md-fab" icon="remove"></ng-md-icon>
+                     </md-button>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="in.paginationData.size" md-page="in.paginationData.page" md-total="{{in.users.getTotalElements()}}" 
+                          md-on-paginate="in.onPaginate" md-page-select></md-table-pagination>
+  </div>
+    <div>
+  	Users Not In Group
+  </div>
+  <div>
+   <md-table-container>
+        <table md-table md-progress="out.loadingPromise">
+          <thead md-head >
+            <tr md-row>
+              <th md-column md-order-by="username"><span>Username</span></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="user in out.users.content">
+              <td md-cell>{{user.username}}</td>
+              <td md-cell>
+                    <md-button type="button" data-ng-click="add(user.id)">
+                     <ng-md-icon class="md-fab" icon="add"></ng-md-icon>
+                     </md-button>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="out.paginationData.size" md-page="out.paginationData.page" md-total="{{out.users.getTotalElements()}}" 
+                          md-on-paginate="out.onPaginate" md-page-select></md-table-pagination>
+  </div>
