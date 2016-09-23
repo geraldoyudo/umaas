@@ -1,0 +1,61 @@
+  <div layout="column">
+  	<div ng-repeat="type in affiliates" layout='row'>
+  		<div>
+  			
+  			<md-table-container>
+	        <table md-table md-progress="in[type].loadingPromise">
+	          <thead md-head >
+	            <tr md-row>
+	              <th md-column md-order-by="username"><span>Name/Username</span></th>
+	            </tr>
+	          </thead>
+	          <tbody md-body>
+	            <tr md-row ng-repeat="entity in in[type].entities.content">
+	              <td md-cell>{{(entity.email)?entity.username:entity.name}}</td>
+	              <td md-cell>
+	                    <md-button type="button" data-ng-click="remove(entity.id, type)">
+	                     <ng-md-icon class="md-fab" icon="remove"></ng-md-icon>
+	                     </md-button>
+	              </td>
+	              
+	            </tr>
+	          </tbody>
+	        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="in[type].paginationData.size" md-page="in[type].paginationData.page" md-total="{{in[type].entities.getTotalElements()}}" 
+                          md-on-paginate="in[type].onPaginate" md-page-select></md-table-pagination>
+  		</div>
+  	</div>
+  </div>
+  
+  <div layout="column">
+  	<div ng-repeat="type in affiliates" layout='column'>
+  		<div>
+  			
+  			<md-table-container>
+	        <table md-table md-progress="out[type].loadingPromise">
+	          <thead md-head >
+	            <tr md-row>
+	              <th md-column md-order-by="username"><span>Name/Username</span></th>
+	            </tr>
+	          </thead>
+	          <tbody md-body>
+	            <tr md-row ng-repeat="entity in out[type].entities.content">
+	              <td md-cell>{{(entity.email)?entity.username:entity.name}}</td>
+	              <td md-cell>
+	                    <md-button type="button" data-ng-click="add(entity.id, type)">
+	                     <ng-md-icon class="md-fab" icon="add"></ng-md-icon>
+	                     </md-button>
+	              </td>
+	              
+	            </tr>
+	          </tbody>
+	        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="out[type].paginationData.size" md-page="out[type].paginationData.page" md-total="{{out[type].entities.getTotalElements()}}" 
+                          md-on-paginate="out[type].onPaginate" md-page-select></md-table-pagination>
+  		</div>
+  	</div>
+  </div>
+  
+  

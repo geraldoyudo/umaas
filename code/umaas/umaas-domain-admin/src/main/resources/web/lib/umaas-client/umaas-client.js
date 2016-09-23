@@ -128,21 +128,27 @@ var getAccessCode = function(){
 }
 // Lazy List
 // lazy list template
-var LazyList = function(resourceObject, Creator, collectionName, traversal, callback, traversalFn){
+var LazyList = function(resourceObject, Creator, collectionName, traversal, callback){
   var size = 0;
   var totalElements = 0;
   var totalPages =0;
   var pageNumber = 0;
   var resource = resourceObject;
   this.content =  [];
+  var resourceLength = 0;
   var content = this.content;
-  var resourceContent = resourceObject._embedded[collectionName];
+  var resourceContent = [];
+  try{
+  resourceContent = resourceObject._embedded[collectionName];
 
   size = resource.page.size;
   totalElements = resource.page.totalElements;
   totalPages = resource.page.totalPages;
   pageNumber = resource.page.number;
-  var resourceLength = resourceContent.length;
+  resourceLength = resourceContent.length;
+  }catch(e){
+	  // do nothing
+  }
   var counter = 0;
   this.getSize = function(){
     return size;
@@ -162,7 +168,7 @@ var LazyList = function(resourceObject, Creator, collectionName, traversal, call
      var url = resource._links.next.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback, traversalFn));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback));
           }else{
             return callback(error, undefined);
           }
@@ -173,7 +179,7 @@ var LazyList = function(resourceObject, Creator, collectionName, traversal, call
      var url = resource._links.prev.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback, traversalFn));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback));
           }else{
             return callback(error, undefined);
           }
@@ -185,27 +191,31 @@ var LazyList = function(resourceObject, Creator, collectionName, traversal, call
    this.hasPrevious =  function(){
      return pageNumber > 0;
    }
-
-  resourceContent.forEach(function(element) {
-     if(!traversal)
-        content.push(new Creator(element));
-     else{
-       var traversalUrl;
-       if(!traversalFn){ 
-        var traversalLink = element._links[traversal];
-        if(!traversalLink) return;
-        traversalUrl = traversalLink.href;
-       }else{
-         traversalUrl = traversalFn(element);
-       }
-       utils.getObject(traversalUrl, function(error, resource){
-         content.push(new Creator(resource));
-         counter++;
-         if(counter == resourceLength)
-            callback();
-       })
-     }
-  });
+  if(resourceLength > 0){
+	  resourceContent.forEach(function(element) {
+	     if(!traversal)
+	        content.push(new Creator(element));
+	     else{
+	       var traversalUrl;
+	       if(typeof traversal === 'string'){
+	        var traversalLink = element._links[traversal];
+	        if(!traversalLink) return;
+	        traversalUrl = traversalLink.href;
+	       }else{
+	         traversalUrl = traversal(element);
+	       }
+	       utils.getObject(traversalUrl, function(error, resource){
+	         content.push(new Creator(resource));
+	         counter++;
+	         if(counter == resourceLength){
+	        	 if(callback) return callback();
+	         }
+	       })
+	     }
+	  });
+  }else{
+ 	 if(callback) return callback();
+  }
   
 
 }
@@ -823,6 +833,37 @@ var Role = function(resourceObject){
                 if(error) return callback(error);
                 else return callback();
               })
+            }else{
+              return callback();
+            }
+        });
+     }
+     var urlConverter = function(element, name){
+       return umaas.getBaseUrl() + '/domain/' + name + '/' + element.key;
+     }
+
+     this.getWithCriteria = function(pageObject, type, isIn, callback){
+         var url = apiBaseUrl + "/domain/roleMappings/search/findByDomainIdAndTypeAndRoleId" + ((!isIn)? 'Not' : '');
+         var roleId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['roleId'] = roleId;
+         pageObject['type'] = type
+         pageObject['domain'] = umaas.getDomain().id;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, (type === 'GROUP'? Group: AppUser), "roleMappings",
+               function(element){
+            	  console.log('converting element');
+            	  console.log(element);
+                 return urlConverter(element, (type === 'GROUP'? 'groups': 'appUsers'));
+              }, function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
             }else{
               return callback();
             }

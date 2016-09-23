@@ -320,6 +320,10 @@ var app = angular.module("app")
                         placeholder: 'Enter Role Name',
                         required: true
                     }
+                },
+                {
+                    noFormControl: true,
+                    template: "<role-affiliate-manager role='{{model}}'></role-affiliate-manager>"
                 }
                 ])
                 
