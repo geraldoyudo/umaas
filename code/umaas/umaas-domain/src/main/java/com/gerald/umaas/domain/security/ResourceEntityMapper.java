@@ -29,6 +29,7 @@ public class ResourceEntityMapper {
 		uriMap.put("domainAccessCodes", DomainAccessCode.class.getSimpleName());
 		uriMap.put("domainAccessCodeMappings", DomainAccessCodeMapping.class.getSimpleName());
 		uriMap.put("auth", "auth");
+		uriMap.put("domainAdmin", "domainAdmin");
 	}
 	public static String getEntityName(String collectionName){
 		return uriMap.get(collectionName);

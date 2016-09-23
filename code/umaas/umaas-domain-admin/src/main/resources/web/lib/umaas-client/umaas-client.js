@@ -85,6 +85,16 @@ utils.insertObject = function(url, object, callback){
         } 
       });
 }
+utils.getObject = function(url, callback){
+    //console.log("inserting to " + url);
+    //console.log(object);
+    api.newRequest().from(url)
+      .addRequestOptions({headers:{'Content-Type': 'application/json'}})
+      .getResource(function(error, resource, traversal){
+      	  if(error) return callback(error);
+           callback(undefined, resource, traversal);
+      });
+}
 
 var setDomain = function(domain){
   currentDomain = domain ;
@@ -118,7 +128,7 @@ var getAccessCode = function(){
 }
 // Lazy List
 // lazy list template
-var LazyList = function(resourceObject, Creator, collectionName){
+var LazyList = function(resourceObject, Creator, collectionName, traversal, callback, traversalFn){
   var size = 0;
   var totalElements = 0;
   var totalPages =0;
@@ -127,14 +137,13 @@ var LazyList = function(resourceObject, Creator, collectionName){
   this.content =  [];
   var content = this.content;
   var resourceContent = resourceObject._embedded[collectionName];
-  resourceContent.forEach(function(element) {
-      content.push(new Creator(element));
-  });
 
   size = resource.page.size;
   totalElements = resource.page.totalElements;
   totalPages = resource.page.totalPages;
   pageNumber = resource.page.number;
+  var resourceLength = resourceContent.length;
+  var counter = 0;
   this.getSize = function(){
     return size;
   }
@@ -176,6 +185,28 @@ var LazyList = function(resourceObject, Creator, collectionName){
    this.hasPrevious =  function(){
      return pageNumber > 0;
    }
+
+  resourceContent.forEach(function(element) {
+     if(!traversal)
+        content.push(new Creator(element));
+     else{
+       var traversalUrl;
+       if(!traversalFn){ 
+        var traversalLink = element._links[traversal];
+        if(!traversalLink) return;
+        traversalUrl = traversalLink.href;
+       }else{
+         traversalUrl = traversalFn(element);
+       }
+       utils.getObject(traversalUrl, function(error, resource){
+         content.push(new Creator(resource));
+         counter++;
+         if(counter == resourceLength)
+            callback();
+       })
+     }
+  });
+  
 
 }
 
@@ -287,6 +318,7 @@ var AppUser =  function(resourceObject){
 
       if(resourceObject){
         initResource(this, resourceObject);
+        try{
         this.phoneNumber = resourceObject.phoneNumber || '' ;
         this.email = resourceObject.email || '';
         this.username = resourceObject.username || '';
@@ -297,6 +329,7 @@ var AppUser =  function(resourceObject){
         this.roles = resourceObject.roles || [];
         this.properties = resourceObject.properties || {};
         domain =  resourceObject._links.domain.href;
+        } catch(e){};
       }
 
 
@@ -451,11 +484,13 @@ var Group = function(resourceObject){
       var parentUrl = '';
 
       if(resourceObject){
-        initResource(this, resourceObject);
-        this.name = resourceObject.name || '' ;
-        this.roles = resourceObject.roles || [];
-        domain =  resourceObject._links.domain.href;
-        parentUrl = resourceObject._links.parent.href;
+        try{ 
+          initResource(this, resourceObject);
+          this.name = resourceObject.name || '' ;
+          this.roles = resourceObject.roles || [];
+          domain =  resourceObject._links.domain.href;
+          parentUrl = resourceObject._links.parent.href;
+        } catch(e){}
       }
 
 
@@ -600,6 +635,26 @@ var Group = function(resourceObject){
                 if(error) return callback(error);
                 else return callback();
               })
+            }else{
+              return callback();
+            }
+        });
+     }
+     this.getUsers = function(pageObject, callback){
+        var url = apiBaseUrl + "/domain/userGroups/search/findByGroupId";
+         var groupId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['groupId'] = groupId;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, AppUser, "userGroups", "user", function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
             }else{
               return callback();
             }

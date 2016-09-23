@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.Domain;
-import com.gerald.umaas.domain.entities.Group;
 import com.gerald.umaas.domain.entities.DomainAccessCodeMapping.Priviledge;
+import com.gerald.umaas.domain.entities.Group;
 import com.gerald.umaas.domain.entities.UserField;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
@@ -59,6 +59,11 @@ public class ApiSecurityChecker {
 			if(domain != null){
 				return permissionManager.hasDomainCollectionPermission(domain, entityType, priviledge);
 			}
+		}
+		if(entityType.equals("domainAdmin")){
+			String domainId = request.getParameter("domain");
+			if(domainId == null) return false;
+			return permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge);
 		}
 		if(entityId.equals("search")){
 			if(entityType.equals(Domain.class.getSimpleName())){

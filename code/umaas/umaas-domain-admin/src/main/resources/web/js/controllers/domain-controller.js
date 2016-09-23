@@ -4,8 +4,11 @@ angular.module('app')
 	$scope.domain = domain;
 	$scope.fields = fields;
 	$scope.generateCode = function(){
-	    $http.get('/umaas/core/domains/domain/generateCode').then(function(resp){
+	    $http.get('/umaas/core/domain/domainAdmin/generateCode', {
+	        params: { domain: $scope.domain.id }
+	    }).then(function(resp){
 	          $scope.domain.code = resp.data.code;
+	          alert('Domain code generated!!')
 	      });
 	}
 	
@@ -18,6 +21,7 @@ angular.module('app')
 			}
 			$scope.domain = domain;
 			loader.setDomain(domain);
+			alert('Changes saved successfully!!');
 		})
 	}
 })
