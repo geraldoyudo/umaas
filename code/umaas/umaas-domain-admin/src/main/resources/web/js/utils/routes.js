@@ -1,11 +1,11 @@
 angular.module('app')
 
 .config(function($stateProvider, $urlRouterProvider,
-		DomainConstants, domainFields) {
+		DomainConstants, domainFields, globalConfig) {
     
 	$stateProvider
 		.state('users', {
-	        templateUrl: '/app/partials/users.html',
+	        templateUrl: globalConfig.basePath + '/app/partials/users.html',
 	        controller: 'EntityCtrl',
 	        resolve: {
             	domain: function(loader){
@@ -18,7 +18,7 @@ angular.module('app')
             }
 	      })
           .state('groups',{
-              templateUrl: '/app/partials/groups.html',
+              templateUrl: globalConfig.basePath + '/app/partials/groups.html',
               controller: 'EntityCtrl',
 	  	      resolve: {
 	              	domain: function(loader){
@@ -29,7 +29,7 @@ angular.module('app')
 	  	      }
           })
           .state('roles',{
-            templateUrl: '/app/partials/roles.html',
+            templateUrl: globalConfig.basePath + '/app/partials/roles.html',
 	    	  controller: 'EntityCtrl',
 	  	      resolve: {
 	              	domain: function(loader){
@@ -40,7 +40,7 @@ angular.module('app')
 	  	      }
           })
           .state('customFields',{
-            templateUrl: '/app/partials/custom-fields.html',
+            templateUrl: globalConfig.basePath + '/app/partials/custom-fields.html',
             controller: 'EntityCtrl',
 	  	      resolve: {
 	              	domain: function(loader){
@@ -52,7 +52,7 @@ angular.module('app')
           
           })
           .state('properties',{
-              templateUrl: '/app/partials/properties.html',
+              templateUrl: globalConfig.basePath + '/app/partials/properties.html',
               controller: 'DomainCtrl',
 	  	      resolve: {
 	              	domain: function(loader){

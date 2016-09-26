@@ -1,9 +1,9 @@
 angular.module('app')
 
-.directive("roleAffiliateManager",function(){
+.directive("roleAffiliateManager",function(globalConfig){
     return {
         restrict: "AE",
-        templateUrl: "/app/partials/templates/role-affiliate-manager.htm",
+        templateUrl: globalConfig.basePath +  "/app/partials/templates/role-affiliate-manager.htm",
         scope:{
             role: "@role"
         },

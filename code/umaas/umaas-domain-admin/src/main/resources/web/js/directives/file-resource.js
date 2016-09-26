@@ -1,21 +1,21 @@
 angular.module('app')
 
-.directive("fileResource",function(){
+.directive("fileResource",function(globalConfig){
     return {
         restrict: "AE",
-        templateUrl: "/app/partials/templates/file-field.htm",
+        templateUrl: globalConfig.basePath + "/app/partials/templates/file-field.htm",
         scope:{
             viewUrl: "@viewUrl",
             downloadUrl: "@downloadUrl"
         },
-        controller: function($scope, $mdDialog, $timeout){
+        controller: function($scope, $mdDialog, $timeout, globalConfig){
             $scope.view = function($event){
                 var parentEl = angular.element(document.body);
                 
                 $mdDialog.show({
                     parent: parentEl,
                     targetEvent: $event,
-                    templateUrl: '/app/partials/templates/resource.htm',
+                    templateUrl: globalConfig.basePath + '/app/partials/templates/resource.htm',
                     controller: function($scope, $sce, viewUrl){
                         var getTrustedUrl = function(url){
                                 return $sce.trustAsResourceUrl(url);

@@ -3,7 +3,7 @@ angular.module('app')
 .directive("groupUserManager",function(){
     return {
         restrict: "AE",
-        templateUrl: "/app/partials/templates/group-user-manager.htm",
+        templateUrl: globalConfig.basePath + "/app/partials/templates/group-user-manager.htm",
         scope:{
             group: "@group"
         },

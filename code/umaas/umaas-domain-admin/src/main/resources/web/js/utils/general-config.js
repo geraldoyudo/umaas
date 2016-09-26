@@ -14,16 +14,16 @@ var arrayInputCtrl = function($scope){
 }
 
 angular.module('app')
-.run(function(formlyConfig){
+.run(function(formlyConfig, globalConfig){
     formlyConfig.setType({
         name: 'arrayInput',
-        templateUrl: '/app/partials/templates/array-input.htm',
+        templateUrl: globalConfig.basePath + '/app/partials/templates/array-input.htm',
         controller: arrayInputCtrl
     });
   
 	formlyConfig.setType({
 	  name: 'file-input',
-	  templateUrl: '/app/partials/templates/file-input.htm'
+	  templateUrl: globalConfig.basePath + '/app/partials/templates/file-input.htm'
 	});
     
 })

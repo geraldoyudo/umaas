@@ -1,7 +1,7 @@
 angular.module('app')
 .controller('EntityCtrl', function($scope,
 		domain, fields, entityType, entityAttendant, 
-		$q, $mdDialog, entityListener){
+		$q, $mdDialog, entityListener, globalConfig){
 	
 	 var displayForm = function($event, entity, newEntity){
 		 	console.log("Displaying form");
@@ -12,7 +12,7 @@ angular.module('app')
 	        $mdDialog.show({
 	            parent: parentEl,
 	            targetEvent: $event,
-	            templateUrl: '/app/partials/templates/EntityEditForm.htm',
+	            templateUrl: globalConfig.basePath + '/app/partials/templates/EntityEditForm.htm',
 	            controller: 'EntityEditFormCtrl',
 	            locals: { 
 	                isNew: newEntity,
