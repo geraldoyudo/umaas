@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ProxyConfiguration extends RouteBuilder {
 	@Value("${umaas.core}")
 	private String coreUrl;
-	
+
 	@PostConstruct
 	public void init(){
 		coreUrl = coreUrl.replace("http", "http4")
@@ -22,7 +22,7 @@ public class ProxyConfiguration extends RouteBuilder {
 	public void configure() throws Exception {
 		 from("servlet://core?matchOnUriPrefix=true")
 		.setHeader("X-Forwarded-Host", simple("${headers.host}"))
-		.setHeader("X-Forwarded-Prefix", simple("/umaas/core"))
+		.setHeader("X-Forwarded-Prefix", simple("RELATIVE_PATH('/umaas/core')"))
 		 .to(coreUrl + "?bridgeEndpoint=true&throwExceptionOnFailure=false");
 		 
 		 from("servlet:///test?httpMethodRestrict=GET")

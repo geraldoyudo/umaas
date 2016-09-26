@@ -16,34 +16,34 @@
 		<div ui-view=""></div>
 		
 		</div>
-		<script src="/app/webjars/api-check/api-check.js"></script> <!-- must appear before formly.js -->
-		<script src='/app/webjars/angularjs/angular.min.js'></script>
-		<script src='/app/webjars/angular-ui-router/angular-ui-router.min.js'></script>
-        <script src="/app/webjars/angularjs/angular-animate.min.js"></script>
- 		<script src="/app/webjars/angularjs/angular-aria.min.js"></script>
- 		<script src="/app/webjars/angularjs/angular-messages.min.js"></script>
-        <script src='/app/webjars/angular-material/angular-material.min.js'></script>
-        <script src="/app/webjars/angular-material-icons/angular-material-icons.js"></script>
-		<script src="/app/webjars/angular-formly/formly.js"></script>
-		<script src="/app/webjars/angular-formly-material/formly-material.min.js"></script>
-        <script src="/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.js"></script>
-        <script src='/app/webjars/traverson/traverson.min.js'></script>
-        <script src='/app/webjars/traverson-hal/traverson-hal.min.js'></script>
-        <script src='/app/webjars/traverson-angular/traverson-angular.min.js'></script>
-        <script src='/app/web/lib/umaas-client/umaas-client.js'></script>
-        <script src='/app/web/js/app.js'></script>
-        <script src='/app/web/js/utils/umaas-client-angular.js'></script>
-        <script src='/app/web/js/utils/routes.js'></script>
-        <script src='/app/web/js/utils/stage-config.js'></script>     
-        <script src='/app/web/js/utils/general-config.js'></script>       
-        <script src='/app/web/js/services/stage-manager.js'></script>
-        <script src='/app/web/js/services/field-manager.js'></script>
-        <script src='/app/web/js/controllers/main-controller.js'></script>
-        <script src='/app/web/js/controllers/registration-controller.js'></script>
+		<script th:src="@{/app/webjars/api-check/api-check.js}"></script> <!-- must appear before formly.js -->
+		<script th:src="@{/app/webjars/angularjs/angular.min.js}"></script>
+		<script th:src="@{/app/webjars/angular-ui-router/angular-ui-router.min.js}"></script>
+        <script th:src="@{/app/webjars/angularjs/angular-animate.min.js}"></script>
+ 		<script th:src="@{/app/webjars/angularjs/angular-aria.min.js}"></script>
+ 		<script th:src="@{/app/webjars/angularjs/angular-messages.min.js}"></script>
+        <script th:src="@{/app/webjars/angular-material/angular-material.min.js}"></script>
+        <script th:src="@{/app/webjars/angular-material-icons/angular-material-icons.js}"></script>
+		<script th:src="@{/app/webjars/angular-formly/formly.js}"></script>
+		<script th:src="@{/app/webjars/angular-formly-material/formly-material.min.js}"></script>
+        <script th:src="@{/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.js}"></script>
+        <script th:src="@{/app/webjars/traverson/traverson.min.js}"></script>
+        <script th:src="@{/app/webjars/traverson-hal/traverson-hal.min.js}"></script>
+        <script th:src="@{/app/webjars/traverson-angular/traverson-angular.min.js}"></script>
+        <script th:src="@{/app/web/lib/umaas-client/umaas-client.js}"></script>
+        <script th:src="@{/app/web/js/app.js}"></script>
+        <script th:src="@{/app/web/js/utils/umaas-client-angular.js}"></script>
+        <script th:src="@{/app/web/js/utils/routes.js}"></script>
+        <script th:src="@{/app/web/js/utils/stage-config.js}"></script>     
+        <script th:src="@{/app/web/js/utils/general-config.js}"></script>       
+        <script th:src="@{/app/web/js/services/stage-manager.js}"></script>
+        <script th:src="@{/app/web/js/services/field-manager.js}"></script>
+        <script th:src="@{/app/web/js/controllers/main-controller.js}"></script>
+        <script th:src="@{/app/web/js/controllers/registration-controller.js}"></script>
         <script th:inline="javascript">
         	angular.module("app")
         	.run(function(umaas){
-        		umaas.setBaseUrl("/umaas/core");
+        		umaas.setBaseUrl([[@{/umaas/core}]]);
         	})
         	.constant('globalConfig', {
         		accessCode: [[${accessCode}]],
