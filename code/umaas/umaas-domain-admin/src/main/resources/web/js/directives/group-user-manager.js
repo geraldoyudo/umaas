@@ -35,7 +35,7 @@ angular.module('app')
             		})
         		}else{
         			$scope.out.loadingPromise = deferred.promise;
-        			$scope.group.getUsersNotInGroup({
+        			umaas.appUsers.find({
             			size: $scope.out.paginationData.size,
             			page: $scope.out.paginationData.page -1
             		}, function(error, users){
@@ -80,6 +80,14 @@ angular.module('app')
         			})
         			
         		})
+        	}
+        	
+        	$scope.containsGroup = function (name, entity){
+        		if(entity.groups){
+            		return (entity.groups.indexOf(name) !== -1);
+        		}else{
+        			return false;
+        		}
         	}
         	umaas.groups.findById($scope.group.id, function(error, group){
         		$scope.group = group;

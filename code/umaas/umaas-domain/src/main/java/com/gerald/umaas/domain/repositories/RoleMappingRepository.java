@@ -31,7 +31,6 @@ public interface RoleMappingRepository extends  DomainResourceRepository<RoleMap
 	public List<RoleMapping> findByRole(Role role);
 	public RoleMapping findByKeyAndRoleId(@Param("key") String key, @Param("roleId") String roleId);
 	public Page<RoleMapping> findByDomainIdAndKey(@Param("domain") String domainId, @Param("key") String key, Pageable p);
-	
 	public Page<RoleMapping> findByDomainIdAndTypeAndRoleId(@Param("domain") String domainId, @Param("type") String type,
 			@Param("roleId") String roleId, Pageable p);
 	public Page<RoleMapping> findByDomainIdAndTypeAndRoleIdNot(@Param("domain") String domainId, @Param("type") String type,

@@ -1,19 +1,21 @@
-  <div layout="column">
-  	<div ng-repeat="type in affiliates" layout='row'>
-  		<div>
-  			
+  <!-- For Users -->
+  <div ng-init="USER.showAdd=false">
+	<h2>USERS</h2>
+  	<div>
+  		<div  ng-show="!USER.showAdd">	
+  			<h3>Users with role</h3>
   			<md-table-container>
-	        <table md-table md-progress="in[type].loadingPromise">
+	        <table md-table md-progress="in.USER.loadingPromise">
 	          <thead md-head >
 	            <tr md-row>
-	              <th md-column md-order-by="username"><span>Name/Username</span></th>
+	              <th md-column md-order-by="username"><span>Username</span></th>
 	            </tr>
 	          </thead>
 	          <tbody md-body>
-	            <tr md-row ng-repeat="entity in in[type].entities.content">
-	              <td md-cell>{{(entity.email)?entity.username:entity.name}}</td>
+	            <tr md-row ng-repeat="entity in in.USER.entities.content">
+	              <td md-cell>{{entity.username}}</td>
 	              <td md-cell>
-	                    <md-button type="button" data-ng-click="remove(entity.id, type)">
+	                    <md-button type="button" data-ng-click="remove(entity.id, 'USER')">
 	                     <ng-md-icon class="md-fab" icon="remove"></ng-md-icon>
 	                     </md-button>
 	              </td>
@@ -22,28 +24,27 @@
 	          </tbody>
 	        </table>   
       </md-table-container>
-       <md-table-pagination md-limit-options="options" md-limit="in[type].paginationData.size" md-page="in[type].paginationData.page" md-total="{{in[type].entities.getTotalElements()}}" 
-                          md-on-paginate="in[type].onPaginate" md-page-select></md-table-pagination>
+       <md-table-pagination md-limit-options="options" md-limit="in.USER.paginationData.size" md-page="in.USER.paginationData.page" md-total="{{in.USER.entities.getTotalElements()}}" 
+                          md-on-paginate="in.USER.onPaginate" md-page-select></md-table-pagination>
+  		 <md-button class="md-primary" aria-label="Add" 
+                  ng-click="USER.showAdd = true">
+        <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
   		</div>
-  	</div>
-  </div>
-  
-  <div layout="column">
-  	<div ng-repeat="type in affiliates" layout='column'>
-  		<div>
-  			
+  		<div  ng-show="USER.showAdd">	
+  		  	<h3>All Users</h3>
   			<md-table-container>
-	        <table md-table md-progress="out[type].loadingPromise">
+	        <table md-table md-progress="out.USER.loadingPromise">
 	          <thead md-head >
 	            <tr md-row>
 	              <th md-column md-order-by="username"><span>Name/Username</span></th>
 	            </tr>
 	          </thead>
 	          <tbody md-body>
-	            <tr md-row ng-repeat="entity in out[type].entities.content">
-	              <td md-cell>{{(entity.email)?entity.username:entity.name}}</td>
+	            <tr md-row ng-repeat="entity in out.USER.entities.content">
+	              <td md-cell>{{entity.username}}</td>
 	              <td md-cell>
-	                    <md-button type="button" data-ng-click="add(entity.id, type)">
+	                    <md-button ng-if='!containsRole(role.name, entity)' type="button" data-ng-click="add(entity.id, 'USER')">
 	                     <ng-md-icon class="md-fab" icon="add"></ng-md-icon>
 	                     </md-button>
 	              </td>
@@ -52,10 +53,78 @@
 	          </tbody>
 	        </table>   
       </md-table-container>
-       <md-table-pagination md-limit-options="options" md-limit="out[type].paginationData.size" md-page="out[type].paginationData.page" md-total="{{out[type].entities.getTotalElements()}}" 
-                          md-on-paginate="out[type].onPaginate" md-page-select></md-table-pagination>
+       <md-table-pagination md-limit-options="options" md-limit="out.USER.paginationData.size" md-page="out.USER.paginationData.page" md-total="{{out.USER.entities.getTotalElements()}}" 
+                          md-on-paginate="out.USER.onPaginate" md-page-select></md-table-pagination>
+  		 <md-button class="md-primary md-block" aria-label="OK" 
+                  ng-click="USER.showAdd = false">
+        	OK
+        </md-button>
   		</div>
   	</div>
   </div>
   
+  <div ng-init="GROUP.showAdd=false">
+	<h2>GROUPS</h2>
+  	<div>
+  		<div  ng-show="!GROUP.showAdd">	
+  		    <h3>Groups with role</h3>
+  			<md-table-container>
+	        <table md-table md-progress="in.GROUP.loadingPromise">
+	          <thead md-head >
+	            <tr md-row>
+	              <th md-column md-order-by="username"><span>Name</span></th>
+	            </tr>
+	          </thead>
+	          <tbody md-body>
+	            <tr md-row ng-repeat="entity in in.GROUP.entities.content">
+	              <td md-cell>{{entity.name}}</td>
+	              <td md-cell>
+	                    <md-button type="button" data-ng-click="remove(entity.id, 'GROUP')">
+	                     <ng-md-icon class="md-fab" icon="remove"></ng-md-icon>
+	                     </md-button>
+	              </td>
+	              
+	            </tr>
+	          </tbody>
+	        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="in.GROUP.paginationData.size" md-page="in.GROUP.paginationData.page" md-total="{{in.GROUP.entities.getTotalElements()}}" 
+                          md-on-paginate="in.GROUP.onPaginate" md-page-select></md-table-pagination>
+  		 <md-button class="md-primary" aria-label="Add" 
+                  ng-click="GROUP.showAdd = true">
+        <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+  		</div>
+  	</div>
+  	<div  ng-show="GROUP.showAdd">	
+  		  		<h3>All Groups</h3>
+  			<md-table-container>
+	        <table md-table md-progress="out.GROUP.loadingPromise">
+	          <thead md-head >
+	            <tr md-row>
+	              <th md-column md-order-by="username"><span>Name</span></th>
+	            </tr>
+	          </thead>
+	          <tbody md-body>
+	            <tr md-row ng-repeat="entity in out.GROUP.entities.content">
+	              <td md-cell>{{entity.name}}</td>
+	              <td md-cell >
+	                    <md-button ng-if='!containsRole(role.name, entity)'  type="button" data-ng-click="add(entity.id, 'GROUP')">
+	                     <ng-md-icon class="md-fab" icon="add"></ng-md-icon>
+	                     </md-button>
+	              </td>
+	              
+	            </tr>
+	          </tbody>
+	        </table>   
+      </md-table-container>
+       <md-table-pagination md-limit-options="options" md-limit="out.GROUP.paginationData.size" md-page="out.GROUP.paginationData.page" md-total="{{out.GROUP.entities.getTotalElements()}}" 
+                          md-on-paginate="out.GROUP.onPaginate" md-page-select></md-table-pagination>
+  		 <md-button class="md-primary md-block" aria-label="OK" 
+                  ng-click="GROUP.showAdd = false">
+        	OK
+        </md-button>
+  		</div>
+  
+  </div>
   

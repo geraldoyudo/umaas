@@ -27,7 +27,7 @@ angular.module('app')
                 				console.log("on paginiate ", page, limit);
                                 $scope[direction][type].paginationData.page = page;
                                 $scope[direction][type].paginationData.size = limit;
-                                $scope.load('in', type);
+                                $scope.load(direction, type);
                 			}
             				}(direction, type));
             			
@@ -36,20 +36,49 @@ angular.module('app')
         		
         	})
         	$scope.load = function(direction, type){
-        		var deferred = $q.defer();
+    			var deferred = $q.defer();
     			$scope[direction][type].loadingPromise= deferred.promise;
+    			if(direction == 'out'){
+    				var entityFn;
+    				if(type == 'GROUP'){
+    					entityFn = umaas.groups;
+    				}else{
+    					entityFn = umaas.appUsers;
+    				}
+    				entityFn.find({
+	        			size: $scope[direction][type].paginationData.size,
+	        			page: $scope[direction][type].paginationData.page -1
+	        		},function(error, entities){
+	            		console.log("loaded for " + direction + " and " +  type);
+	            		$scope.$apply(function(){
+	            			$scope[direction][type].entities = entities;
+	            			if(!entities){
+	            				$scope[direction][type].entities = new umaas.LazyList({_embedded:{roleMappings:[]},page:{size:$scope[direction][type].paginationData.size,totalElements:0,totalPages:1,number:0}});
+	            			}
+	            		})
+	        			
+	        			console.log($scope[direction][type].entities);
+	        			deferred.resolve();
+	        		});
+    				return;
+    			}
     			$scope.role.getWithCriteria({
         			size: $scope[direction][type].paginationData.size,
         			page: $scope[direction][type].paginationData.page -1
         		}, type, (direction === 'in') , function(error, entities){
             		console.log("loaded for " + direction + " and " +  type);
-        			$scope[direction][type].entities = entities;
-        			if(!entities){
-        				$scope[direction][type].entities = new umaas.LazyList({_embedded:{roleMappings:[]},page:{size:$scope[direction][type].paginationData.size,totalElements:0,totalPages:1,number:0}});
-        			}
+            		$scope.$apply(function(){
+            			$scope[direction][type].entities = entities;
+            			if(!entities){
+            				$scope[direction][type].entities = new umaas.LazyList({_embedded:{roleMappings:[]},page:{size:$scope[direction][type].paginationData.size,totalElements:0,totalPages:1,number:0}});
+            			}
+            		})
+        			
         			console.log($scope[direction][type].entities);
         			deferred.resolve();
         		})	
+        		
+        		
         	}            
         	$scope.remove = function(key, type){
         		$scope.role.removeKey(key, function(error){
@@ -75,6 +104,9 @@ angular.module('app')
         	}
         	
         	umaas.roles.findById($scope.role.id, function(error, role){
+        		if(error){
+        			throw error;
+        		}
         		$scope.role = role;
         		$scope.load('in', 'USER');
         		$scope.load('out', 'USER');
@@ -86,6 +118,13 @@ angular.module('app')
         		console.log(direction);
         		console.log(type);
         		return $scope[direction][type].entities.content;
+        	}
+        	$scope.containsRole = function (name, entity){
+        		if(entity.roles){
+            		return (entity.roles.indexOf(name) !== -1);
+        		}else{
+        			return false;
+        		}
         	}
         	console.log($scope);
         }

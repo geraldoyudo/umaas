@@ -1,3 +1,5 @@
+<div ng-init="showAdd = false">
+ <div ng-show="!showAdd">
   <div>
   	Users In Group
   </div>
@@ -25,8 +27,14 @@
        <md-table-pagination md-limit-options="options" md-limit="in.paginationData.size" md-page="in.paginationData.page" md-total="{{in.users.getTotalElements()}}" 
                           md-on-paginate="in.onPaginate" md-page-select></md-table-pagination>
   </div>
+   <md-button class="md-primary" aria-label="Add" 
+                  ng-click="showAdd = true">
+        <ng-md-icon icon="add"></ng-md-icon>
+        </md-button>
+  </div>
+  <div ng-show="showAdd"> 
     <div>
-  	Users Not In Group
+  	All Users
   </div>
   <div>
    <md-table-container>
@@ -40,7 +48,7 @@
             <tr md-row ng-repeat="user in out.users.content">
               <td md-cell>{{user.username}}</td>
               <td md-cell>
-                    <md-button type="button" data-ng-click="add(user.id)">
+                    <md-button ng-if="!containsGroup(group.name, user)" type="button" data-ng-click="add(user.id)">
                      <ng-md-icon class="md-fab" icon="add"></ng-md-icon>
                      </md-button>
               </td>
@@ -51,4 +59,10 @@
       </md-table-container>
        <md-table-pagination md-limit-options="options" md-limit="out.paginationData.size" md-page="out.paginationData.page" md-total="{{out.users.getTotalElements()}}" 
                           md-on-paginate="out.onPaginate" md-page-select></md-table-pagination>
+  </div>
+   <md-button class="md-primary" aria-label="OK" 
+                  ng-click="showAdd = false">
+       OK
+        </md-button>
+  </div>
   </div>

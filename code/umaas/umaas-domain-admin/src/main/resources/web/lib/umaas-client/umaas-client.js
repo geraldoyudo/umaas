@@ -1436,6 +1436,7 @@ var groups = function(){
   }
 	
  this.find = function(options,callback){
+	 console.log("Current Domain ==> " + currentDomain.id)
 	  if(currentDomain && currentDomain.id){
 		return this.findByDomain(options, currentDomain.id,callback);
 	  }else{
