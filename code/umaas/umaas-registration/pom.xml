@@ -6,7 +6,7 @@
 	<groupId>com.gerald.umaas</groupId>
 	<artifactId>umaas-registration</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>umaas-registration</name>
 	<description>Registration process for users on umaas</description>

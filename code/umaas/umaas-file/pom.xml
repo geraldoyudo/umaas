@@ -6,7 +6,7 @@
 	<groupId>com.gerald.umaas</groupId>
 	<artifactId>umaas-file</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>umaas-file</name>
 	<description>File Repository for UmaaS</description>
@@ -43,8 +43,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		 <!-- … -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    <!-- … -->
 	</dependencies>
-
+	
 	<build>
 		<plugins>
 			<plugin>
