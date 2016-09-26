@@ -6,9 +6,9 @@
 			</title> 
 			 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 			  <!-- Angular Material style sheet -->
-			  <link rel="stylesheet" href="/app/webjars/angular-material/angular-material.min.css"></link>
-			  <link rel="stylesheet" href="/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.min.css"></link>
-			  <link rel="stylesheet" href="/app/web/css/styles.css"></link>
+			  <link rel="stylesheet" th:href="@{/app/webjars/angular-material/angular-material.min.css}"></link>
+			  <link rel="stylesheet" th:href="@{/app/webjars/lf-ng-md-file-input/lf-ng-md-file-input.min.css}"></link>
+			  <link rel="stylesheet" th:href="@{/app/web/css/styles.css}"></link>
 		</head> 
 		<body ng-app='app'>
 		<div ng-controller='MainCtrl'> 
@@ -47,7 +47,8 @@
         	})
         	.constant('globalConfig', {
         		accessCode: [[${accessCode}]],
-        		domainName: [[${domainName}]]
+        		domainName: [[${domainName}]],
+        		basePath: [[${#httpServletRequest.getContextPath()}]]
         	});
         </script>
 		

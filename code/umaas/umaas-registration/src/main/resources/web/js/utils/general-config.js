@@ -1,17 +1,13 @@
 angular.module('app')
 
-.run(function(formlyConfig){
+.run(function(formlyConfig, globalConfig){
 	formlyConfig.setType({
-	  name: 'file-input',
-	  templateUrl: '/app/partials/templates/file-input.htm'
-	});
-})
-
-
-.run(function(formlyConfig){
+		  name: 'file-input',
+		  templateUrl: globalConfig.basePath + '/app/partials/templates/file-input.htm'
+		});
 	formlyConfig.setType({
 	  name: 'verify-item',
-	  templateUrl: '/app/partials/templates/verify-item.htm',
+	  templateUrl: globalConfig.basePath + '/app/partials/templates/verify-item.htm',
 	  controller: function($scope, $parse, $http){
 		  var key = $scope.options.key;
 		  console.log($scope);
@@ -39,7 +35,7 @@ angular.module('app')
 		 $scope.requestVerify = function(){
 			 console.log("Executing Request verify");
 			 $scope.verificationFailed = false;
-			$http.post('/app/verify/request', request).then(function(resp){
+			$http.post(globalConfig.basePath + '/app/verify/request', request).then(function(resp){
 				var data = resp.data;
 				console.log(data);
 				request.properties.tokenId = data.id;
@@ -49,7 +45,7 @@ angular.module('app')
 		 $scope.resend = function(){
 			 console.log("Executing Resend");
 			 $scope.verificationFailed = false;
-			$http.post('/app/verify/resend', request).then(function(resp){
+			$http.post(globalConfig.basePath + '/app/verify/resend', request).then(function(resp){
 				var data = resp.data;
 				console.log(data);
 				request.properties.tokenId = data.id;
@@ -60,7 +56,7 @@ angular.module('app')
 		 $scope.verify = function(){
 			 console.log("Executing verify");
 			 request.properties.code = $scope.data.code;
-			 $http.post('/app/verify/process', request).then(function(resp){
+			 $http.post(globalConfig.basePath + '/app/verify/process', request).then(function(resp){
 				    var data = resp.data;
 				 	console.log(data);
 					$scope.verified = data.verified;
