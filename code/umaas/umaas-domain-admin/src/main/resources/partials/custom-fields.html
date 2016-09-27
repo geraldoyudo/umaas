@@ -19,6 +19,7 @@
           <thead md-head md-order="asc" >
            <tr md-row>
 	          <th md-column md-order-by="name"><span>Name</span></th>
+	          <th md-column><span>Type</span></th>
 	          <th md-column ><span>Required</span></th>
 	          <th md-column><span>Include in Registration</span></th>
 	          <th md-column><span>DefaultValue</span></th>
@@ -29,6 +30,7 @@
             <tr md-row md-select="field" md-on-select="onSelect" md-select-id="field.id" 
                 md-auto-select ng-repeat="field in entities.content">     
 		          <td md-cell>{{field.name}}</td>
+		          <td md-cell>{{field.type}}</td>
 		          <td md-cell>{{field.mandatory}}</td>
 		          <td md-cell>{{field.registrationItem}}</td>
 		          <td md-cell>{{field.default}}</td>

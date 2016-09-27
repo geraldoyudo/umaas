@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.data.mongodb.core.mapping.event.AfterConvertEvent;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 import org.springframework.data.mongodb.core.mapping.event.BeforeDeleteEvent;
+import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
 import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.domain.entities.Affiliate;
@@ -45,7 +46,13 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 	private FieldRepository fieldRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private UserFieldValidator userFieldValidator;
 	
+	@Override
+	public void onBeforeSave(BeforeSaveEvent<AppUser> event) {
+		userFieldValidator.validate(event.getSource());
+	}
 	@Override
 	public void onAfterSave(AfterSaveEvent<AppUser> event) {
 		System.out.println("On after save");
@@ -62,6 +69,7 @@ public class UserRelationsManager extends AbstractMongoEventListener<AppUser>{
 		populateProperties(u);
 		populateGroups(u);
 		populateRoles(u);
+		userFieldValidator.format(u);
 		super.onAfterConvert(event);
 	}
 	

@@ -42,6 +42,9 @@
                         <file-resource view-url="{{user.getFileUrlByFieldId(field.id, true)}}"
                                        download-url="{{user.getFileUrlByFieldId(field.id, false)}}"></file-resource>
                     </div>
+                    <div ng-switch-when="date">
+                         {{(user.properties[field.name])| date}}
+                    </div>
                     <div ng-switch-default>{{user.properties[field.name]}}</div>
                   </div>
                  

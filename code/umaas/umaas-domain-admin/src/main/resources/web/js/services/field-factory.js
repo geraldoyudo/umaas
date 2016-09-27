@@ -25,7 +25,11 @@ var getFieldTemplate = function(field){
         else
             return "input";
     };
-   
+	var convertToDate = function(date){
+		console.log("Converting date " + date)
+		return new Date(date);
+	}
+
     var ret = {
                  "ngModelElAttrs": {
                     "ng-model": "model['properties']['".concat(field.name).concat("']")
@@ -62,11 +66,13 @@ var getFieldTemplate = function(field){
      ret.templateOptions.type = "email";
  }else  if (field.type === 'integer') {
 	    ret.templateOptions.type = 'number';
+	    ret.templateOptions["md-placeholder"] = field.properties.label || field.name;
 		ret.templateOptions.min = field.properties.minimum;
 		ret.templateOptions.max = field.properties.maximum;
  }else if (field.type === 'date'){
 		ret.templateOptions.minDate = new Date(field.properties.minimum);
 		ret.templateOptions.maxDate = new Date(field.properties.maximum);
+		ret.formatters = [convertToDate];
  }else if (field.type === 'string'){
      ret.templateOptions.pattern = field.properties.pattern;
 
