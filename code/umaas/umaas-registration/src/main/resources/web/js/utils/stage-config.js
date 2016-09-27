@@ -13,6 +13,11 @@ angular.module('app')
 		var files = user.files;
 		console.log("Details Verified");
 		console.log(user);
+		var domain = umaas.getDomain();
+		if(domain.properties.emailAsUsername){
+			user.username = user.email;
+		}
+	    
 		user.insert(function(error,updatedUser){
 			if(!error){ 
 				user = updatedUser;

@@ -1,7 +1,8 @@
-var defaultFields = function(){
+var defaultFields = function(domain){
 	return [ {
 	      key: 'username',
 	      type: 'input',
+	      hideExpression: domain.properties.emailAsUsername? 'true':'false',
 	      templateOptions: {
 	        type: 'text',
 	        label: 'Username',
@@ -107,7 +108,6 @@ var makeField = function(fieldData){
 			field.type = "file-input";
 			field.templateOptions.accept = fieldData.properties.accept;
 		}
-	
 	return field;
 }
 
@@ -185,7 +185,7 @@ angular.module('app')
 	}
 	this.getFields = function(){
 		var deferred = $q.defer();
-		var fields = defaultFields();
+		var fields = defaultFields(umaas.getDomain());
 		if(fieldLoaded){
 			customFields = getCustomFields();
 			fields = fields.concat(customFields);

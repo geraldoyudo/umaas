@@ -448,6 +448,26 @@ var app = angular.module("app")
                 label: 'Use Email as Username'
 
              }
+         },
+         {
+
+             model: 'model.properties',
+             key: 'verifyPhoneNumber',
+             type: 'checkbox',
+             templateOptions: {
+                label: 'Verify Phone Number'
+
+             }
+         },
+         {
+
+             model: 'model.properties',
+             key: 'verifyEmail',
+             type: 'checkbox',
+             templateOptions: {
+                label: 'Verify Email'
+
+             }
          }
 ]);
 

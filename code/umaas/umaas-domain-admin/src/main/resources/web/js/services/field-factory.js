@@ -66,7 +66,7 @@ var getFieldTemplate = function(field){
      ret.templateOptions.type = "email";
  }else  if (field.type === 'integer') {
 	    ret.templateOptions.type = 'number';
-	    ret.templateOptions["md-placeholder"] = field.properties.label || field.name;
+	    ret.templateOptions.placeholder = field.properties.label || field.name;
 		ret.templateOptions.min = field.properties.minimum;
 		ret.templateOptions.max = field.properties.maximum;
  }else if (field.type === 'date'){
