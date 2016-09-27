@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
-	@Value("${umaas.registration.accesscode.id:0000}")
+	@Value("${umaas.accesscode.id:0000}")
 	private String accessCodeId;
-	@Value("${umaas.registration.accesscode.value:0000}")
+	@Value("${umaas.accesscode.value:0000}")
 	private String accessCodeValue;
-	@Value("${umaas.registration.defaultDomain:domain-0}")
+	@Value("${umaas.defaultDomain:domain-0}")
 	private String defaultDomain;
+	@Value("${umaas.core.contextPath:}")
+	private String coreContextPath;
 	
 	@RequestMapping("/register")
 	public String register( Model model, @RequestParam(name = "domain", required = false) String domainName){
@@ -28,6 +30,7 @@ public class HomeController {
 		accessCode.put("id", accessCodeId);
 		accessCode.put("code", accessCodeValue);
 		model.addAttribute("accessCode", accessCode);
+		model.addAttribute("coreUrl", "/umaas/core"  + coreContextPath);
 		return "index";
 	}
 }

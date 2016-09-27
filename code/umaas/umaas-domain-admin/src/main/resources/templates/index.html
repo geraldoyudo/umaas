@@ -91,7 +91,7 @@
         <script th:inline="javascript">
         	angular.module("app")
         	.run(function(umaas){
-        		umaas.setBaseUrl([[@{/umaas/core}]]);
+        		umaas.setBaseUrl([[@{${coreUrl}}]]);
         	})
         	.constant('globalConfig', {
         		accessCode: [[${accessCode}]],
