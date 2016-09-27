@@ -103,7 +103,12 @@ public class FileController {
     	Map<String, Object> map = new HashMap<>();
     	
 		map.put("file", file.getBytes());
-    	map.put("name", field.getId());
+		String name = field.getId();
+		Object extension =  field.get("extension");
+		if(extension != null){
+			name = name + "." + extension;
+		}
+    	map.put("name", name);
     	map.put("mimeType", file.getContentType());    	
     	map.put("directory", String.format(DIRECTORY_FORMAT, user.getDomain().getId(),
     			user.getId()));
@@ -157,9 +162,14 @@ public class FileController {
         	}
         	boolean exists = fileExists(fileId);
         	Map<String, Object> map = new HashMap<>();
-        	
+        	String name = field.getId();
+    		Object extension =  field.get("extension");
+    		if(extension != null){
+    			name = name + "." + extension;
+    		}
+        	map.put("name", name);
+
     		map.put("file", file.getBytes());
-        	map.put("name", field.getId());
         	map.put("mimeType", file.getContentType());    	
         	map.put("directory", String.format(DIRECTORY_FORMAT, user.getDomain().getId(),
         			user.getId()));
