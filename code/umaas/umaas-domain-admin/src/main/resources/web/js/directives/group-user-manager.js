@@ -1,6 +1,6 @@
 angular.module('app')
 
-.directive("groupUserManager",function(){
+.directive("groupUserManager",function(globalConfig){
     return {
         restrict: "AE",
         templateUrl: globalConfig.basePath + "/app/partials/templates/group-user-manager.htm",
