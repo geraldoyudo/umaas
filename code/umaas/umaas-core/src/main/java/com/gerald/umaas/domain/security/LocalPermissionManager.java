@@ -1,8 +1,9 @@
 package com.gerald.umaas.domain.security;
 
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +26,8 @@ import com.gerald.umaas.domain.services.GeneralResourceManager;
 
 @Component
 public class LocalPermissionManager implements PermissionManager{
-	private static Logger log = Logger.getLogger(LocalPermissionManager.class.getName());
-
+	private static final Logger log = LoggerFactory
+			.getLogger(LocalPermissionManager.class);
 	public static final String META_DOMAINS = "domains";
 	public static final String DOMAIN_ITEMS = "domain";
 	public static final String ALL_ITEMS = "ALL";

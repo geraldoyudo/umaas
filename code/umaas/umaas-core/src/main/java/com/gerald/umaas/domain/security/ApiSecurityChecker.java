@@ -2,11 +2,12 @@ package com.gerald.umaas.domain.security;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -23,9 +24,8 @@ import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
 
 @Component
 public class ApiSecurityChecker {
-	
-	private static Logger log = Logger.getLogger(ApiSecurityChecker.class.getName());
-	
+	private static final Logger log = LoggerFactory
+			.getLogger(ApiSecurityChecker.class);
 	@Autowired
 	private PermissionManager permissionManager;
 	@Value("${spring.data.rest.basePath}")
