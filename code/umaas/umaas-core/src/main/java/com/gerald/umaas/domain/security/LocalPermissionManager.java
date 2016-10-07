@@ -1,6 +1,7 @@
 package com.gerald.umaas.domain.security;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,8 @@ import com.gerald.umaas.domain.services.GeneralResourceManager;
 
 @Component
 public class LocalPermissionManager implements PermissionManager{
+	private static Logger log = Logger.getLogger(LocalPermissionManager.class.getName());
+
 	public static final String META_DOMAINS = "domains";
 	public static final String DOMAIN_ITEMS = "domain";
 	public static final String ALL_ITEMS = "ALL";
@@ -42,18 +45,18 @@ public class LocalPermissionManager implements PermissionManager{
 	@Override
 	public boolean hasPermission(String entityType, String entityId, Priviledge priviledge) {
 		Class<?> entityClass = findEntityClassByName(entityType);
-		System.out.println("has permission called");
+		log.info("has permission called");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth.getName());
+		log.info(auth.getName());
 		DomainAccessCode accessCode = accessCodeRepository.findOne(auth.getName());
 		if(accessCode == null){
-			System.out.println("Access code not found");
+			log.info("Access code not found");
 			return false;
 		}
-		System.out.println("Domain access code retrieved");
+		log.info("Domain access code retrieved");
 		try{
 		if(entityClass == null){
-			System.out.println("Evaluating non-class resource");
+			log.info("Evaluating non-class resource");
 			if(checkEntry(accessCode, entityType, entityId, priviledge)) return true;
 			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
 			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
@@ -69,7 +72,7 @@ public class LocalPermissionManager implements PermissionManager{
 			}
 			return false;
 		}else if(DomainResource.class.isAssignableFrom(entityClass)){
-			System.out.println("Evaluating domain resource");
+			log.info("Evaluating domain resource");
 			if(entityType.equals(UserField.class.getSimpleName())){
 				String userEntityType = AppUser.class.getSimpleName();
 				String userEntityId = entityId;
@@ -93,13 +96,13 @@ public class LocalPermissionManager implements PermissionManager{
 			return false;
 			
 		}else if(Resource.class.isAssignableFrom(entityClass)){
-			System.out.println("Evaluating resource");
+			log.info("Evaluating resource");
 			if(checkEntry(accessCode, entityType, entityId, priviledge)) return true;
 			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
 			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
 			return false;
 		}else{
-			System.out.println("Entity Type not a resource");
+			log.info("Entity Type not a resource");
 		}
 		}catch(PriviledgeDeniedException ex){
 			//do nothing
@@ -152,7 +155,7 @@ public class LocalPermissionManager implements PermissionManager{
 		if(containsPriviledgeForDomain(mapping, priviledge, d.getId())){
 			return true;
 		}
-		System.out.println("No priviledge for domain set");
+		log.info("No priviledge for domain set");
 		if(containsPriviledge(mapping, Priviledge.ALL)){
 			return true;
 		}
@@ -162,7 +165,7 @@ public class LocalPermissionManager implements PermissionManager{
 			String entityType,  Priviledge priviledge) throws PriviledgeDeniedException{
 		Domain d = domainRepository.findOne(domainId);
 		if(d == null) {
-			System.out.println("No domain found");
+			log.info("No domain found");
 			return false;
 		}
 			
@@ -170,8 +173,8 @@ public class LocalPermissionManager implements PermissionManager{
 	}
 	
 	public Class<?> findEntityClassByName(String name) {
-		System.out.println(name);
-		System.out.println(ENTITY_PACKAGE);
+		log.info(name);
+		log.info(ENTITY_PACKAGE);
 	      try{
 	        return Class.forName(ENTITY_PACKAGE + "." + name);
 	      } catch (ClassNotFoundException e){
@@ -184,20 +187,20 @@ public class LocalPermissionManager implements PermissionManager{
 
 	@Override
 	public boolean hasDomainCollectionPermission(String domainId, String entityType, Priviledge priviledge) {
-		System.out.println("has domain collection permission called");
+		log.info("has domain collection permission called");
 		if(entityType.equals(UserField.class.getSimpleName())){
 			if(hasDomainCollectionPermission(domainId,AppUser.class.getSimpleName(),priviledge))
 				return true;
 			
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(auth.getName());
+		log.info(auth.getName());
 		DomainAccessCode accessCode = accessCodeRepository.findOne(auth.getName());
 		if(accessCode == null){
-			System.out.println("Access code not found");
+			log.info("Access code not found");
 			return false;
 		}
-		System.out.println("Domain access code retrieved");
+		log.info("Domain access code retrieved");
 		try{
 		 if( checkForDomainEntry(domainId, accessCode, entityType, priviledge)) return true;
 		 if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
@@ -243,17 +246,17 @@ public class LocalPermissionManager implements PermissionManager{
 
 	@Override
 	public boolean hasPermissionWithExternalId(String domainId, String entityType, String entityExternalId, Priviledge priviledge) {
-		System.out.println("has permission with external id");
-		System.out.println(domainId);
-		System.out.println(entityExternalId);
+		log.info("has permission with external id");
+		log.info(domainId);
+		log.info(entityExternalId);
 		if( domainId == null){
 			return hasPermission(entityType, ALL_ITEMS,priviledge);
 		}
 		Domain d = domainRepository.findOne(domainId);
-		System.out.println(d);
+		log.info(d.toString());
 		if( d == null) return false;
 		String id = domainResourceManager.getIdFromExternalId(d, entityExternalId, entityType);
-		System.out.println("ID = " + id);
+		log.info("ID = " + id);
 		if(id == null ) return false;
 		
 		return hasPermission(entityType, id, priviledge);
@@ -261,24 +264,24 @@ public class LocalPermissionManager implements PermissionManager{
 
 	@Override
 	public boolean hasUserDomainPermission(String entityType, String userId, Priviledge priviledge) {
-		System.out.println("has user domain permission");
-		System.out.println(entityType);
+		log.info("has user domain permission");
+		log.info(entityType);
 		DomainResource user = (DomainResource) domainResourceManager.getObjectById(userId, AppUser.class.getSimpleName());
 		if(user == null ) return false;
-		System.out.println(user);
+		log.info(user.toString());
 		return hasDomainCollectionPermission(user.getDomain().getId(), entityType, priviledge);
 	}
 
 	@Override
 	public boolean hasAffiliateDomainPermission(String entityType, String key, Priviledge priviledge) {
-		System.out.println("has affiliate domain permission");
-		System.out.println(entityType);
+		log.info("has affiliate domain permission");
+		log.info(entityType);
 		DomainResource affiliate = (DomainResource) domainResourceManager.getObjectById(key, AppUser.class.getSimpleName());
 		if(affiliate == null ){
 			affiliate = (DomainResource) domainResourceManager.getObjectById(key, Group.class.getSimpleName());
 			if(affiliate == null) return false;
 		}
-		System.out.println(affiliate);
+		log.info(affiliate.toString());
 		return hasDomainCollectionPermission(affiliate.getDomain().getId(), entityType, priviledge);
 	}
 }

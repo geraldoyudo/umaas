@@ -2,6 +2,7 @@ package com.gerald.umaas.domain.security;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ import com.gerald.umaas.domain.web.utils.PostDataPersisterFilter;
 @Component
 public class ApiSecurityChecker {
 	
+	private static Logger log = Logger.getLogger(ApiSecurityChecker.class.getName());
+	
 	@Autowired
 	private PermissionManager permissionManager;
 	@Value("${spring.data.rest.basePath}")
@@ -34,25 +37,25 @@ public class ApiSecurityChecker {
 	
 	public boolean check(Authentication auth, HttpServletRequest request){
 		try{
-		System.out.println("checking security");
-		System.out.println(auth);
-		System.out.println("Evaluating access");
+		log.info("checking security");
+		log.info(auth.toString());
+		log.info("Evaluating access");
 	
-		System.out.println(basePath);
+		log.info(basePath);
 		String path = request.getRequestURI().split(basePath + "/")[1];
-		System.out.println(path);
+		log.info(path);
 		String[] segments = path.split("/");
 		String entityType = ResourceEntityMapper.getEntityName( segments[0]);
 		if(entityType == null){
-			System.out.println("Collection cannot be mapped to an entity name");
+			log.info("Collection cannot be mapped to an entity name");
 			return true;
 		}
 		String entityId = "ALL";
 		if(segments.length > 1){
 			entityId = segments[1];
 		}
-		System.out.println(entityType);
-		System.out.println(entityId);
+		log.info(entityType);
+		log.info(entityId);
 		Priviledge priviledge = getPriviledge(request);
 		if(entityType.equals("auth")){
 			String domain = request.getParameter("domain");
@@ -68,7 +71,7 @@ public class ApiSecurityChecker {
 		if(entityId.equals("search")){
 			if(entityType.equals(Domain.class.getSimpleName())){
 				String searchCommand = segments[2];
-				System.out.println("Search command " + searchCommand );
+				log.info("Search command " + searchCommand );
 				String domainId = null;
 				if(searchCommand.equals("findByCode")){
 					String code = request.getParameter("code");
@@ -126,19 +129,19 @@ public class ApiSecurityChecker {
 			HashMap<String,Object> content = objectMapper.readValue(body, HashMap.class);
 			String domainUrl = (String) content.get("domain");
 			if(domainUrl == null){
-				System.out.println("No domain specified");
+				log.info("No domain specified");
 			}
 			String[] domainPaths = domainUrl.split("/");
 			String domain = domainPaths[domainPaths.length -1];
-			System.out.println("Evaluating for domain " + domain);
+			log.info("Evaluating for domain " + domain);
 			return permissionManager.hasDomainCollectionPermission(domain, entityType, priviledge);
 			}catch( IOException ex){
-				System.out.println("Cannot read data");
-				System.out.println(ex.getMessage());
+				log.info("Cannot read data");
+				log.info(ex.getMessage());
 				return true;
 			}
 		}
-		System.out.println(priviledge);
+		log.info(priviledge.name());
 		return permissionManager.hasPermission(entityType, entityId, priviledge);
 		}catch(ArrayIndexOutOfBoundsException | NullPointerException | RequestNotSupportedException ex){
 			return true;
@@ -146,10 +149,10 @@ public class ApiSecurityChecker {
 	}
 	
 	public boolean checkFilePropertyAccess(Authentication auth, HttpServletRequest request){
-		System.out.println("Checking file property access");
+		log.info("Checking file property access");
 		try{
 			String path = request.getRequestURI().split("/files/")[1];
-			System.out.println("Path = " + path);
+			log.info("Path = " + path);
 			String[] segments = path.split("/");
 			String userId = segments[2];
 			String mode = segments[1];
@@ -164,7 +167,7 @@ public class ApiSecurityChecker {
 		}
 	}
 	private Priviledge getPriviledge(HttpServletRequest request) {
-		System.out.println("Request Method " + request.getMethod());
+		log.info("Request Method " + request.getMethod());
 		switch(request.getMethod().toLowerCase()){
 			case "get": return Priviledge.VIEW;
 			case "post": return Priviledge.ADD;
