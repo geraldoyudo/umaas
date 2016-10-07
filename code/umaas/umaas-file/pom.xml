@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>umaas-file</artifactId>
 	<packaging>war</packaging>
-	<name>umaas-core</name>
+	<name>umaas-file</name>
 	<description>File Repository for UmaaS</description>
 	 
 	<parent>
