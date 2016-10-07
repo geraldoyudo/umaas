@@ -28,7 +28,6 @@ public class ProxyConfiguration extends RouteBuilder {
 			contextPath = "";
 		String forwardPrefix = contextPath + "/umaas/core";
 		 from("servlet://core?matchOnUriPrefix=true")
-		 .log("${headers}")
 		.setHeader("X-Forwarded-Host", simple("${headers.host}"))
 		.setHeader("X-Forwarded-Prefix", simple(forwardPrefix))
 		 .to(coreUrl + "?bridgeEndpoint=true&throwExceptionOnFailure=false");
