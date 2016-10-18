@@ -468,6 +468,17 @@ var app = angular.module("app")
                 label: 'Verify Email'
 
              }
+         },
+         {
+
+             model: 'model.properties',
+             key: 'userListenerUrl',
+             type: 'input',
+             templateOptions: {
+                label: 'Listen for User Changes',
+                placeholder: 'Enter Url'
+
+             }
          }
 ]);
 
