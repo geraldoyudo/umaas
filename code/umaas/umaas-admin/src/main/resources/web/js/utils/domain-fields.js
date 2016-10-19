@@ -60,6 +60,30 @@ var app = angular.module("app")
                         label: 'Groups',
                         options: [{name: "opt1", id:1},{name:"opt2", id:2}]
                     }
+                },
+                 {
+                    key: 'disabled',
+                    type: 'checkbox',
+                    templateOptions: {
+                        label: 'Disabled'
+                       
+                    }
+                },
+                 {
+                    key: 'credentialsExpired',
+                    type: 'checkbox',
+                    templateOptions: {
+                        label: 'Credentials Expired'
+                       
+                    }
+                },
+                 {
+                    key: 'locked',
+                    type: 'checkbox',
+                    templateOptions: {
+                        label: 'Locked'
+                       
+                    }
                 }])
             
     .constant("customFieldFields", [{
@@ -475,8 +499,18 @@ var app = angular.module("app")
              key: 'userListenerUrl',
              type: 'input',
              templateOptions: {
+            	type: 'text',
                 label: 'Listen for User Changes',
                 placeholder: 'Enter Url'
+
+             }
+         },
+         {
+             model: 'model.properties',
+             key: 'lockOnRegistration',
+             type: 'checkbox',
+             templateOptions: {
+                label: 'Lock New Accounts'
 
              }
          }

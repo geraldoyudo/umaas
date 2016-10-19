@@ -1,11 +1,11 @@
 package com.gerald.umaas.domain.web;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +29,22 @@ public class AuthenticationAttendant {
         ret.put("auth", false);
          if(appUser == null) return ret;
          
+         if(appUser.isCredentialsExpired() || appUser.isDisabled() || 
+        		 appUser.isLocked()){
+        	 List<String> messages = new ArrayList<>();
+        	  if(appUser.isCredentialsExpired()){
+             	 messages.add("credentials expired");
+              }
+        	  if(appUser.isDisabled()){
+        		  messages.add("Account is disabled");
+        	  }
+        	  if(appUser.isLocked()){
+        		  messages.add("Account is locked");
+        	  }
+        	  ret.put("messages", messages);
+        	  return ret;
+         }
+       
          String encryptedPassword = encrypt(password);
          if(!appUser.getPassword().equals(encryptedPassword))
         	 return ret;

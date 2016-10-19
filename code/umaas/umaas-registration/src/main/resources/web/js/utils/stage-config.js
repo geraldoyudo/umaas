@@ -17,7 +17,9 @@ angular.module('app')
 		if(domain.properties.emailAsUsername){
 			user.username = user.email;
 		}
-	    
+	    if(domain.properties.lockOnRegistration){
+	    	user.locked = true;
+	    }
 		user.insert(function(error,updatedUser){
 			if(!error){ 
 				user = updatedUser;

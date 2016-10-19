@@ -324,6 +324,9 @@ var AppUser =  function(resourceObject){
       this.properties = {};
       this.groups = [];
       this.roles = [];
+      this.disabled = false;
+      this.credentialsExpired = false;
+      this.locked = false;
       var domain = '';
 
       if(resourceObject){
@@ -338,6 +341,9 @@ var AppUser =  function(resourceObject){
         this.groups = resourceObject.groups || [];
         this.roles = resourceObject.roles || [];
         this.properties = resourceObject.properties || {};
+        this.disabled = resourceObject.disabled;
+        this.credentialsExpired = resourceObject.credentialsExpired;
+        this.locked = resourceObject.locked;
         domain =  resourceObject._links.domain.href;
         } catch(e){};
       }
@@ -360,6 +366,9 @@ var AppUser =  function(resourceObject){
         userObject.properties = this.properties;
         userObject.externalId = this.externalId;
         userObject.meta = this.meta;
+        userObject.disabled = this.disabled;
+        userObject.credentialsExpired = this.credentialsExpired;
+        userObject.locked = this.locked;
         //console.log({message:'this is where we want.'});
         //console.log(userObject);
         this.update(userObject,callback);
@@ -378,6 +387,9 @@ var AppUser =  function(resourceObject){
            self.groups = appUsers.groups;
            self.roles = appUsers.roles;
            self.username = appUsers.username;
+           self.disabled = appUsers.disabled;
+           self.credentialsExpired = appUsers.credentialsExpired;
+           self.locked = appUsers.locked;
            self.properties = appUsers.properties;
             callback();
          })
@@ -411,6 +423,9 @@ var AppUser =  function(resourceObject){
             userObject.phoneNumber = this.phoneNumber;
             userObject.username = this.username;
             userObject.properties = this.properties;
+            userObject.disabled = this.disabled;
+            userObject.credentialsExpired = this.credentialsExpired;
+            userObject.locked = this.locked;
             utils.insertObject(apiBaseUrl + '/domain/appUsers', userObject, function(error, response, traversal){
               if(error){
                 callback(error);

@@ -14,7 +14,6 @@ try{
    TraversonJsonHalAdapterRef = require('traverson-hal');
 }
 
-
 traversonRef.registerMediaType(TraversonJsonHalAdapterRef.mediaType,
     TraversonJsonHalAdapterRef);
 
@@ -29,11 +28,12 @@ utils.updateObject = function (url, object, callback){
    api.newRequest().from(url)
       .addRequestOptions({headers:{'Content-Type': 'application/json'}})
       .patch(object, function(error, response, traversal){
+    	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
         }
-        if(body === ''  && response.headers && response.headers.location){
+        if((body === undefined || body === '')  && response.headers && response.headers.location){
           var location = response.headers.location;
           api.newRequest().from(location)
             .getResource(function(error, resource, traversal){
@@ -42,7 +42,8 @@ utils.updateObject = function (url, object, callback){
         }else{
            //console.log(response);
           //console.log(traversal);
-          callback(error, JSON.parse(body), traversal);
+           callback(error, JSON.parse(body), traversal); 	 
+         
         } 
       });
 }
@@ -50,6 +51,7 @@ utils.deleteObject = function(url, callback){
     //console.log("deleting from " + url);
     api.newRequest().from(url)
       .delete(function(error, response, traversal){
+      	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
@@ -65,11 +67,12 @@ utils.insertObject = function(url, object, callback){
     api.newRequest().from(url)
       .addRequestOptions({headers:{'Content-Type': 'application/json'}})
       .post(object, function(error, response, traversal){
+      	if(error) return callback(error);
         var body;
         if( response){
           body = response.body;
         }
-         if(body === '' && response.headers && response.headers.location){
+         if((body === undefined || body === '') && response.headers && response.headers.location){
           var location = response.headers.location;
           api.newRequest().from(location)
             .getResource(function(error, resource, traversal){
@@ -80,6 +83,16 @@ utils.insertObject = function(url, object, callback){
           //console.log(traversal);
           callback(error, JSON.parse(body), traversal);
         } 
+      });
+}
+utils.getObject = function(url, callback){
+    //console.log("inserting to " + url);
+    //console.log(object);
+    api.newRequest().from(url)
+      .addRequestOptions({headers:{'Content-Type': 'application/json'}})
+      .getResource(function(error, resource, traversal){
+      	  if(error) return callback(error);
+           callback(undefined, resource, traversal);
       });
 }
 
@@ -115,23 +128,28 @@ var getAccessCode = function(){
 }
 // Lazy List
 // lazy list template
-var LazyList = function(resourceObject, Creator, collectionName){
+var LazyList = function(resourceObject, Creator, collectionName, traversal, callback){
   var size = 0;
   var totalElements = 0;
   var totalPages =0;
   var pageNumber = 0;
   var resource = resourceObject;
   this.content =  [];
+  var resourceLength = 0;
   var content = this.content;
-  var resourceContent = resourceObject._embedded[collectionName];
-  resourceContent.forEach(function(element) {
-      content.push(new Creator(element));
-  });
+  var resourceContent = [];
+  try{
+  resourceContent = resourceObject._embedded[collectionName];
 
   size = resource.page.size;
   totalElements = resource.page.totalElements;
   totalPages = resource.page.totalPages;
   pageNumber = resource.page.number;
+  resourceLength = resourceContent.length;
+  }catch(e){
+	  // do nothing
+  }
+  var counter = 0;
   this.getSize = function(){
     return size;
   }
@@ -150,7 +168,7 @@ var LazyList = function(resourceObject, Creator, collectionName){
      var url = resource._links.next.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback));
           }else{
             return callback(error, undefined);
           }
@@ -161,7 +179,7 @@ var LazyList = function(resourceObject, Creator, collectionName){
      var url = resource._links.prev.href;
      api.newRequest().from(url).getResource(function(error,response){
           if(!error){
-            return callback(undefined, new LazyList(response,Creator, collectionName));
+            return callback(undefined, new LazyList(response,Creator, collectionName, traversal, callback));
           }else{
             return callback(error, undefined);
           }
@@ -173,6 +191,32 @@ var LazyList = function(resourceObject, Creator, collectionName){
    this.hasPrevious =  function(){
      return pageNumber > 0;
    }
+  if(resourceLength > 0){
+	  resourceContent.forEach(function(element) {
+	     if(!traversal)
+	        content.push(new Creator(element));
+	     else{
+	       var traversalUrl;
+	       if(typeof traversal === 'string'){
+	        var traversalLink = element._links[traversal];
+	        if(!traversalLink) return;
+	        traversalUrl = traversalLink.href;
+	       }else{
+	         traversalUrl = traversal(element);
+	       }
+	       utils.getObject(traversalUrl, function(error, resource){
+	         content.push(new Creator(resource));
+	         counter++;
+	         if(counter == resourceLength){
+	        	 if(callback) return callback();
+	         }
+	       })
+	     }
+	  });
+  }else{
+ 	 if(callback) return callback();
+  }
+  
 
 }
 
@@ -280,10 +324,14 @@ var AppUser =  function(resourceObject){
       this.properties = {};
       this.groups = [];
       this.roles = [];
+      this.disabled = false;
+      this.credentialsExpired = false;
+      this.locked = false;
       var domain = '';
 
       if(resourceObject){
         initResource(this, resourceObject);
+        try{
         this.phoneNumber = resourceObject.phoneNumber || '' ;
         this.email = resourceObject.email || '';
         this.username = resourceObject.username || '';
@@ -293,7 +341,11 @@ var AppUser =  function(resourceObject){
         this.groups = resourceObject.groups || [];
         this.roles = resourceObject.roles || [];
         this.properties = resourceObject.properties || {};
+        this.disabled = resourceObject.disabled;
+        this.credentialsExpired = resourceObject.credentialsExpired;
+        this.locked = resourceObject.locked;
         domain =  resourceObject._links.domain.href;
+        } catch(e){};
       }
 
 
@@ -314,6 +366,9 @@ var AppUser =  function(resourceObject){
         userObject.properties = this.properties;
         userObject.externalId = this.externalId;
         userObject.meta = this.meta;
+        userObject.disabled = this.disabled;
+        userObject.credentialsExpired = this.credentialsExpired;
+        userObject.locked = this.locked;
         //console.log({message:'this is where we want.'});
         //console.log(userObject);
         this.update(userObject,callback);
@@ -332,6 +387,9 @@ var AppUser =  function(resourceObject){
            self.groups = appUsers.groups;
            self.roles = appUsers.roles;
            self.username = appUsers.username;
+           self.disabled = appUsers.disabled;
+           self.credentialsExpired = appUsers.credentialsExpired;
+           self.locked = appUsers.locked;
            self.properties = appUsers.properties;
             callback();
          })
@@ -365,6 +423,9 @@ var AppUser =  function(resourceObject){
             userObject.phoneNumber = this.phoneNumber;
             userObject.username = this.username;
             userObject.properties = this.properties;
+            userObject.disabled = this.disabled;
+            userObject.credentialsExpired = this.credentialsExpired;
+            userObject.locked = this.locked;
             utils.insertObject(apiBaseUrl + '/domain/appUsers', userObject, function(error, response, traversal){
               if(error){
                 callback(error);
@@ -425,6 +486,18 @@ var AppUser =  function(resourceObject){
             field.getFileProperty(userId, callback);
         })
      }
+      
+      this.getFileUrl = function(fieldName, callback, view){
+    	  var userId = this.id;
+          umaas.fields.findByName(fieldName, function(error, field){
+              if(error) return callback(error);
+              return callback(apiBaseUrl + '/files/user/'+ (view?'view':'download') + '/' + userId + "/" + fieldId) ;
+          })
+      }
+      this.getFileUrlByFieldId = function(fieldId, view){
+    	  var userId = this.id;
+    	 return apiBaseUrl + '/files/user/'+ (view?'view':'download') + '/' + userId + "/" + fieldId;
+      }
 }
 
 
@@ -436,11 +509,13 @@ var Group = function(resourceObject){
       var parentUrl = '';
 
       if(resourceObject){
-        initResource(this, resourceObject);
-        this.name = resourceObject.name || '' ;
-        this.roles = resourceObject.roles || [];
-        domain =  resourceObject._links.domain.href;
-        parentUrl = resourceObject._links.parent.href;
+        try{ 
+          initResource(this, resourceObject);
+          this.name = resourceObject.name || '' ;
+          this.roles = resourceObject.roles || [];
+          domain =  resourceObject._links.domain.href;
+          parentUrl = resourceObject._links.parent.href;
+        } catch(e){}
       }
 
 
@@ -590,6 +665,48 @@ var Group = function(resourceObject){
             }
         });
      }
+     this.getUsers = function(pageObject, callback){
+        var url = apiBaseUrl + "/domain/userGroups/search/findByGroupId";
+         var groupId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['groupId'] = groupId;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, AppUser, "userGroups", "user", function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
+            }else{
+              return callback();
+            }
+        });
+     }
+
+     this.getUsersNotInGroup = function(pageObject, callback){
+        var url = apiBaseUrl + "/domain/userGroups/search/findByGroupIdNotAndDomainId";
+         var groupId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['groupId'] = groupId;
+         pageObject['domainId'] = umaas.getDomain().id;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, AppUser, "userGroups", "user", function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
+            }else{
+              return callback();
+            }
+        });
+     }
 }
 
 var Role = function(resourceObject){
@@ -731,6 +848,37 @@ var Role = function(resourceObject){
                 if(error) return callback(error);
                 else return callback();
               })
+            }else{
+              return callback();
+            }
+        });
+     }
+     var urlConverter = function(element, name){
+       return umaas.getBaseUrl() + '/domain/' + name + '/' + element.key;
+     }
+
+     this.getWithCriteria = function(pageObject, type, isIn, callback){
+         var url = apiBaseUrl + "/domain/roleMappings/search/findByDomainIdAndTypeAndRoleId" + ((!isIn)? 'Not' : '');
+         var roleId = this.id;
+         if(!pageObject) pageObject = {};
+         pageObject['roleId'] = roleId;
+         pageObject['type'] = type
+         pageObject['domain'] = umaas.getDomain().id;
+        api.newRequest().from(url)
+        .addRequestOptions({ qs: pageObject })
+        .getResource(function(error, resource){
+            if(error) callback();
+            if(resource){
+              var userList = new umaas.LazyList(resource, (type === 'GROUP'? Group: AppUser), "roleMappings",
+               function(element){
+            	  console.log('converting element');
+            	  console.log(element);
+                 return urlConverter(element, (type === 'GROUP'? 'groups': 'appUsers'));
+              }, function(error){
+                    if(error) callback(error);
+                    callback(undefined, userList);
+              });
+
             }else{
               return callback();
             }
@@ -1303,6 +1451,7 @@ var groups = function(){
   }
 	
  this.find = function(options,callback){
+	 console.log("Current Domain ==> " + currentDomain.id)
 	  if(currentDomain && currentDomain.id){
 		return this.findByDomain(options, currentDomain.id,callback);
 	  }else{

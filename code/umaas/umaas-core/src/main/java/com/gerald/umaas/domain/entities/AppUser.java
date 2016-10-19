@@ -40,6 +40,9 @@ public class AppUser extends DomainResource implements Affiliate{
     private String phoneNumber;
     private boolean emailVerified;
     private boolean phoneNumberVerified;
+    private boolean disabled;
+    private boolean locked;
+    private boolean credentialsExpired;
     private Map<String,Object> properties = new HashMap<>();
     private List<String> groups = new ArrayList<>();
     private List<String> roles = new ArrayList<>();
