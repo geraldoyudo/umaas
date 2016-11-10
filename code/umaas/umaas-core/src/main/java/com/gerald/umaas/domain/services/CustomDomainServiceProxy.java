@@ -1,15 +1,21 @@
 package com.gerald.umaas.domain.services;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Component
 public class CustomDomainServiceProxy{
@@ -71,6 +77,12 @@ public class CustomDomainServiceProxy{
 		}
 		throw new IllegalArgumentException("Method not available for this service");
 	}
+	
+	public Collection<Service> getServices(){
+		return domainServiceMap.values().stream().map((service) -> {
+			return new Service(service.getName(), service.getId());
+		}).collect(Collectors.toList());
+	}
 	private CustomDomainService getService(String serviceId) {
 		if(serviceId == null) throw new NullPointerException("Null service Id");
 		CustomDomainService service = domainServiceMap.get(serviceId);
@@ -84,13 +96,24 @@ public class CustomDomainServiceProxy{
 	}
 	
 	private void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
-		configuration.forEach((key, value) -> {
+		Map<String, Object> clone = new HashMap<>(configuration);
+		
+		clone.forEach((key, value) -> {
 			Class<?> keyType = params.get(key);
-			if(keyType == null) return;
+			if(keyType == null){
+				configuration.remove(key);
+				return;
+			}
 			if(!keyType.isInstance(value)){
 				throw new IllegalArgumentException("Invalid parameter type in configuration");
 			}
 		});
 	}
 	
+	@Data
+	@AllArgsConstructor
+	public static class Service{
+		private String name;
+		private String id;
+	}
 }
