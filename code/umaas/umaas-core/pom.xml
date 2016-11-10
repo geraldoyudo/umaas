@@ -62,6 +62,16 @@
 			<artifactId>general</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gerald.umaas</groupId>
+			<artifactId>umaas-data</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gerald.umaas</groupId>
+			<artifactId>umaas-extension-point</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
