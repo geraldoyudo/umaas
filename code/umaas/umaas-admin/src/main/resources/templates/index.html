@@ -85,6 +85,7 @@
         <script th:src='@{/app/web/js/controllers/entity-controller.js}'></script>
         <script th:src='@{/app/web/js/controllers/domain-controller.js}'></script>
         <script th:src='@{/app/web/js/controllers/service-config-controller.js}'></script>
+        <script th:src='@{/app/web/js/controllers/service-execution-controller.js}'></script>
         <script th:src='@{/app/web/js/directives/file-resource.js}'></script>
         <script th:src='@{/app/web/js/directives/group-user-manager.js}'></script>
         <script th:src='@{/app/web/js/directives/role-affiliate-manager.js}'></script>
@@ -99,7 +100,9 @@
         	.constant('globalConfig', {
         		accessCode: [[${accessCode}]],
         		domainName: [[${domainName}]],
-        		basePath: [[${#httpServletRequest.getContextPath()}]]
+        		basePath: [[${#httpServletRequest.getContextPath()}]],
+        		serviceUINames: [[${serviceUINames}]],
+        		serviceUIDescriptions: [[${serviceUIDescriptions}]]
         	});
         </script>
 		

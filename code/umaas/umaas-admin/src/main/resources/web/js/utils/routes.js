@@ -2,7 +2,7 @@ angular.module('app')
 
 .config(function($stateProvider, $urlRouterProvider,
 		DomainConstants, domainFields, globalConfig) {
-    
+   
 	$stateProvider
 		.state('users', {
 	        templateUrl: globalConfig.basePath + '/app/partials/users.html',
@@ -69,7 +69,23 @@ angular.module('app')
 	              		return loader.loadDomain();
 	              	}	  	      
 	          }
-          });
+          })
+          .state('services',{
+              templateUrl: globalConfig.basePath + '/app/partials/services.html',
+              controller: 'ServiceExecutionCtrl'
+          }   
+          );
+		var serviceIds = Object.keys(globalConfig.serviceUINames);
+		console.log(serviceIds);
+		serviceIds.forEach(function(serviceId){
+			$stateProvider.state('services.' + serviceId, {
+				templateUrl: globalConfig.basePath + '/app/serviceUI/' + serviceId + '/template',
+				data: {
+					name: globalConfig.serviceUINames[serviceId],
+					description: globalConfig.serviceUIDescriptions[serviceId]
+				}
+			})
+		})
         
     // catch all route
     // send users to the form page 

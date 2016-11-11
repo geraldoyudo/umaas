@@ -20,7 +20,7 @@ angular.module('app')
 		});
 	}
 	
-	self.getConfiguration = function(serviceId, domainId){
+	self.getConfiguration = function(serviceId){
 		checkNull(serviceId);
 		checkNull(domainId);
 		return $http.get(baseUrl + '/endpoint/' + serviceId + '/' + domainId + '/properties', function(resp){
@@ -28,7 +28,7 @@ angular.module('app')
 		});
 	}
 	
-	self.saveConfiguration = function(serviceId, domainId,configuration){
+	self.saveConfiguration = function(serviceId,configuration){
 		checkNull(serviceId);
 		checkNull(domainId);
 		checkNull(configuration);
@@ -42,7 +42,7 @@ angular.module('app')
 		var executionInput = {method: method, input: input};
 		var deferred = $q.defer();
 		 $http.post(baseUrl + '/endpoint/' +
-				serviceId + '/' + domainId + '/execute', executionInput, function(resp){
+				serviceId + '/' + domainId + '/execute', executionInput).then( function(resp){
 			deferred.resolve(resp.data.value);
 		});
 		 return deferred.promise;

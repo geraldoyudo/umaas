@@ -1,7 +1,7 @@
 angular.module('app')
 
 .controller('ServiceConfigCtrl', function($scope, 
-		serviceConfigFieldFactory, customServiceAttendant, domain){
+		serviceConfigFieldFactory, customServiceAttendant){
 	$scope.services = []
 	customServiceAttendant.getServices().then(function(services){
 		$scope.services = services.data;
@@ -19,14 +19,14 @@ angular.module('app')
 				console.log($scope.serviceFieldMap);
 				
 			});
-			customServiceAttendant.getConfiguration(service.id, domain.id).then(function(configuration){
+			customServiceAttendant.getConfiguration(service.id).then(function(configuration){
 				$scope.data.configMap[service.id] = configuration.data;
 				console.log($scope.data.configMap);
 			});
 		});
 		
 		$scope.saveConfiguration = function(serviceId, configuration){
-			customServiceAttendant.saveConfiguration(serviceId, domain.id, configuration).then(function(){
+			customServiceAttendant.saveConfiguration(serviceId, configuration).then(function(){
 				alert("Configuration saved");
 			}, function(){
 				alert("Error occured");
