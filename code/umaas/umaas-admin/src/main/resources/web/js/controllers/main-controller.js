@@ -18,8 +18,9 @@ angular.module('app')
     {icon:"group", title:"Groups"}, 
     {icon:"work", title:"Roles"},
      {icon:"view list", title:"Custom Fields"},
-     {icon:"settings", title:"Setting"}];
-    var routes=["users", "groups","roles", "customFields", "properties"];
+     {icon:"settings", title:"Setting"}, 
+     {icon:"settings", title:"Configuration"}];
+    var routes=["users", "groups","roles", "customFields", "properties", "configuration"];
     $scope.loadContent = function(index){
          $state.go(routes[index]);
      };

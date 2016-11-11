@@ -60,6 +60,15 @@ angular.module('app')
 	              	},
 	              	fields:function(){return angular.copy(domainFields)}	  	      
 	          }
+          })
+          .state('configuration',{
+              templateUrl: globalConfig.basePath + '/app/partials/configuration.html',
+              controller: 'ServiceConfigCtrl',
+	  	      resolve: {
+	              	domain: function(loader){
+	              		return loader.loadDomain();
+	              	}	  	      
+	          }
           });
         
     // catch all route
