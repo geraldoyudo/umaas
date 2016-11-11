@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gerald.umaas.domain.services.CustomDomainServiceProxy;
-
-import lombok.Data;
+import com.gerald.umaas.domain.web.utils.ExecutionInput;
 
 @RestController
-public class CustomServiceEndpoint {
+public class CustomDomainServiceEndpoint {
 	@Autowired
 	private CustomDomainServiceProxy serviceProxy;
 	
@@ -94,9 +93,4 @@ public class CustomServiceEndpoint {
 	}
 	
 	
-	@Data
-	public static class ExecutionInput{
-		private String method;
-		private Map<String, Object> input;
-	}
 }

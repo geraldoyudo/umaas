@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartException;
 public class ExceptionResolver {
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<HashMap<String,String>> notFoundHandler(Exception ex){
-		ex.printStackTrace();
 		HashMap<String,String> result = new HashMap<>();
 		result.put("message" , ex.getMessage());
 		result.put("description", "Not found");

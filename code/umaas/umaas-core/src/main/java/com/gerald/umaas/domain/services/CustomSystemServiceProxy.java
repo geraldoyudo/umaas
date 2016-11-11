@@ -11,24 +11,24 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gerald.umaas.extensionpoint.CustomDomainService;
+import com.gerald.umaas.extensionpoint.CustomSystemService;
 import com.gerald.umaas.extensionpoint.Method;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Component
-public class CustomDomainServiceProxy{
-	private Map<String,CustomDomainService> domainServiceMap = new TreeMap<>();
+public class CustomSystemServiceProxy{
+	private Map<String,CustomSystemService> serviceMap = new TreeMap<>();
 	
 	@Autowired(required = false)
-	public CustomDomainServiceProxy(List<CustomDomainService> services) {
+	public CustomSystemServiceProxy(List<CustomSystemService> services) {
 		services.forEach((service) -> {
-			domainServiceMap.put(service.getId(), service);
+			serviceMap.put(service.getId(), service);
 		});
 	}
-	
-	public CustomDomainServiceProxy() {
+	public CustomSystemServiceProxy() {
+		// TODO Auto-generated constructor stub
 	}
 	public String getName(String serviceId){
 		return getService(serviceId).getName();
@@ -37,66 +37,61 @@ public class CustomDomainServiceProxy{
 		return  getService(serviceId).getMethods();
 	}
 	
-	public void setEnabled(String serviceId, String domainId, boolean enabled){
-		checkDomainId(domainId);
-		getService(serviceId).setEnabled(domainId, enabled);
+	public void setEnabled(String serviceId, boolean enabled){
+		
+		getService(serviceId).setEnabled( enabled);
 	}
 
-	public boolean isEnabled(String serviceId, String domainId){
-		checkDomainId(domainId);
-		return getService(serviceId).isEnabled(domainId);
+	public boolean isEnabled(String serviceId ){
+		return getService(serviceId).isEnabled();
 	}
 	
 	public Map<String,Class<?>> getConfigurationSpecification(String serviceId){
 		return getService(serviceId).getConfigurationSpecification();
 	}
 	
-	public void setConfiguration(String serviceId, String domainId, Map<String,Object> configuration){
-		checkDomainId(domainId);
+	public void setConfiguration(String serviceId, Map<String,Object> configuration){
+		
 		if(configuration == null) throw new NullPointerException("Null Configuration");
-		CustomDomainService service = getService(serviceId);
+		CustomSystemService service = getService(serviceId);
 		
 		Map<String,Class<?>> params = service.getConfigurationSpecification();
 		checkTypedMap(configuration, params);
 		
-		service.setConfiguration(domainId, configuration);	
+		service.setConfiguration( configuration);	
 	}
 
-	public Map<String,Object> getConfiguration(String serviceId, String domainId){
-		checkDomainId(domainId);
-		return getService(serviceId).getConfiguration(domainId);
+	public Map<String,Object> getConfiguration(String serviceId ){
+		return getService(serviceId).getConfiguration();
 	}
 	
-	public Object execute(String serviceId, String domainId, String method, 
+	public Object execute(String serviceId, String method, 
 			Map<String,Object> inputParams){
-		checkDomainId(domainId);
+		
 		if(method == null) throw new NullPointerException("Method name is null");
-		CustomDomainService service = getService(serviceId);
+		CustomSystemService service = getService(serviceId);
 		for(Method m: service.getMethods()){
 			if(m.getName().equals(method)){
 				checkTypedMap(inputParams, m.getInput());
-				return service.execute(domainId, method, inputParams);
+				return service.execute( method, inputParams);
 			}
 		}
 		throw new IllegalArgumentException("Method not available for this service");
 	}
 	
 	public Collection<Service> getServices(){
-		return domainServiceMap.values().stream().map((service) -> {
+		return serviceMap.values().stream().map((service) -> {
 			return new Service(service.getName(), service.getId());
 		}).collect(Collectors.toList());
 	}
-	private CustomDomainService getService(String serviceId) {
+	private CustomSystemService getService(String serviceId) {
 		if(serviceId == null) throw new NullPointerException("Null service Id");
-		CustomDomainService service = domainServiceMap.get(serviceId);
+		CustomSystemService service = serviceMap.get(serviceId);
 		if(service == null) throw new NullPointerException("No service available with the specified id."
 				+ " Check that you installed the plugin successfully.");
 		return service;
 	}
-	private void checkDomainId(String domainId) {
-		if(domainId == null) throw new NullPointerException("Domain ID not set");
-		
-	}
+	
 	
 	private void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
 		Map<String, Object> clone = new HashMap<>(configuration);
