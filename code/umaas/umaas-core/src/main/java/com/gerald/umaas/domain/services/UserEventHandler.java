@@ -47,7 +47,7 @@ public class UserEventHandler {
 			d = user.getDomain();
 			if (d == null) return;
 			String listenerUrl = d.getProperties().get(USER_LISTENER_URL_PROPERTY).toString();
-			if(listenerUrl == null) return;
+			if(listenerUrl == null || listenerUrl.isEmpty()) return;
 			Map<String, Object> values = new HashMap<>();
 			values.put("user", user);
 			values.put("action", action.name());
