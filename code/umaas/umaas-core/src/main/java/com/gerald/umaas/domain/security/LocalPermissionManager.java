@@ -117,7 +117,7 @@ public class LocalPermissionManager implements PermissionManager{
 		List<DomainAccessCodeMapping> mapping = 
 				codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, entityId);
-		if(mapping == null){
+		if(mapping == null || mapping.isEmpty()){
 			return false;
 		}
 		if(containsPriviledge(mapping,Priviledge.NONE)){
@@ -140,10 +140,10 @@ public class LocalPermissionManager implements PermissionManager{
 		
 		mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 						entityType, DOMAIN_ITEMS);
-		if(mapping == null){
+		if(mapping == null || mapping.isEmpty()){
 			mapping = codeMappingRepository.findByAccessCodeAndEntityTypeAndEntityId(accessCode, 
 					ALL_ITEMS, DOMAIN_ITEMS);
-			if(mapping == null){
+			if(mapping == null || mapping.isEmpty()){
 				return false;
 			}
 		}
