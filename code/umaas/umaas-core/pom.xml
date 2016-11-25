@@ -77,11 +77,11 @@
 			<artifactId>rome</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.gerald.test.plugin</groupId>
 			<artifactId>umaas-plugin-test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>
