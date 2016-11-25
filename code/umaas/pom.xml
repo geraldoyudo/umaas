@@ -23,6 +23,8 @@
 	</properties>
 	
     <modules>
+    	<module>umaas-data</module>
+    	<module>umaas-extension-point</module>
         <module>umaas-core</module>
 		<module>umaas-file</module>
 		<module>umaas-registration</module>
