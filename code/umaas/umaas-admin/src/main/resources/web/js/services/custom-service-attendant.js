@@ -1,9 +1,9 @@
 angular.module('app')
 
-.service('customServiceAttendant', function($q, umaas, $http, globalConfig){
+.service('customServiceAttendant', function($q, umaas, $http){
 	var domainId = umaas.getDomain().id;
 	var self = this;
-	var baseUrl = globalConfig.basePath + '/umaas/core';
+	var baseUrl = umaas.getBaseUrl();
 	
 	var checkNull = function(variable){
 		if(!variable) throw "Null data present";

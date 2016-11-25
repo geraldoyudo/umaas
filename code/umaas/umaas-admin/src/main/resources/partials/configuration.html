@@ -2,11 +2,16 @@
 <md-card flex-gt-sm="90" flex-gt-md="80">
     <md-card-content>
         <h2><span class="label label-default">Configuration</span></h2>
-        <div ng-repeat="service in services">
-        <h3><span class="label label-default"> {{service.id}} ( {{service.name}})</span></h3>
-         <formly-form model="data.configMap[service.id]" fields="serviceFieldMap[service.id]" form="serviceForm">
-                <md-button type="button" ng-show="!serviceForm.$pristine" ng-disabled="serviceForm.$invalid" ng-click="saveConfiguration(service.id, data.configMap[service.id])">Save</md-button>
-            </formly-form>
+         <div ng-if="!services.length">
+         	No Configurable Services
+         </div>
+        <div ng-if="services.length">
+	        <div ng-repeat="service in services">
+	        <h3><span class="label label-default"> {{service.id}} ( {{service.name}})</span></h3>
+	         <formly-form model="data.configMap[service.id]" fields="serviceFieldMap[service.id]" form="serviceForm">
+	                <md-button type="button" ng-show="!serviceForm.$pristine" ng-disabled="serviceForm.$invalid" ng-click="saveConfiguration(service.id, data.configMap[service.id])">Save</md-button>
+	            </formly-form>
+	         </div>
          </div>
     </md-card-content>
 </md-card>

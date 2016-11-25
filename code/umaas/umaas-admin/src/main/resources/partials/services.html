@@ -7,11 +7,16 @@
 	</style>
     <md-card-content>
         <h2><span class="label label-default">Services</span></h2>
+     <div ng-if="!serviceUIs.length">
+     	No Services Installed
+     </div>
+    <div ng-if="serviceUIs.length">
     <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
       	<md-nav-item ng-repeat="serviceUI in serviceUIs" md-nav-click="goTo(serviceUI)" name="{{serviceUI}}">{{getName(serviceUI)}}</md-nav-item>
     </md-nav-bar>	
     <div class="ext-content">
      <div ui-view></div>
+    </div>
     </div>
     </md-card-content>
 </md-card>
