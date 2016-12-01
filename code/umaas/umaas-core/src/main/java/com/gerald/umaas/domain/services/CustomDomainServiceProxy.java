@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gerald.umaas.domain.entities.Domain;
+import com.gerald.umaas.domain.entities.ServiceConfiguration;
+import com.gerald.umaas.domain.entities.ServiceConfiguration.PluginType;
+import com.gerald.umaas.domain.repositories.DomainRepository;
+import com.gerald.umaas.domain.repositories.PluginConfigurationRepository;
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
 
@@ -20,6 +25,10 @@ import lombok.Data;
 @Component
 public class CustomDomainServiceProxy{
 	private Map<String,CustomDomainService> domainServiceMap = new TreeMap<>();
+	@Autowired
+	private PluginConfigurationRepository pluginConfigurationRepository;
+	@Autowired
+	private DomainRepository domainRepository;
 	
 	@Autowired(required = false)
 	public CustomDomainServiceProxy(List<CustomDomainService> services) {
@@ -38,13 +47,38 @@ public class CustomDomainServiceProxy{
 	}
 	
 	public void setEnabled(String serviceId, String domainId, boolean enabled){
-		checkDomainId(domainId);
-		getService(serviceId).setEnabled(domainId, enabled);
+		Domain d = checkDomainId(domainId);
+		checkServiceId(serviceId);
+		ServiceConfiguration config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, domainId);
+		if(config == null){
+			config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
+					d, enabled, new HashMap<>());
+		}else{
+			config.setEnabled(enabled);
+		}
+		pluginConfigurationRepository.save(config);
+	}
+
+	private void checkServiceId(String serviceId) {
+		CustomDomainService service = getService(serviceId);
+		if(service == null){
+			throw new NullPointerException("Service is null!!");
+		}
+		
 	}
 
 	public boolean isEnabled(String serviceId, String domainId){
 		checkDomainId(domainId);
-		return getService(serviceId).isEnabled(domainId);
+		checkServiceId(serviceId);
+		ServiceConfiguration config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
+						domainId);
+		if(config == null){
+			System.out.println(String.format("Config is null for %s and %s", serviceId, domainId));
+			return false;
+		}else{
+			return config.isEnabled();
+		}
 	}
 	
 	public Map<String,Class<?>> getConfigurationSpecification(String serviceId){
@@ -52,19 +86,36 @@ public class CustomDomainServiceProxy{
 	}
 	
 	public void setConfiguration(String serviceId, String domainId, Map<String,Object> configuration){
-		checkDomainId(domainId);
+		Domain d =checkDomainId(domainId);
+		checkServiceId(serviceId);
 		if(configuration == null) throw new NullPointerException("Null Configuration");
 		CustomDomainService service = getService(serviceId);
 		
 		Map<String,Class<?>> params = service.getConfigurationSpecification();
 		checkTypedMap(configuration, params);
-		
-		service.setConfiguration(domainId, configuration);	
+		ServiceConfiguration config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, 
+						domainId);
+		if(config == null){
+			config = new ServiceConfiguration(serviceId, PluginType.DOMAIN,
+					d, false, configuration);
+		}else{
+			config.setConfiguration(configuration);
+		}
+		pluginConfigurationRepository.save(config);
 	}
 
 	public Map<String,Object> getConfiguration(String serviceId, String domainId){
 		checkDomainId(domainId);
-		return getService(serviceId).getConfiguration(domainId);
+		checkServiceId(serviceId);
+		ServiceConfiguration config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
+						domainId);
+		if(config == null){
+			return new HashMap<>();
+		}else{
+			return config.getConfiguration();
+		}
 	}
 	
 	public Object execute(String serviceId, String domainId, String method, 
@@ -72,10 +123,16 @@ public class CustomDomainServiceProxy{
 		checkDomainId(domainId);
 		if(method == null) throw new NullPointerException("Method name is null");
 		CustomDomainService service = getService(serviceId);
+		ServiceConfiguration config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
+						domainId);
+		if(config == null || !config.isEnabled()){
+			throw new IllegalStateException("Service is disabled for this domain");
+		}
 		for(Method m: service.getMethods()){
 			if(m.getName().equals(method)){
 				checkTypedMap(inputParams, m.getInput());
-				return service.execute(domainId, method, inputParams);
+				return service.execute(domainId, method, inputParams, config.getConfiguration());
 			}
 		}
 		throw new IllegalArgumentException("Method not available for this service");
@@ -93,9 +150,11 @@ public class CustomDomainServiceProxy{
 				+ " Check that you installed the plugin successfully.");
 		return service;
 	}
-	private void checkDomainId(String domainId) {
+	private Domain checkDomainId(String domainId) {
 		if(domainId == null) throw new NullPointerException("Domain ID not set");
-		
+		Domain d = domainRepository.findOne(domainId);
+		if(d == null)  throw new NullPointerException("No domain with the specified ID");
+		return d;
 	}
 	
 	private void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
