@@ -17,6 +17,7 @@ public class ExceptionResolver {
 		HashMap<String,String> result = new HashMap<>();
 		result.put("message" , ex.getMessage());
 		result.put("description", "Not found");
+		ex.printStackTrace();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
 

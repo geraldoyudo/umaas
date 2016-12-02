@@ -3,6 +3,7 @@ package com.gerald.umaas.domain.config;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import com.gerald.utils.general.CodeGenerator;
 import com.gerald.utils.general.RandomCodeStringGenerator;
@@ -17,4 +18,8 @@ public class ServiceConfig {
         gen.setCharLength(16);
         return gen;
     }
+	 @Bean
+	 public RestTemplate restTemplate(){
+		 return new RestTemplate();
+	 }
 }

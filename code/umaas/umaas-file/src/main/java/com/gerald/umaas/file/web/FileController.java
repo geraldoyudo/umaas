@@ -163,7 +163,9 @@ public class FileController {
  	}
     
      @RequestMapping(value = "/files/size", method = RequestMethod.GET)
-     public long directorySize(@RequestParam("directory") String directory) {
-    	 return fileRepository.sizeOfDirectory(directory);
+     public Map<String,Object> directorySize(@RequestParam("directory") String directory) {
+    	 Map<String,Object> ret = new HashMap<>();
+    	 ret.put("size", fileRepository.sizeOfDirectory(directory));
+    	 return ret;
      }
 }

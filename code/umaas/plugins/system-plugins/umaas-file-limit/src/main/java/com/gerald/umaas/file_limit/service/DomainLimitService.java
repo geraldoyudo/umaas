@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainConfiguration;
 import com.gerald.umaas.domain.entities.DomainConfiguration.Properties;
@@ -20,6 +26,9 @@ import com.gerald.umaas.extensionpoint.Method;
 
 public class DomainLimitService implements CustomSystemService {
 	
+	private static final String DOMAIN_DIRECTORY_FORMAT = "umaas/domain/%s";
+	private static final String CALCULATE_ALL_DOMAIN_SIZES = "calculateAllDomainSizes";
+	private static final String CALCULATE_DOMAIN_SIZE = "calculateDomainSize";
 	private static final String LIMIT_PARAM = "limit";
 	private static final String SET_DOMAIN_LIMIT = "setDomainLimit";
 	private static final String DOMAIN_PARAM = "domain";
@@ -28,6 +37,10 @@ public class DomainLimitService implements CustomSystemService {
 	private PluginConfigurationRepository repository;
 	private DomainConfigurationRepository domainConfigurationRepository;
 	private DomainRepository domainRepository;
+	@Value("${umaas.file-repo.url}")
+	private String fileRepoUrl;
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	public DomainLimitService(PluginConfigurationRepository repository,
 			DomainConfigurationRepository fileLimitRepository, DomainRepository domainRepository) {
@@ -53,16 +66,31 @@ public class DomainLimitService implements CustomSystemService {
 		input.put(DOMAIN_PARAM, String.class);
 		domainLimit.setInput(input);
 		domainLimit.setOutput(Map.class);
+		
 		Method allLimits = new Method();
 		allLimits.setName(GET_ALL_LIMITS);
 		allLimits.setOutput(List.class);
+		
 		Method setDomainLimit = new Method();
 		setDomainLimit.setName(SET_DOMAIN_LIMIT);
 		input = new HashMap<>();
 		input.put(DOMAIN_PARAM, String.class);
 		input.put(LIMIT_PARAM, Long.class);
 		setDomainLimit.setInput(input);
-		return new HashSet<>(Arrays.asList(domainLimit, allLimits, setDomainLimit));
+		
+		Method calculateDomainSize = new Method();
+		calculateDomainSize.setName(CALCULATE_DOMAIN_SIZE);
+		input = new HashMap<>();
+		input.put(DOMAIN_PARAM, String.class);
+		calculateDomainSize.setInput(input);
+		calculateDomainSize.setOutput(Long.class);
+		
+		Method calculateAllDomainSizes = new Method();
+		calculateAllDomainSizes.setName(CALCULATE_ALL_DOMAIN_SIZES);
+		calculateAllDomainSizes.setOutput(Boolean.class);
+		return new HashSet<>(Arrays.asList(domainLimit, allLimits, setDomainLimit, 
+				calculateDomainSize, calculateAllDomainSizes));
+	
 	}
 
 
@@ -76,36 +104,80 @@ public class DomainLimitService implements CustomSystemService {
 	public Object execute(String methodName, Map<String, Object> inputParams, Map<String,Object> configuation) {
 		switch(methodName){
 		case GET_DOMAIN_LIMIT: {
-			String domainId = inputParams.get(DOMAIN_PARAM).toString();
-			checkDomainId(domainId);
-			return getLimitByDomain(domainId);
+			return doGetDomainLimit(inputParams);
 		}
 		case GET_ALL_LIMITS:{
-			List<DomainConfiguration> configs= domainConfigurationRepository.findAll();
-			Map<String, FileLimit> fileLimitMap = new HashMap<>();
-			configs.forEach((config) ->{
-				Domain d = config.getDomain();
-				String id = "ALL";
-				if(d != null){
-					id = d.getId();
-				}
-				fileLimitMap.put(id, (FileLimit)config.get(Properties.FILE_LIMIT));
-				});
-			return fileLimitMap;
+			return doGetAllLimits();
 		}
 		case SET_DOMAIN_LIMIT: {
-			String domainId = inputParams.get(DOMAIN_PARAM).toString();
-			checkDomainId(domainId);
-			long limit = (Long) inputParams.get(LIMIT_PARAM);
-			FileLimit fileLimit = getLimitByDomain(domainId);
-			fileLimit.setLimit(limit);
-			saveLimitByDomain(domainId, fileLimit);
-			return true;
+			return doSetDomainLimit(inputParams);
+		}
+		case CALCULATE_DOMAIN_SIZE:{
+			return doCalculateDomainSize(inputParams);
+		}
+		case CALCULATE_ALL_DOMAIN_SIZES:{
+			return doCalculateAllDomainSizes(inputParams);
 		}
 		default:{
 			throw new IllegalArgumentException("Method not supporoted");
 		}
 		}
+	}
+	
+	private Object doCalculateAllDomainSizes(Map<String, Object> inputParams) {
+		calculateDomainSizesAsync();
+		return true;
+	}
+	
+	@Async
+	private void calculateDomainSizesAsync(){
+		for(Domain d: domainRepository.findAll()){
+			calculateDomainSize(d.getId());
+		}
+	}
+	private Object doCalculateDomainSize(Map<String, Object> inputParams) {
+		String domainId = inputParams.get(DOMAIN_PARAM).toString();
+		return calculateDomainSize(domainId);
+	}
+	private long calculateDomainSize(String domainId){
+		checkDomainId(domainId);
+		String query = UriComponentsBuilder.fromHttpUrl(fileRepoUrl + "/files/size").queryParam("directory" ,
+				String.format(DOMAIN_DIRECTORY_FORMAT, domainId)).toUriString();
+		System.out.println(query);
+		Map<String,Object> ret =  restTemplate.getForObject(query, HashMap.class);
+		System.out.println(ret);
+		long size =((Number)ret.get("size")).longValue();
+		FileLimit limit = getLimitByDomain(domainId);
+		limit.setSize(size);
+		saveLimitByDomain(domainId, limit);
+		return size;
+	}
+	private Object doGetDomainLimit(Map<String, Object> inputParams) {
+		String domainId = inputParams.get(DOMAIN_PARAM).toString();
+		checkDomainId(domainId);
+		return getLimitByDomain(domainId);
+	}
+	private Object doGetAllLimits() {
+		List<DomainConfiguration> configs= domainConfigurationRepository.findAll();
+		Map<String, FileLimit> fileLimitMap = new HashMap<>();
+		configs.forEach((config) ->{
+			Domain d = config.getDomain();
+			String id = "ALL";
+			if(d != null){
+				id = d.getId();
+			}
+			fileLimitMap.put(id, (FileLimit)config.get(Properties.FILE_LIMIT));
+			});
+		return fileLimitMap;
+	}
+	private Object doSetDomainLimit(Map<String, Object> inputParams) {
+		String domainId = inputParams.get(DOMAIN_PARAM).toString();
+		checkDomainId(domainId);
+		long limit = (Long) inputParams.get(LIMIT_PARAM);
+		FileLimit fileLimit = getLimitByDomain(domainId);
+		fileLimit.setLimit(limit);
+		saveLimitByDomain(domainId, fileLimit);
+		return true;
 	}
 	public FileLimit getLimitByDomain(String domainId) {
 		DomainConfiguration config = domainConfigurationRepository.findByDomainId(domainId);
