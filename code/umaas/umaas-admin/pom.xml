@@ -116,11 +116,11 @@
 		    	<artifactId>umaas-extension-point</artifactId>
 		    	<version>0.0.1-SNAPSHOT</version>
 		    </dependency>
-		    <dependency>
+		    <!-- <dependency>
 		    	<groupId>com.gerald.test.admin_plugin</groupId>
 		    	<artifactId>umaas-admin-plugin-test</artifactId>
 		    	<version>0.0.1-SNAPSHOT</version>
-		    </dependency>
+		    </dependency>-->
 	</dependencies>
 
 
