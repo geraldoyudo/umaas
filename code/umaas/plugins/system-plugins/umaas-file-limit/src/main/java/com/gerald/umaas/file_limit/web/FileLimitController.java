@@ -18,6 +18,7 @@ public class FileLimitController {
 	
 	@RequestMapping(path = "/fileLimit/approveSave", method = RequestMethod.POST)
 	public boolean approveUpdate(@RequestBody FileEntry entry){
+		if(!domainLimitService.isEnabled())return true;
 		String[] pathChunks = entry.getDirectory().split("/");
 		if(pathChunks.length == 0){
 			throw new IllegalArgumentException("Could not extract domain Id");

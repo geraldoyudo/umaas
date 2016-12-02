@@ -161,4 +161,9 @@ public class FileController {
 
          return new ResponseEntity<>(file.getFile(), headers, HttpStatus.OK);
  	}
+    
+     @RequestMapping(value = "/files/size", method = RequestMethod.GET)
+     public long directorySize(@RequestParam("directory") String directory) {
+    	 return fileRepository.sizeOfDirectory(directory);
+     }
 }
