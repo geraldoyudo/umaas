@@ -84,7 +84,7 @@ public class CustomSystemServiceProxy{
 		CustomSystemService service = getService(serviceId);
 		
 		Map<String,Class<?>> params = service.getConfigurationSpecification();
-		checkTypedMap(configuration, params);
+		ServiceUtils.checkTypedMap(configuration, params);
 		ServiceConfiguration config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.SYSTEM, null);
 		if(config == null){
 			config = new ServiceConfiguration(serviceId, PluginType.SYSTEM, 
@@ -117,7 +117,7 @@ public class CustomSystemServiceProxy{
 		}
 		for(Method m: service.getMethods()){
 			if(m.getName().equals(method)){
-				checkTypedMap(inputParams, m.getInput());
+				ServiceUtils.checkTypedMap(inputParams, m.getInput());
 				return service.execute( method, inputParams, config.getConfiguration());
 			}
 		}
@@ -137,21 +137,6 @@ public class CustomSystemServiceProxy{
 		return service;
 	}
 	
-	
-	private void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
-		Map<String, Object> clone = new HashMap<>(configuration);
-		
-		clone.forEach((key, value) -> {
-			Class<?> keyType = params.get(key);
-			if(keyType == null){
-				configuration.remove(key);
-				return;
-			}
-			if(!keyType.isInstance(value)){
-				throw new IllegalArgumentException("Invalid parameter type in configuration");
-			}
-		});
-	}
 	
 	@Data
 	@AllArgsConstructor

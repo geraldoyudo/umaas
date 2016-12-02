@@ -1,7 +1,7 @@
 angular.module('app')
 
 .controller('ServiceExecutionCtrl', function($scope, 
-		 customServiceAttendant, $state, globalConfig){
+		 customServiceAttendant, $state, globalConfig, $parse){
 	$scope.state = $state.data;
 	$scope.serviceUIs = Object.keys(globalConfig.serviceUINames);
 	$scope.goTo = function(serviceId){
@@ -10,13 +10,15 @@ angular.module('app')
 	$scope.getName = function(serviceId){
 		return globalConfig.serviceUINames[serviceId];
 	}
-	$scope.execute = function(serviceId, method, input, variable){
+	$scope.execute = function(serviceId, method, input, variable, alert){
 		customServiceAttendant.execute(serviceId, method, input).then(function(value){
 			console.log("Executed!!");
 			if(variable){
-				$scope[variable] = value;
+				var setter = $parse(variable).assign
+				setter($scope, value);
 			}
-			alert("Completed!");
+			if(alert)
+				alert("Completed!");
 		});
 		
 	}

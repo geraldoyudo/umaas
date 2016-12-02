@@ -82,6 +82,11 @@
 			<artifactId>umaas-plugin-test</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			  <groupId>com.gerald.umaas.file_limit</groupId>
+			  <artifactId>umaas-file-limit-service</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: Umaas File Limit Service
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Dev7
+Implementation-Vendor-Id: com.gerald.umaas.file_limit
+Build-Jdk: 1.8.0_73
+Implementation-URL: http://projects.spring.io/spring-boot/umaas-file-l
+ imit-service/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

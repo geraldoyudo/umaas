@@ -92,7 +92,7 @@ public class CustomDomainServiceProxy{
 		CustomDomainService service = getService(serviceId);
 		
 		Map<String,Class<?>> params = service.getConfigurationSpecification();
-		checkTypedMap(configuration, params);
+		ServiceUtils.checkTypedMap(configuration, params);
 		ServiceConfiguration config = pluginConfigurationRepository
 				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, 
 						domainId);
@@ -131,7 +131,7 @@ public class CustomDomainServiceProxy{
 		}
 		for(Method m: service.getMethods()){
 			if(m.getName().equals(method)){
-				checkTypedMap(inputParams, m.getInput());
+				ServiceUtils.checkTypedMap(inputParams, m.getInput());
 				return service.execute(domainId, method, inputParams, config.getConfiguration());
 			}
 		}
@@ -155,21 +155,6 @@ public class CustomDomainServiceProxy{
 		Domain d = domainRepository.findOne(domainId);
 		if(d == null)  throw new NullPointerException("No domain with the specified ID");
 		return d;
-	}
-	
-	private void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
-		Map<String, Object> clone = new HashMap<>(configuration);
-		
-		clone.forEach((key, value) -> {
-			Class<?> keyType = params.get(key);
-			if(keyType == null){
-				configuration.remove(key);
-				return;
-			}
-			if(!keyType.isInstance(value)){
-				throw new IllegalArgumentException("Invalid parameter type in configuration");
-			}
-		});
 	}
 	
 	@Data
