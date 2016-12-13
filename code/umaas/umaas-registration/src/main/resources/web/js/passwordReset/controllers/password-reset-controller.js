@@ -7,6 +7,7 @@ angular.module("passwordReset")
 	vm.data = {};
 	vm.data.emailSent = false;
 	var savedEmail;
+	var savedUser;
 	
 	vm.checkEmail = function(email){
 		umaas.appUsers.findByEmail(email, function(error, user){
@@ -14,6 +15,7 @@ angular.module("passwordReset")
 				console.log(error);
 				alert("Invalid Email!");
 			}else{
+				savedUser = user;
 				$http.post(globalConfig.basePath + '/app/verify/request', 
 						{
 							"name": "password-reset",
@@ -44,8 +46,9 @@ angular.module("passwordReset")
 			"value": savedEmail,
 			"properties": {
 				"domain": globalConfig.domainName,
+				"tokenId": tokenId,
 				"tokenValues":{
-					"userId": user.id
+					"userId": savedUser.id
 				}
 			}
 		}).then(function(resp){
@@ -56,7 +59,7 @@ angular.module("passwordReset")
 		});
 	 }
 	 
-	 $scope.verify = function(code){
+	 vm.verify = function(code){
 		 console.log("Executing verify");
 		 $http.post(globalConfig.basePath + '/app/verify/process', {
 				"name": "password-reset",
