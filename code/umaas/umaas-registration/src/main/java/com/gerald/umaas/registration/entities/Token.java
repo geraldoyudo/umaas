@@ -1,6 +1,8 @@
 package com.gerald.umaas.registration.entities;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
@@ -25,4 +27,11 @@ public class Token {
   	private String entityType="";
 	@NotNull
     private String purpose;
+	private Map<String,Object> properties = new HashMap<>();
+	public Object get(String key){
+		return properties.get(key);
+	}
+	public void set(String key, String value){
+		properties.put(key,value);
+	}
 }

@@ -22,6 +22,17 @@ public class HomeController {
 	
 	@RequestMapping("/register")
 	public String register( Model model, @RequestParam(name = "domain", required = false) String domainName){
+		setUpModel(model, domainName);
+		return "index";
+	}
+	
+	@RequestMapping("/passwordReset")
+	public String passwordReset( Model model, @RequestParam(name = "domain", required = false) String domainName){
+		setUpModel(model, domainName);
+		return "password-reset";
+	}
+
+	private void setUpModel(Model model, String domainName) {
 		if(domainName == null){
 			domainName = defaultDomain;
 		}
@@ -31,6 +42,5 @@ public class HomeController {
 		accessCode.put("code", accessCodeValue);
 		model.addAttribute("accessCode", accessCode);
 		model.addAttribute("coreUrl", "/umaas/core"  + coreContextPath);
-		return "index";
 	}
 }

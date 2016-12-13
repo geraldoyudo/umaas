@@ -1,7 +1,8 @@
 package com.gerald.umaas.registration.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.registration.entities.Token;
 import com.gerald.umaas.registration.managers.TokenManager;
@@ -20,7 +21,9 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
 	public final String onRequest(VerificationRequest request) {
 		String name = request.getName();
 		String code = generateRandomCode();
-		Token token = tokenManager.createToken(name, code, "verification");
+		Token token = 
+				tokenManager.createToken(name, code, "verification" ,
+						(Map<String,Object>)request.get("tokenValues"));
 		request.set("code", code);
 		request.set("tokenId", token.getId());
 		doRequest(request);
@@ -32,20 +35,21 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
     }
     
     @Override
-    protected final boolean onProcess(VerificationRequest request) {
+    protected final Map<String,Object> onProcess(VerificationRequest request) {
     	String code = request.get("code").toString();
     	String tokenId = request.get("tokenId").toString();
     	Token token = tokenManager.get(tokenId);
     	if(token == null)
-    		return false;
+    		return returnValue(false);
     	if(!token.getCode().equals(code))
-    		return false;
+    		return returnValue(false);
     	tokenManager.delete(token);
+    	request.set("tokenValues", token.getProperties());
     	return doProcess(request);
     }
     
-    protected boolean doProcess(VerificationRequest request){
-    	return true;
+    protected Map<String,Object> doProcess(VerificationRequest request){
+    	return returnValue(true, (Map<String,Object>)request.get("tokenValues"));
     }
     
     @Override
@@ -55,8 +59,9 @@ public abstract class AbstractTwoStepVerifier extends AbstractVerifier {
     	if(t != null){
     		tokenManager.delete(t);
     	}
-    	Token newToken = tokenManager.createToken(t.getEntityType(), generateRandomCode()
-    			, t.getPurpose());
+    	Token newToken = tokenManager
+    			.createToken(t.getEntityType(), generateRandomCode()
+    			, t.getPurpose(),(Map<String,Object>)request.get("tokenValues"));
     	request.set("code", newToken.getCode());
 		request.set("tokenId", newToken.getId());
 		doRequest(request);

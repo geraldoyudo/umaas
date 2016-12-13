@@ -1,5 +1,7 @@
 package com.gerald.umaas.registration.service;
 
+import java.util.Map;
+
 public abstract class AbstractOneStepVerifier extends AbstractVerifier{
 	@Override
 	public final String onRequest(VerificationRequest request) {
@@ -11,11 +13,11 @@ public abstract class AbstractOneStepVerifier extends AbstractVerifier{
 		return null;
 	}
 	@Override
-	protected final boolean onProcess(VerificationRequest request) {
+	protected final Map<String,Object> onProcess(VerificationRequest request) {
 		return doProcess(request);
 	}
 	
-	protected abstract boolean doProcess(VerificationRequest request);
+	protected abstract Map<String,Object> doProcess(VerificationRequest request);
 	
 	@Override
 	public VerifierType getType() {

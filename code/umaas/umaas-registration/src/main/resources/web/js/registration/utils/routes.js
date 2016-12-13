@@ -7,7 +7,7 @@ angular.module('app')
         // route to show our basic form (/form)
         .state('form', {
             url: '/form',
-            templateUrl: globalConfig.basePath + '/app/partials/form.htm',
+            templateUrl: globalConfig.basePath + '/app/partials/registration/form.htm',
             controller: 'RegistrationCtrl',
             resolve: {
             	domain: function(loader){
@@ -21,19 +21,19 @@ angular.module('app')
         // url will be nested (/form/details)
         .state('form.details', {
             url: '/details',
-            templateUrl: globalConfig.basePath + '/app/partials/form-details.htm'
+            templateUrl: globalConfig.basePath + '/app/partials/registration/form-details.htm'
         })
         
         // url will be /form/interests
         .state('form.verification', {
             url: '/validation',
-            templateUrl: globalConfig.basePath + '/app/partials/form-validation.htm'
+            templateUrl: globalConfig.basePath + '/app/partials/registration/form-validation.htm'
         })
         
         // url will be /form/payment
         .state('form.success', {
             url: '/success',
-            templateUrl: globalConfig.basePath + '/app/partials/form-success.htm'
+            templateUrl: globalConfig.basePath + '/app/partials/registration/form-success.htm'
         });
         
     // catch all route

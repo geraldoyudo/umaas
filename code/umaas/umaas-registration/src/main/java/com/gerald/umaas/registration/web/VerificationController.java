@@ -32,7 +32,7 @@ public class VerificationController {
 		req.set("code", code);
 		req.set("tokenId", tokenId);
 		model.addAttribute("request", req);
-		Map<String,Boolean> result =  verificationAttendant.processVerification(req);
+		Map<String,Object> result =  verificationAttendant.processVerification(req);
 		model.addAttribute("result", result);
 		return "verification-result";
 	}

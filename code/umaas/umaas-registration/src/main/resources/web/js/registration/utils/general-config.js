@@ -3,11 +3,11 @@ angular.module('app')
 .run(function(formlyConfig, globalConfig){
 	formlyConfig.setType({
 		  name: 'file-input',
-		  templateUrl: globalConfig.basePath + '/app/partials/templates/file-input.htm'
+		  templateUrl: globalConfig.basePath + '/app/partials/registration/templates/file-input.htm'
 		});
 	formlyConfig.setType({
 	  name: 'verify-item',
-	  templateUrl: globalConfig.basePath + '/app/partials/templates/verify-item.htm',
+	  templateUrl: globalConfig.basePath + '/app/partials/registration/templates/verify-item.htm',
 	  controller: function($scope, $parse, $http){
 		  var key = $scope.options.key;
 		  console.log($scope);

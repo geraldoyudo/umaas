@@ -1,6 +1,7 @@
 package com.gerald.umaas.registration.managers;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,15 @@ public class TokenManager{
     	 return tokenRepository.save(t);
     }
     
+    public Token createToken(String entityType, String code, String purpose, Map<String, Object> properties) {
+    	 Token t = new Token();
+    	 t.setCode(code);
+    	 t.setEntityType(entityType);
+    	 t.setExpiryDate(new Date(System.currentTimeMillis() + timeToLive));
+    	 t.setPurpose(purpose);
+    	 t.setProperties(properties);
+		return tokenRepository.save(t);
+	}
     public Token get(String id){
     	return tokenRepository.findOne(id);
     }
@@ -55,6 +65,8 @@ public class TokenManager{
 	public void delete(Token token) {
 		tokenRepository.delete(token);
 	}
+
+	
 	    
 	   
 }

@@ -1,6 +1,7 @@
 package com.gerald.umaas.registration.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +14,7 @@ public class VerifierFacade implements Verifier{
 	private List<AbstractVerifier> verifiers;
 	
 	@Override
-	public boolean process(VerificationRequest request) throws VerifierNotSupportedException {
+	public Map<String,Object> process(VerificationRequest request) throws VerifierNotSupportedException {
 		if(verifiers == null) throw new VerifierNotSupportedException();
 		for(Verifier verifier: verifiers){
 			try{
