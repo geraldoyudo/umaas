@@ -24,11 +24,16 @@ angular.module('passwordReset')
             url: '/enterEmail',
             templateUrl: globalConfig.basePath + '/app/partials/passwordReset/enter-email.htm'
         })
+         .state('passwordReset.emailSent', {
+            url: '/emailSent',
+            templateUrl: globalConfig.basePath + '/app/partials/passwordReset/email-sent.htm'
+        })
         
         // url will be /form/interests
         .state('passwordReset.changePassword', {
-            url: '/changePassword/{userId}',
-            templateUrl: globalConfig.basePath + '/app/partials/passwordReset/change-password.htm'
+            url: '/changePassword/:userId?tokenId&code}',
+            templateUrl: globalConfig.basePath + '/app/partials/passwordReset/change-password.htm',
+            controller: 'PasswordChangeCtrl'
         })
         
         // url will be /form/payment

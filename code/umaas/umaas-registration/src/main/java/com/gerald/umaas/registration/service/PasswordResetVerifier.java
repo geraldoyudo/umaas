@@ -17,6 +17,10 @@ public class PasswordResetVerifier  extends AbstractTwoStepVerifier{
 	@Autowired
 	@Qualifier("customFormatMimeMailSender")
 	private AsyncSender<Map<String,Object>> htmlMailSender;
+	@Value("${app.host:http://localhost:8071}")
+	private String hostUrl;
+	
+	
 	@Override
 	public void doRequest(VerificationRequest request) {
 		Map<String, Object> values = new HashMap<>();
@@ -25,6 +29,11 @@ public class PasswordResetVerifier  extends AbstractTwoStepVerifier{
 		values.put(CustomFormatMimeEmailSender.SUBJECT, "Password Reset");
 		values.put(ThymeleafMimeEmailConstructor.HTML_TEMPLATE
 				, "password_reset.html");
+		String verifyUrlTemplate = hostUrl + "/app/passwordReset?domain=%s#/passwordReset/changePassword/?code=%s&tokenId=%s";
+		String verifyUrl = String.format(verifyUrlTemplate, request.get("domain"),
+				request.get("code"), request.get("tokenId"));
+		values.put("verifyUrl", verifyUrl);
+		System.out.println(verifyUrl);
 		htmlMailSender.sendAsync(values);	
 	}
 

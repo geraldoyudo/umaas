@@ -1,7 +1,16 @@
 <div layout="row" layout-align="center center">
 <md-card style="width:70%">
-	<div>
-		Enter Details
+	<div ng-init="data.emailSent=false">
+		<md-input-container>
+			<input placeholder="Enter Email" type="email" ng-model="email"></input>
+		</md-input-container>
+		<md-button class="md-raised md-accent" ng-click="checkEmail(email)">RESET</md-button>
+	</div>
+	<div ng-if="data.emailSent">
+		<md-input-container>
+			<input placeholder="Enter Verification Code" type="text" ng-model="code"></input>
+		</md-input-container>
+		<md-button class="md-raised md-accent" ng-click="verify(code)">VERIFY</md-button>
 	</div>
 </md-card>
 </div>
