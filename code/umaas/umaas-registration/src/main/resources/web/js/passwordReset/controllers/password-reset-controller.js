@@ -1,14 +1,14 @@
 angular.module("passwordReset")
 
 .controller("PasswordResetCtrl", function($scope,
-		umaas, $state, $http, globalConfig){
+		umaas, $state, $http, globalConfig, domain){
 	var vm = $scope;
 	var tokenId;
 	vm.data = {};
 	vm.data.emailSent = false;
 	var savedEmail;
 	var savedUser;
-	
+	vm.loginPage = domain.properties.loginPage;
 	vm.checkEmail = function(email){
 		umaas.appUsers.findByEmail(email, function(error, user){
 			if(error){
