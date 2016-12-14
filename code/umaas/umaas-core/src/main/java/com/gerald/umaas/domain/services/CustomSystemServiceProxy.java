@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.gerald.umaas.domain.entities.ServiceConfiguration;
 import com.gerald.umaas.domain.entities.ServiceConfiguration.PluginType;
 import com.gerald.umaas.domain.repositories.PluginConfigurationRepository;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 import com.gerald.umaas.extensionpoint.CustomSystemService;
 import com.gerald.umaas.extensionpoint.Method;
 
@@ -73,7 +74,7 @@ public class CustomSystemServiceProxy{
 		
 		
 	}
-	public Map<String,Class<?>> getConfigurationSpecification(String serviceId){
+	public Collection<TypeSpec> getConfigurationSpecification(String serviceId){
 		return getService(serviceId).getConfigurationSpecification();
 	}
 	
@@ -83,7 +84,7 @@ public class CustomSystemServiceProxy{
 		if(configuration == null) throw new NullPointerException("Null Configuration");
 		CustomSystemService service = getService(serviceId);
 		
-		Map<String,Class<?>> params = service.getConfigurationSpecification();
+		Collection<TypeSpec> params = service.getConfigurationSpecification();
 		ServiceUtils.checkTypedMap(configuration, params);
 		ServiceConfiguration config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.SYSTEM, null);
 		if(config == null){

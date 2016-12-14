@@ -7,6 +7,9 @@
         <dependent-module archiveName="umaas-extension-point-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/umaas-extension-point/umaas-extension-point">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="umaas-admin-plugin-test-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/umaas-admin-plugin-test/umaas-admin-plugin-test">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/umaas-admin/target/classes"/>
         <property name="context-root" value="umaas-admin"/>
     </wb-module>

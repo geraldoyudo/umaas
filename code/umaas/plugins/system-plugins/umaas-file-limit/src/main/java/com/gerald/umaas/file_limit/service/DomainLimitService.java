@@ -1,6 +1,8 @@
 package com.gerald.umaas.file_limit.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +25,7 @@ import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.PluginConfigurationRepository;
 import com.gerald.umaas.extensionpoint.CustomSystemService;
 import com.gerald.umaas.extensionpoint.Method;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 public class DomainLimitService implements CustomSystemService {
 	
@@ -62,9 +65,8 @@ public class DomainLimitService implements CustomSystemService {
 	public Set<Method> getMethods() {
 		Method domainLimit = new Method();
 		domainLimit.setName(GET_DOMAIN_LIMIT);
-		Map<String, Class<?>> input = new HashMap<>();
-		input.put(DOMAIN_PARAM, String.class);
-		domainLimit.setInput(input);
+		TypeSpec spec = new TypeSpec(DOMAIN_PARAM, "Domain ID", String.class);
+		domainLimit.setInput(Arrays.asList(spec));
 		domainLimit.setOutput(Map.class);
 		
 		Method allLimits = new Method();
@@ -73,16 +75,15 @@ public class DomainLimitService implements CustomSystemService {
 		
 		Method setDomainLimit = new Method();
 		setDomainLimit.setName(SET_DOMAIN_LIMIT);
-		input = new HashMap<>();
-		input.put(DOMAIN_PARAM, String.class);
-		input.put(LIMIT_PARAM, Long.class);
-		setDomainLimit.setInput(input);
+		setDomainLimit.setInput(Arrays.asList(
+				new TypeSpec(DOMAIN_PARAM, "Domain ID", String.class),
+				new TypeSpec(LIMIT_PARAM, "Limit", Long.class)));
 		
 		Method calculateDomainSize = new Method();
 		calculateDomainSize.setName(CALCULATE_DOMAIN_SIZE);
-		input = new HashMap<>();
-		input.put(DOMAIN_PARAM, String.class);
-		calculateDomainSize.setInput(input);
+		calculateDomainSize.setInput(Arrays.asList(
+				new TypeSpec(DOMAIN_PARAM, "Domain ID", String.class)
+			));
 		calculateDomainSize.setOutput(Long.class);
 		
 		Method calculateAllDomainSizes = new Method();
@@ -95,9 +96,8 @@ public class DomainLimitService implements CustomSystemService {
 
 
 	@Override
-	public Map<String, Class<?>> getConfigurationSpecification() {
-		Map<String, Class<?>> input = new HashMap<>();
-		return input;
+	public Collection<TypeSpec> getConfigurationSpecification() {
+		return new ArrayList<>();
 	}
 	
 	@Override

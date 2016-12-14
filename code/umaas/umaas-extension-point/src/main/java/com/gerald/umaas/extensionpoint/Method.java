@@ -1,12 +1,12 @@
 package com.gerald.umaas.extensionpoint;
 
-import java.util.Map;
+import java.util.Collection;
 
 import lombok.Data;
 
 @Data
 public class Method {
 	private String name;
-	private Map<String,Class<?>> input;
+	private Collection<TypeSpec> input;
 	private Class<?> output;
 }

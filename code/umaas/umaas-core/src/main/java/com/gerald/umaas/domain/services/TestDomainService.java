@@ -1,7 +1,7 @@
 package com.gerald.umaas.domain.services;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 @Component
 public class TestDomainService implements CustomDomainService{
@@ -28,18 +29,18 @@ public class TestDomainService implements CustomDomainService{
 	public Set<Method> getMethods() {
 		Method method = new Method();
 		method.setName("doSomething");
-		Map<String, Class<?>> input = new HashMap<>();
-		input.put("param1", Integer.class);
-		method.setInput(input);
+		TypeSpec spec = new  TypeSpec(
+				"param1", "First Parameter", Integer.class);
+		method.setInput( Arrays.asList(spec));
 		method.setOutput(String.class);
 		return new HashSet<>(Arrays.asList(method));
 	}
 
 	@Override
-	public Map<String, Class<?>> getConfigurationSpecification() {
-		Map<String, Class<?>> input = new HashMap<>();
-		input.put("param1", Integer.class);
-		return input;
+	public Collection<TypeSpec> getConfigurationSpecification() {
+		TypeSpec spec = new  TypeSpec(
+				"param1", "First Parameter", Integer.class);
+		return Arrays.asList(spec);
 	}
 
 

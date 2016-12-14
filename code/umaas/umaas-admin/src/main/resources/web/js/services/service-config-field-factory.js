@@ -12,13 +12,13 @@ angular.module('app')
     self.create = function(specs){
     	if(!specs) throw "specifications is undefined";
     	var fields = []
-    	Object.keys(specs).forEach(function(key){
+    	specs.forEach(function(spec){
     		var field =  {
-                 key: key,
+                 key: spec.key,
                  type: 'input',
                  templateOptions: {
-                     type: getInputType(specs[key]),
-                     label: key,
+                     type: getInputType(spec.type),
+                     label: spec.name,
                      required: false
                  }
              }

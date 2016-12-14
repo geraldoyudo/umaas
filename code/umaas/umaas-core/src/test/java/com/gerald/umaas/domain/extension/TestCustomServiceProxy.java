@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.gerald.umaas.domain.services.CustomDomainServiceProxy;
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 @RunWith(SpringRunner.class)
 public class TestCustomServiceProxy {
@@ -34,11 +35,11 @@ public class TestCustomServiceProxy {
 		Method m = new Method();
 		m.setName(DO_METHOD);
 		m.setOutput(Integer.class);
-		Map<String,Class<?>> input = new HashMap<>();
-		input.put("param1", String.class);
-		m.setInput(input);
+		TypeSpec spec = new  TypeSpec(
+				"param1", "First Parameter", String.class); 
+		m.setInput(Arrays.asList(spec));
 		given(mockService.getMethods()).willReturn(new HashSet<>(Arrays.asList(m)));
-		given(mockService.getConfigurationSpecification()).willReturn(input);
+		given(mockService.getConfigurationSpecification()).willReturn(Arrays.asList(spec));
 		proxy = new CustomDomainServiceProxy(Arrays.asList(mockService));
 	}
 	

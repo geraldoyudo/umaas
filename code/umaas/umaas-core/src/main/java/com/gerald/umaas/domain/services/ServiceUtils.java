@@ -1,14 +1,19 @@
 package com.gerald.umaas.domain.services;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gerald.umaas.extensionpoint.TypeSpec;
+
 public class ServiceUtils {
-	public static void checkTypedMap(Map<String, Object> configuration, Map<String, Class<?>> params) {
+	public static void checkTypedMap(Map<String, Object> configuration,
+			Collection<TypeSpec> params) {
 		Map<String, Object> clone = new HashMap<>(configuration);
 		
 		clone.forEach((key, value) -> {
-			Class<?> keyType = params.get(key);
+			Class<?> keyType = getClassValue(key, params);
 			if(keyType == null){
 				configuration.remove(key);
 				return;
@@ -36,6 +41,16 @@ public class ServiceUtils {
 			}
 		});
 	}
-	
 
+	private static Class<?> getClassValue(String key, Collection<TypeSpec> specs){
+		for(TypeSpec spec: specs){
+			try{
+			if(spec.getKey().equals(key)) 
+				return spec.getValueClass();
+			}catch(NullPointerException ex){
+				continue;
+			}
+		}
+		return null;
+	}
 }

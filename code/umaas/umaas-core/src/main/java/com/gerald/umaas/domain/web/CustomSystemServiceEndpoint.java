@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gerald.umaas.domain.services.CustomSystemServiceProxy;
 import com.gerald.umaas.domain.web.utils.ExecutionInput;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 @RestController
 public class CustomSystemServiceEndpoint {
@@ -49,13 +50,11 @@ public class CustomSystemServiceEndpoint {
 	}
 	
 	@RequestMapping(path = "/system/{id}/configure", method = RequestMethod.GET)
-	public Map<String, String> getConfigurationSpecication(@PathVariable("id") String serviceId){
+	public Collection<Map<String, String>> getConfigurationSpecication(@PathVariable("id") String serviceId){
 		return serviceProxy.getConfigurationSpecification(serviceId)
-		.entrySet()
-		.stream()
-		.collect((Collectors.toMap(Map.Entry<String,Class<?>>::getKey ,
-				(entry) -> {return entry.getValue().getSimpleName();}, 
-				(a,b) -> a, TreeMap::new)));
+				.stream()
+				.map(TypeSpec::typeMap)
+				.collect(Collectors.toList());
 	}
 	
 	@RequestMapping(path = {"/system/{id}/properties"}, 

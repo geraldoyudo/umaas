@@ -16,6 +16,7 @@ import com.gerald.umaas.domain.entities.ServiceConfiguration;
 import com.gerald.umaas.domain.entities.ServiceConfiguration.PluginType;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.PluginConfigurationRepository;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
 
@@ -81,7 +82,7 @@ public class CustomDomainServiceProxy{
 		}
 	}
 	
-	public Map<String,Class<?>> getConfigurationSpecification(String serviceId){
+	public Collection<TypeSpec> getConfigurationSpecification(String serviceId){
 		return getService(serviceId).getConfigurationSpecification();
 	}
 	
@@ -91,7 +92,7 @@ public class CustomDomainServiceProxy{
 		if(configuration == null) throw new NullPointerException("Null Configuration");
 		CustomDomainService service = getService(serviceId);
 		
-		Map<String,Class<?>> params = service.getConfigurationSpecification();
+		Collection<TypeSpec> params = service.getConfigurationSpecification();
 		ServiceUtils.checkTypedMap(configuration, params);
 		ServiceConfiguration config = pluginConfigurationRepository
 				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, 

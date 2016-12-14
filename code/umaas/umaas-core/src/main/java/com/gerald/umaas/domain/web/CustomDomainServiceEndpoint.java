@@ -3,7 +3,6 @@ package com.gerald.umaas.domain.web;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gerald.umaas.domain.services.CustomDomainServiceProxy;
 import com.gerald.umaas.domain.web.utils.ExecutionInput;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 @RestController
 public class CustomDomainServiceEndpoint {
@@ -52,14 +52,12 @@ public class CustomDomainServiceEndpoint {
 	
 	@RequestMapping(path = {"/endpoint/{id}/configure"}, 
 			method = RequestMethod.GET)
-	public Map<String, String> getConfigurationSpecication(@PathVariable("id") String serviceId){
+	public Collection<Map<String, String>>getConfigurationSpecication(@PathVariable("id") String serviceId){
 		
 		return serviceProxy.getConfigurationSpecification(serviceId)
-		.entrySet()
 		.stream()
-		.collect((Collectors.toMap(Map.Entry<String,Class<?>>::getKey ,
-				(entry) -> {return entry.getValue().getSimpleName();}, 
-				(a,b) -> a, TreeMap::new)));
+		.map(TypeSpec::typeMap)
+		.collect(Collectors.toList());
 	}
 	
 	@RequestMapping(path = {"/endpoint/{id}/{domainId}/properties"}, 
