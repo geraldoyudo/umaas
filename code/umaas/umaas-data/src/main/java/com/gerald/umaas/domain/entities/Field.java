@@ -33,7 +33,7 @@ public class Field extends DomainResource{
 	private String type = "string";
     private Map<String,Object> properties = new HashMap<>();
     public Object get(String key){
-    	return properties.get("key");
+    	return properties.get(key);
     }
     public void set(String key, Object value){
     	properties.put(key, value);
