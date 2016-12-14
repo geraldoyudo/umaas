@@ -13,7 +13,11 @@
 			<link rel="stylesheet" th:href="@{/app/web/css/styles.css}"></link>
 		</head> 
 		<body ng-app='app' ng-controller="layoutCtrl">
-		<div> 
+		<div id="page-loading">
+		    <img style="display:block; margin:0 auto;" 
+		    th:src="@{/app/web/img/cube.gif}" alt="IMAGE LOADING"></img>
+		</div>
+		<div ng-cloak=""> 
 		 	<!-- Sidebar -->
             <md-toolbar layout="row">
                 <div class="md-toolbar-tools">
@@ -105,6 +109,11 @@
         		serviceUIDescriptions: [[${serviceUIDescriptions}]]
         	});
         </script>
-		
+		<script type="text/javascript">
+		    document.addEventListener("DOMContentLoaded", function(event) {
+		        var element = document.getElementById("page-loading");
+		        element.parentNode.removeChild(element);
+		    });
+		</script>
 		</body> 
 </html>

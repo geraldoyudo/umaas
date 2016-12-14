@@ -1,7 +1,6 @@
 angular.module('app')
 .controller('MainCtrl', function($scope, $state, loader){
 	console.log("Successfully Loaded");
-	$state.go('users');
 	loader.loadDomain().then(function(domain){
 		$scope.domain = domain;
 	});
@@ -23,6 +22,9 @@ angular.module('app')
      {icon:"settings", title:"Services"}];
     var routes=["users", "groups","roles", "customFields", "properties", "configuration", "services"];
     $scope.loadContent = function(index){
+    	console.log(routes[index]);
          $state.go(routes[index]);
      };
+     $state.go("properties");
+    
   });
