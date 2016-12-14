@@ -14,17 +14,8 @@ angular.module('app')
 	};
 	start();
 	$scope.user = new umaas.AppUser();
-	var code = globalConfig.accessCode;
-	var url =  umaas.getBaseUrl() + "/endpoint/com.gerald.umaas.domain.services.extensions.RegistrationService/" + 
-	domain.id + "/properties";
-	console.log(url);
-	var auth = 'Basic ' + btoa( code.id + ":" +code.code);
-	$http.get(url , {
-	    headers: {'Authorization': auth}
-	}).then(function(resp){
-		$scope.domainProperties = resp.data;
-		console.log($scope.domainProperties);
-	});
+	$scope.domainProperties = domain.domainProperties;
+	console.log($scope.domainProperties);
 	$scope.display.title = stageManager.currentStage.title;
 	$scope.display.description = stageManager.currentStage.description;
 	$scope.display.hideNav = stageManager.currentStage.hideNav;

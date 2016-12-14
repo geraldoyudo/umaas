@@ -35,7 +35,15 @@ public class RegistrationService  implements CustomDomainService{
 		return Arrays.asList(new  TypeSpec(
 				"afterRegistrationUrl", "Redirect to URL after Registration", String.class),
 				new  TypeSpec(
-						"loginPage", "Login Page", String.class));
+						"loginPage", "Login Page", String.class),
+				new  TypeSpec(
+						"emailAsUsername", "Use Email As Username", Boolean.class),
+				new  TypeSpec(
+						"lockOnRegistration", "Lock On Registration", Boolean.class),
+				new  TypeSpec(
+						"verifyEmail", "Verify Email", Boolean.class),
+				new  TypeSpec(
+						"verifyPhoneNumber", "Verify Phone Number", Boolean.class));
 	}
 
 	@Override

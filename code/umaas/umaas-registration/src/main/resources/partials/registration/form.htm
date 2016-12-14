@@ -1,10 +1,13 @@
 <div layout="row" layout-align="center center">
-<md-card style="width:70%">
-	<div>
-		Registration
+<md-card style="width:50%">
+	<div class="title">
+		<h3 class="md-display-2" >
+			{{domainProperties.title || 'Registration'}}
+		</h3>
+		<h3>{{display.title}}</h3>
+		<p>{{display.description}}</p>
 	</div>
-	<h3>{{display.title}}</h3>
-	<p>{{display.description}}</p>
+	
 	<div layout="row">
 		<div flex="10"></div>
 		<div flex="80" id="form-views" ui-view=""></div>

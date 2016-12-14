@@ -1,8 +1,6 @@
 <input type="hidden" name="{{options.name}}"></input>
-<label>{{options.templateOptions.label}}</label>
+<label>{{options.templateOptions.label}} ({{modelValue}})</label>
 <div layout="row" ng-init="showButton = false">
-<span flex>{{modelValue}}</span>
-
 	<md-button ng-if="!verified && !verifyRequested" flex ng-click="requestVerify()">VERIFY</md-button>
 	<md-button ng-if="!verified && verifyRequested" flex ng-click="resend()">RESEND</md-button>
 	<input ng-if="!verified && verifyRequested" flex ng-model="data.code" placeholder="Enter code"/>

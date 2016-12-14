@@ -9,6 +9,11 @@ angular.module('app')
     	default: return "text"
     	}
     }
+    var modifyField = function(field, spec){
+    	if(spec.type === "Boolean"){
+			field.type = 'checkbox';
+		}
+    }
     self.create = function(specs){
     	if(!specs) throw "specifications is undefined";
     	var fields = []
@@ -22,6 +27,7 @@ angular.module('app')
                      required: false
                  }
              }
+    		modifyField(field, spec);
     		fields.push(field);
     	});	
     	

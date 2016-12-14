@@ -454,63 +454,12 @@ var app = angular.module("app")
          {
 
              model: 'model.properties',
-             key: 'loginPage',
-             type: 'input',
-             templateOptions: {
-                 type: 'text',
-                 label: 'Redirect to url after Registration',
-                 placeholder: 'Enter Url ',
-                 required: true
-             }
-         },
-         {
-
-             model: 'model.properties',
-             key: 'emailAsUsername',
-             type: 'checkbox',
-             templateOptions: {
-                label: 'Use Email as Username'
-
-             }
-         },
-         {
-
-             model: 'model.properties',
-             key: 'verifyPhoneNumber',
-             type: 'checkbox',
-             templateOptions: {
-                label: 'Verify Phone Number'
-
-             }
-         },
-         {
-
-             model: 'model.properties',
-             key: 'verifyEmail',
-             type: 'checkbox',
-             templateOptions: {
-                label: 'Verify Email'
-
-             }
-         },
-         {
-
-             model: 'model.properties',
              key: 'userListenerUrl',
              type: 'input',
              templateOptions: {
             	type: 'text',
                 label: 'Listen for User Changes',
                 placeholder: 'Enter Url'
-
-             }
-         },
-         {
-             model: 'model.properties',
-             key: 'lockOnRegistration',
-             type: 'checkbox',
-             templateOptions: {
-                label: 'Lock New Accounts'
 
              }
          }

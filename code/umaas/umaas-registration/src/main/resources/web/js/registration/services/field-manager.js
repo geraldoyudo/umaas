@@ -146,7 +146,7 @@ angular.module('app')
 	var getVFields = function(){
 		var vfs = [];
 		var domain = umaas.getDomain();
-		if(domain.properties.verifyEmail){
+		if(domain.domainProperties.verifyEmail){
 			vfs.push({
 		        	 key: 'email',
 			   	      type: 'verify-item',
@@ -159,7 +159,7 @@ angular.module('app')
 			   	      }
 		   	    });
 		}
-		if(domain.properties.verifyPhoneNumber){
+		if(domain.domainProperties.verifyPhoneNumber){
 			vfs.push( {
 	        	 key: 'phoneNumber',
 		   	      type: 'verify-item',

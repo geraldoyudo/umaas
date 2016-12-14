@@ -14,10 +14,10 @@ angular.module('app')
 		console.log("Details Verified");
 		console.log(user);
 		var domain = umaas.getDomain();
-		if(domain.properties.emailAsUsername){
+		if(domain.domainProperties.emailAsUsername){
 			user.username = user.email;
 		}
-	    if(domain.properties.lockOnRegistration){
+	    if(domain.domainProperties.lockOnRegistration){
 	    	user.locked = true;
 	    }
 		user.insert(function(error,updatedUser){

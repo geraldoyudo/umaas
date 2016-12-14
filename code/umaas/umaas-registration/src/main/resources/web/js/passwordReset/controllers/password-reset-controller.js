@@ -8,19 +8,8 @@ angular.module("passwordReset")
 	vm.data.emailSent = false;
 	var savedEmail;
 	var savedUser;
-	vm.loginPage = domain.properties.loginPage;
-	
-	var code = globalConfig.accessCode;
-	var url =  umaas.getBaseUrl() + "/endpoint/com.gerald.umaas.domain.services.extensions.RegistrationService/" + 
-	domain.id + "/properties";
-	console.log(url);
-	var auth = 'Basic ' + btoa( code.id + ":" +code.code);
-	$http.get(url , {
-	    headers: {'Authorization': auth}
-	}).then(function(resp){
-		vm.domainProperties = resp.data;
-		console.log($scope.domainProperties);
-	});
+	vm.domainProperties = domain.domainProperties;
+	console.log(vm.domainProperties);
 	
 	vm.checkEmail = function(email){
 		umaas.appUsers.findByEmail(email, function(error, user){
