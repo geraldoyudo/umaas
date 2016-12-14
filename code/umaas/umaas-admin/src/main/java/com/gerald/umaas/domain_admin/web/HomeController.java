@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gerald.umaas.domain_admin.security.AccessCode;
 import com.gerald.umaas.domain_admin.service.ServiceUIProxy;
 
 @Controller
@@ -26,9 +28,10 @@ public class HomeController {
 	@Autowired
 	private ServiceUIProxy serviceUIProxy;
 	
-	
 	@RequestMapping("/admin")
-	public String home( Model model, @RequestParam(name = "domain", required = false) String domainName){
+	public String home( Model model,
+			@RequestParam(name = "domain", required = false) String domainName
+			, @AuthenticationPrincipal AccessCode code){
 		if(domainName == null){
 			domainName = defaultDomain;
 		}
@@ -36,8 +39,8 @@ public class HomeController {
 			coreContextPath = "";
 		model.addAttribute("domainName", domainName);
 		Map<String,String> accessCode = new HashMap<>();
-		accessCode.put("id", accessCodeId);
-		accessCode.put("code", accessCodeValue);
+		accessCode.put("id",code.getId());
+		accessCode.put("code",code.getCode());
 		model.addAttribute("coreUrl", "/umaas/core"  + coreContextPath);
 		model.addAttribute("accessCode", accessCode);
 		Map<String,String> serviceUINames = new HashMap<>();

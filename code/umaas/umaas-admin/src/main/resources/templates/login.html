@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+
+<title>Login</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" th:href="@{/app/webjars/angular-material/angular-material.min.css}"></link>
+
+</head>
+<body ng-app="app">  
+    <div layout="row" ng-cloak="">
+    <div  flex="50" flex-offset="25" >
+      <form layout="column" th:action="@{/app/login}" action="#" method="post" id="loginForm" >
+		 <div style="text-align:center">
+		       <h3 class="md-subheading">Enter Access Code Details</h3>
+		       <!--/*/  
+		         <small class="status">
+		             <p class="error" th:if="${param.error != null}">Invalid details</p>
+		             <p class="info" th:if="${param.logoout != null}">You have been logged out</p>
+		             <p class="info" th:if="${param.message != null}" th:text="${param.message}"></p>
+		        </small>
+		    /*/-->
+		    </div>
+		<md-card style="padding:10px; margin:10px">
+		<md-input-container>
+        <input type="text" id="usernameInput"  class="form-control"
+               placeholder="ID" name="username"/>
+        </md-input-container>
+        <md-input-container>
+        <input type="password" id="passwordInput" class="form-control"
+               placeholder="Code" name="password"/>
+        </md-input-container>
+        <md-button  id="loginButton" type="submit" class="md-raised md-accent" >GO!!</md-button>
+		</md-card>
+    </form>
+    </div>
+    </div>
+        
+    <script th:src="@{/app/webjars/api-check/api-check.js}"></script> <!-- must appear before formly.js -->
+	<script th:src='@{/app/webjars/angularjs/angular.min.js}'></script>
+       <script th:src="@{/app/webjars/angularjs/angular-animate.min.js}"></script>
+		<script th:src="@{/app/webjars/angularjs/angular-aria.min.js}"></script>
+		<script th:src="@{/app/webjars/angularjs/angular-messages.min.js}"></script>
+       <script th:src='@{/app/webjars/angular-material/angular-material.min.js}'></script>
+		<script>
+		angular.module('app', ['ngMaterial'])
+
+		</script>
+</body>
+</html>

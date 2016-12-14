@@ -29,7 +29,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="user" md-on-select="onSelect" md-select-id="{{user.username}}" 
+            <tr md-row md-select="user" md-on-select="onSelect" md-select-id="{{'a' + user.username}}" 
                 md-auto-select ng-repeat="user in entities.content">
               <td md-cell>{{user.username}}</td>
               <td md-cell>{{user.email}}</td>

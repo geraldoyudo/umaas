@@ -1,4 +1,4 @@
-package com.gerald.umaas.domain_admin.service;
+package com.gerald.umaas.domain_admin.web;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.gerald.umaas.domain_admin.service.ServiceUIProxy;
+import com.gerald.umaas.domain_admin.service.ServiceUIProxy.Service;
 
 @RestController
 public class CustomDomainServiceEndpoint {
