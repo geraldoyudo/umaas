@@ -71,7 +71,7 @@ angular.module('app')
 	});
 })
 
-.service('loader', function($q, globalConfig){
+.service('loader', function($q, globalConfig, umaas){
 	this.loadDomain = function(){
 		var deferred = $q.defer();
 		umaas.setAccessCode(globalConfig.accessCode);

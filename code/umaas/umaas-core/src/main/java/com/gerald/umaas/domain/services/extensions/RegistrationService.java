@@ -32,9 +32,10 @@ public class RegistrationService  implements CustomDomainService{
 
 	@Override
 	public Collection<TypeSpec> getConfigurationSpecification() {
-		TypeSpec spec = new  TypeSpec(
-				"registrationUrl", "Redirect to URL after Registration", String.class);
-		return Arrays.asList(spec);
+		return Arrays.asList(new  TypeSpec(
+				"afterRegistrationUrl", "Redirect to URL after Registration", String.class),
+				new  TypeSpec(
+						"loginPage", "Login Page", String.class));
 	}
 
 	@Override
