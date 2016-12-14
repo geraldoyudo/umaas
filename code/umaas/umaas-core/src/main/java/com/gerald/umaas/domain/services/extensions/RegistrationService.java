@@ -37,6 +37,10 @@ public class RegistrationService  implements CustomDomainService{
 				new  TypeSpec(
 						"loginPage", "Login Page", String.class),
 				new  TypeSpec(
+						"registrationTitle", "Title on Registration Page", String.class),
+				new  TypeSpec(
+						"passwordResetTitle", "Title on Password Reset Page", String.class),
+				new  TypeSpec(
 						"emailAsUsername", "Use Email As Username", Boolean.class),
 				new  TypeSpec(
 						"lockOnRegistration", "Lock On Registration", Boolean.class),
