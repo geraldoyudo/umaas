@@ -27,6 +27,7 @@ import com.gerald.umaas.extensionpoint.Method;
 import com.gerald.umaas.extensionpoint.TypeSpec;
 
 public abstract class AbstractCommunicationService implements CustomDomainService{
+	private static final String SEND = "send";
 	private static final String SEND_TO_ROLE = "sendToRole";
 	private static final String SEND_TO_GROUP = "sendToGroup";
 	private static final String SEND_TO_USER = "sendToUser";
@@ -65,6 +66,9 @@ public abstract class AbstractCommunicationService implements CustomDomainServic
 		Method sendToRole = new Method(SEND_TO_ROLE ,
 				specList, Boolean.class);
 		methods.add(sendToRole);
+		Method send = new Method(SEND ,
+				specList, Boolean.class);
+		methods.add(send);
 		return methods;
 	}
 
@@ -73,6 +77,9 @@ public abstract class AbstractCommunicationService implements CustomDomainServic
 	public Object execute(String domainId, String methodName, Map<String, Object> inputParams,
 			Map<String, Object> configuration) {
 		switch(methodName){
+			case SEND:{
+				return doSend(domainId, methodName, inputParams, configuration);
+			}
 			case SEND_TO_USER:{
 				return doSendToUser(domainId, methodName,inputParams, configuration);
 			}
@@ -87,8 +94,18 @@ public abstract class AbstractCommunicationService implements CustomDomainServic
 		throw new IllegalArgumentException("Method name not supported");
 	}
 
+	private Object doSend(String domainId, String methodName, Map<String, Object> inputParams,
+			Map<String, Object> configuration) {
+		String id = inputParams.get("id").toString();
+		sendMessage(inputParams, configuration, id);
+		return true;		
+	}
+
+
 	protected abstract MessageData createMessage(Map<String,Object> input, Map<String,Object> configuration);
 	protected abstract void processMessageData(Map<String, Object> inputParams, Map<String, Object> configuration, AppUser user,
+			MessageData data);
+	protected abstract void processMessageData(Map<String, Object> inputParams, Map<String, Object> configuration, String id,
 			MessageData data);
 	
 	private Object doSendToRole(String domainId, String methodName, Map<String, Object> inputParams,
@@ -144,6 +161,14 @@ public abstract class AbstractCommunicationService implements CustomDomainServic
 		}
 		MessageData data = createMessage(inputParams, configuration);
 		processMessageData(inputParams, configuration, user, data);
+		sendMessage(data);
+	}
+	private void sendMessage(Map<String, Object> inputParams, Map<String,Object> configuration, String id) {
+		if(id == null){
+			throw new NullPointerException("Null ID");
+		}
+		MessageData data = createMessage(inputParams, configuration);
+		processMessageData(inputParams, configuration, id, data);
 		sendMessage(data);
 	}
 

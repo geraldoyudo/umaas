@@ -72,4 +72,12 @@ public class EmailService extends AbstractCommunicationService {
 		data.set("subject", sw.toString());
 	}
 
+	@Override
+	protected void processMessageData(Map<String, Object> inputParams, Map<String, Object> configuration, String id,
+			MessageData data) {
+		data.setTo(new String[]{id});
+		data.setBody(inputParams.getOrDefault("body", "").toString());	
+		data.set("subject",inputParams.getOrDefault("subject", configuration.getOrDefault("subject", "")).toString());
+	}
+
 }

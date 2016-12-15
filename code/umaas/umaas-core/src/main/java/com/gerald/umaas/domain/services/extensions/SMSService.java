@@ -78,6 +78,13 @@ public class SMSService extends AbstractCommunicationService {
 		if(!okay) throw new IllegalStateException("Invalid Message");
 		data.setBody(sw.toString());
 	}
+
+	@Override
+	protected void processMessageData(Map<String, Object> inputParams, Map<String, Object> configuration, String id,
+			MessageData data) {
+		data.setTo(new String[]{id});
+		data.setBody(inputParams.getOrDefault("body", "").toString());	
+	}
 	
 	
 }
