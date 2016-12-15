@@ -10,6 +10,7 @@ angular.module('app')
 		$scope.serviceFieldMap = {};
 		$scope.data = {};
 		$scope.data.configMap = {};
+		$scope.data.selectedService = "com.gerald.umaas.domain.services.extensions.RegistrationService";
 		$scope.services.forEach(function(service){
 			customServiceAttendant.getConfigurationSpecs(service.id).then(function(specs){
 				configurationSpecsMap[service.id] = specs.data;

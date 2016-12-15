@@ -1,7 +1,13 @@
 <div layout="row">
 <md-card flex-gt-sm="90" flex-gt-md="80">
     <md-card-content>
-        <h2><span class="label label-default">Properties</span></h2>
+         <md-toolbar class="md-table-toolbar alternate">
+          <div class="md-toolbar-tools">
+              <div flex>
+                  <h2 >Properties</h2>
+              </div>       
+          </div>
+        </md-toolbar>
          <formly-form model="domain" fields="fields" form="domainForm">
                 <md-button type="button" ng-show="!domainForm.$pristine" ng-disabled="domainForm.$invalid" ng-click="saveDomain(domain)">Save</md-button>
                 <md-button type="button" ng-click="generateCode(); domainForm.$pristine=false">Generate Code</md-button>

@@ -1,13 +1,26 @@
 <div layout="row">
 <md-card flex-gt-sm="90" flex-gt-md="80">
     <md-card-content>
-        <h2><span class="label label-default">Configuration</span></h2>
+          <md-toolbar class="md-table-toolbar alternate">
+          <div class="md-toolbar-tools">
+              <div flex="50">
+                  <h2 >Configuration</h2>
+              </div>
+              <div flex="50" layout-align="center" ng-if="services.length" >
+             	<md-input-container>
+				  <md-select ng-model="data.selectedService" placeholder="Choose an Item">
+				    <md-option ng-value="service.id" ng-repeat="service in services">{{ service.name }}</md-option>
+				  </md-select>
+				</md-input-container>
+              </div>
+              </div>
+        </md-toolbar>
          <div ng-if="!services.length">
          	No Configurable Services
          </div>
         <div ng-if="services.length">
-	        <div ng-repeat="service in services">
-	        <h3><span class="label label-default"> {{service.id}} ( {{service.name}})</span></h3>
+	        <div ng-repeat="service in services" ng-show="service.id === data.selectedService">
+	        <h3 class="md-subtitle"> Service ID: <span> {{service.id}}</span></h3>
 	         <formly-form model="data.configMap[service.id]" fields="serviceFieldMap[service.id]" form="serviceForm">
 	                <md-button type="button" ng-show="!serviceForm.$pristine" ng-disabled="serviceForm.$invalid" ng-click="saveConfiguration(service.id, data.configMap[service.id])">Save</md-button>
 	            </formly-form>

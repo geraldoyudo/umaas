@@ -21,8 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.headers()
 				.frameOptions().sameOrigin()
 			.and()
-			.httpBasic()
-			.and()
 			.formLogin()
 			.loginPage("/app/login")
 			.and()

@@ -6,7 +6,13 @@
 		} 
 	</style>
     <md-card-content>
-        <h2><span class="label label-default">Services</span></h2>
+         <md-toolbar class="md-table-toolbar alternate">
+          <div class="md-toolbar-tools">
+              <div flex>
+                  <h2 >Services</h2>
+              </div>
+          </div>
+        </md-toolbar>
      <div ng-if="!serviceUIs.length">
      	No Services Installed
      </div>

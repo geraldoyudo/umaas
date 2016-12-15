@@ -30,7 +30,7 @@ public class HomeController {
 	
 	@RequestMapping("/admin")
 	public String home( Model model,
-			@RequestParam(name = "domain", required = false) String domainName
+			@RequestParam(name = "domain", required = true) String domainName
 			, @AuthenticationPrincipal AccessCode code){
 		if(domainName == null){
 			domainName = defaultDomain;

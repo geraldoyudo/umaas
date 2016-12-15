@@ -73,8 +73,8 @@ angular.module('app')
           .state('services',{
               templateUrl: globalConfig.basePath + '/app/partials/services.html',
               controller: 'ServiceExecutionCtrl'
-          }   
-          );
+          });   
+          
 		var serviceIds = Object.keys(globalConfig.serviceUINames);
 		console.log(serviceIds);
 		serviceIds.forEach(function(serviceId){

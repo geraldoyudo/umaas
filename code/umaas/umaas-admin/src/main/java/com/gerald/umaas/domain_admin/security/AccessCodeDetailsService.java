@@ -47,8 +47,6 @@ public class AccessCodeDetailsService implements UserDetailsService {
 	}
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("Evaluating user");
-		System.out.println(username);
 		if(username == null){
 			throw new UsernameNotFoundException("Null username");
 		}
@@ -59,7 +57,6 @@ public class AccessCodeDetailsService implements UserDetailsService {
 			AccessCode accessCode= restTemplate.exchange(url, HttpMethod.GET, 
 					new HttpEntity<>(headers), AccessCode.class).getBody();
 			accessCode.setId(username);
-			System.out.println(accessCode);
 			return accessCode;
 		}catch(HttpClientErrorException ex){
 			if(ex.getStatusCode().equals(HttpStatus.NOT_FOUND)){

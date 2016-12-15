@@ -16,10 +16,10 @@ angular.module('app')
     $scope.menu = [{icon:"person", title:"Users"},
     {icon:"group", title:"Groups"}, 
     {icon:"work", title:"Roles"},
-     {icon:"view list", title:"Custom Fields"},
+     {icon:"text_fields", title:"Custom Fields"},
      {icon:"settings", title:"Setting"}, 
-     {icon:"settings", title:"Configuration"},
-     {icon:"settings", title:"Services"}];
+     {icon:"settings_applications", title:"Configuration"},
+     {icon:"developer_mode", title:"Services"}];
     var routes=["users", "groups","roles", "customFields", "properties", "configuration", "services"];
     $scope.loadContent = function(index){
     	console.log(routes[index]);

@@ -29,7 +29,7 @@ angular.module('app')
 })
 
 
-.service('loader', function($q, globalConfig){
+.service('loader', function($q, globalConfig, $window){
 	var domain;
 	this.loadDomain = function(){
 		var deferred = $q.defer();
@@ -41,6 +41,7 @@ angular.module('app')
 				if(error){
 					console.log("Error");
 					console.log(error);
+					$window.location = "./login?error=403";
 					deferred.reject();
 				}else{
 					console.log("Success");
@@ -109,5 +110,26 @@ angular.module('app')
         Group: "Group",
         RoleMapping: "RoleMapping"
     }
-});
+})
 
+
+
+.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(function responseObserver($q, $window) {
+        return {
+            'responseError': function(errorResponse) {
+            	console.log("A response error");
+                switch (errorResponse.status) {
+                case 403:
+                	console.log("Gotten a forbidden!!")
+                	 $window.location = './#forbidden';
+                    break;
+                case 500:
+                	$window.location = './#server-error';
+                    break;
+                }
+                return $q.reject(errorResponse);
+            }
+        };
+        });
+});
