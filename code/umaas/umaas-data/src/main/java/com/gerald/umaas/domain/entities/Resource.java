@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(of = "id")
-public abstract class Resource implements Serializable{
+public abstract class Resource implements Serializable, Comparable<Resource>{
     /**
 	 * 
 	 */
@@ -45,5 +45,9 @@ public abstract class Resource implements Serializable{
     
     public Object meta(String key){
         return meta.get(key);
+    }
+    @Override
+    public int compareTo(Resource o) {
+    	return id.compareTo(o.getId());
     }
 }

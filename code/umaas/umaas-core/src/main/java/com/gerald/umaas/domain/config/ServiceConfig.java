@@ -1,5 +1,6 @@
 package com.gerald.umaas.domain.config;
 
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +22,9 @@ public class ServiceConfig {
 	 @Bean
 	 public RestTemplate restTemplate(){
 		 return new RestTemplate();
+	 }
+	 @Bean
+	 public VelocityEngine velocityEngine(){
+		 return new VelocityEngine();
 	 }
 }

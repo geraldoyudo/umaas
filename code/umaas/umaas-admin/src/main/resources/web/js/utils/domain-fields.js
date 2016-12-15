@@ -38,6 +38,16 @@ var app = angular.module("app")
                     }
                 },
                 {
+                    key: 'phoneNumber',
+                    type: 'input',
+                    templateOptions: {
+                        type: 'phone',
+                        label: 'Phone Number',
+                        placeholder: 'Enter your phone number',
+                        required: true
+                    }
+                },
+                {
                     key: 'emailVerified',
                     type: 'checkbox',
                     templateOptions: {

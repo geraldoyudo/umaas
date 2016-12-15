@@ -20,6 +20,7 @@
             <tr md-row>
               <th md-column md-order-by="username"><span>Username</span></th>
               <th md-column md-order-by="email"><span>Email</span></th>
+              <th md-column md-order-by="phoneNumber"><span>Phone Number</span></th>
                <th md-column><span>Groups</span></th>
               <th md-column><span>Email Verified</span></th>
               <th md-column><span>Phone Number Verified</span></th>
@@ -33,6 +34,7 @@
                 md-auto-select ng-repeat="user in entities.content">
               <td md-cell>{{user.username}}</td>
               <td md-cell>{{user.email}}</td>
+              <td md-cell>{{user.phoneNumber}}</td>
               <td md-cell> {{user.groups}}</td>
               <td md-cell>{{user.emailVerified}}</td>
               <td md-cell>{{user.phoneNumberVerified}}</td>
