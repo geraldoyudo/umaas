@@ -19,14 +19,19 @@ public class PasswordResetVerifier  extends AbstractTwoStepVerifier{
 	private AsyncSender<Map<String,Object>> htmlMailSender;
 	@Value("${app.host:http://localhost:8071}")
 	private String hostUrl;
-	
+	@Value("${app.emailVerifier.subject:Password Reset}")
+	private String passwordRegistrationSubject;
 	
 	@Override
 	public void doRequest(VerificationRequest request) {
 		Map<String, Object> values = new HashMap<>();
 		values.put("request", request);
 		values.put(CustomFormatMimeEmailSender.TO, request.getValue());
-		values.put(CustomFormatMimeEmailSender.SUBJECT, "Password Reset");
+		Object subject = request.get("subject");
+		if(subject == null){
+			subject =  passwordRegistrationSubject;
+		}
+		values.put(CustomFormatMimeEmailSender.SUBJECT, subject.toString());
 		values.put(ThymeleafMimeEmailConstructor.HTML_TEMPLATE
 				, "password_reset.html");
 		String verifyUrlTemplate = hostUrl + "/app/passwordReset?domain=%s#/passwordReset/changePassword/?code=%s&tokenId=%s";

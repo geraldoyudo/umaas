@@ -15,6 +15,7 @@ angular.module('app')
 	start();
 	$scope.user = new umaas.AppUser();
 	$scope.domainProperties = domain.domainProperties;
+	$rootScope.domainProperties = domain.domainProperties;
 	console.log($scope.domainProperties);
 	$scope.display.title = stageManager.currentStage.title;
 	$scope.display.description = stageManager.currentStage.description;

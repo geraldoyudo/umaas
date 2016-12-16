@@ -8,7 +8,7 @@ angular.module('app')
 	formlyConfig.setType({
 	  name: 'verify-item',
 	  templateUrl: globalConfig.basePath + '/app/partials/registration/templates/verify-item.htm',
-	  controller: function($scope, $parse, $http){
+	  controller: function($scope, $parse, $http, $rootScope){
 		  var key = $scope.options.key;
 		  console.log($scope);
 		  $scope.form.$setValidity($scope.options.name, false);
@@ -30,6 +30,8 @@ angular.module('app')
 		 request.name = name;
 		 request.value = $scope.modelValue;
 		 request.properties = {};
+		 request.properties.domain = globalConfig.domainName;
+		 request.properties.subject = $rootScope.domainProperties.registrationSubject;
 		 $scope.verified = false;
 		 $scope.verifyRequested = false;
 		 $scope.requestVerify = function(){

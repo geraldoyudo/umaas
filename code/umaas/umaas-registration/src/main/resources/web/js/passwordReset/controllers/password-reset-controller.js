@@ -1,7 +1,7 @@
 angular.module("passwordReset")
 
 .controller("PasswordResetCtrl", function($scope,
-		umaas, $state, $http, globalConfig, domain){
+		umaas, $state, $http, globalConfig, domain, $rootScope){
 	var vm = $scope;
 	var tokenId;
 	vm.data = {};
@@ -9,6 +9,7 @@ angular.module("passwordReset")
 	var savedEmail;
 	var savedUser;
 	vm.domainProperties = domain.domainProperties;
+	$rootScope.domainProperties = domain.domainProperties;
 	console.log(vm.domainProperties);
 	
 	vm.checkEmail = function(email){
@@ -24,6 +25,7 @@ angular.module("passwordReset")
 							"value": email,
 							"properties": {
 								"domain": globalConfig.domainName,
+								 "subject": $rootScope.domainProperties.passwordResetSubject,
 								"tokenValues":{
 									"userId": user.id
 								}
@@ -49,6 +51,7 @@ angular.module("passwordReset")
 			"properties": {
 				"domain": globalConfig.domainName,
 				"tokenId": tokenId,
+				"subject": $rootScope.domainProperties.passwordResetSubject,
 				"tokenValues":{
 					"userId": savedUser.id
 				}

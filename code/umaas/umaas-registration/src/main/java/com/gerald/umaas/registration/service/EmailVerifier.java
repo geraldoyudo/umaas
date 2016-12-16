@@ -18,6 +18,8 @@ public class EmailVerifier  extends AbstractTwoStepVerifier{
 	private AsyncSender<Map<String,Object>> htmlMailSender;
 	@Value("${app.host:http://localhost:8071}")
 	private String hostUrl;
+	@Value("${app.emailVerifier.subject:Registration}")
+	private String registrationSubject;
 	
 	
 	@Override
@@ -25,6 +27,11 @@ public class EmailVerifier  extends AbstractTwoStepVerifier{
 		Map<String, Object> values = new HashMap<>();
 		values.put("request", request);
 		values.put(CustomFormatMimeEmailSender.TO, request.getValue());
+		Object subject = request.get("subject");
+		if(subject == null){
+			subject =  registrationSubject;
+		}
+		values.put(CustomFormatMimeEmailSender.SUBJECT, subject.toString());
 		String verifyUrlTemplate = hostUrl + "/app/verify/process?name=%s&code=%s&value=%s&tokenId=%s";
 		String verifyUrl = String.format(verifyUrlTemplate, 
 				request.getName(), request.get("code"), request.getValue(), request.get("tokenId"));

@@ -47,7 +47,11 @@ public class RegistrationService  implements CustomDomainService{
 				new  TypeSpec(
 						"verifyEmail", "Verify Email", Boolean.class),
 				new  TypeSpec(
-						"verifyPhoneNumber", "Verify Phone Number", Boolean.class));
+						"verifyPhoneNumber", "Verify Phone Number", Boolean.class),
+				new  TypeSpec(
+						"registrationSubject", "Registration Email Subject", String.class),
+				new  TypeSpec(
+						"passwordResetSubject", "Password Reset Subject", String.class));
 	}
 
 	@Override

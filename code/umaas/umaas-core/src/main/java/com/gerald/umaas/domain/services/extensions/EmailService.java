@@ -34,7 +34,8 @@ public class EmailService extends AbstractCommunicationService {
 				new TypeSpec("host", "Host (and Port)", String.class),
 				new TypeSpec("username", "Username", String.class),
 				new TypeSpec("password", "Password", String.class),
-				new TypeSpec("protocol", "Protocol", String.class)
+				new TypeSpec("protocol", "Protocol", String.class),
+				new TypeSpec("contentType", "Default Content Type (text/html)", String.class)
 				);
 	}
 
@@ -78,6 +79,7 @@ public class EmailService extends AbstractCommunicationService {
 		data.setTo(new String[]{id});
 		data.setBody(inputParams.getOrDefault("body", "").toString());	
 		data.set("subject",inputParams.getOrDefault("subject", configuration.getOrDefault("subject", "")).toString());
+		data.set("contentType",inputParams.getOrDefault("contentType", configuration.getOrDefault("contentType", "text/html")).toString());
 	}
 
 }
