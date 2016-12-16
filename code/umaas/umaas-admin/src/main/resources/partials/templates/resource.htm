@@ -1,13 +1,16 @@
  <md-dialog aria-label="File Resource" flex="80" style="height:80%" >
     <md-dialog-content layout-fill="">
-        <div layout="" layout-fill="" layout-align="center" layout-padding="">
-            <iframe layout-fill="" ng-src="{{url}}" frameBorder="0"></iframe>
-            
+        <div layout="" ng-init="initialize()" layout-fill="" layout-align="center" layout-padding="">
+            <iframe ng-if="!noContent" id="{{iframeId}}" layout-fill="" frameBorder="0"></iframe>
+            <div ng-if="noContent" class="no-content">
+            	No Content
+            </div>
         </div>
      </md-dialog-content>
 
 <md-dialog-actions>         
-      <md-button ng-if="!newEntity" type="button" data-ng-click="ok()">OK</md-button>
+	  <md-button class="md-raised md-primary" ng-if="!newEntity && !noContent" type="button" data-ng-click="download()">Download</md-button>
+      <md-button  class="md-raised md-primary"  ng-if="!newEntity" type="button" data-ng-click="ok()">OK</md-button>
 </md-dialog-actions>
         
 
