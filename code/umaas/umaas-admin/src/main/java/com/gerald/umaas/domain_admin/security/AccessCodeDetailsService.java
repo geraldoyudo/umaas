@@ -35,6 +35,8 @@ public class AccessCodeDetailsService implements UserDetailsService {
 	private String accessCodeValue;
 	@Value("${umaas.core}")
 	private String coreUrl;
+	@Value("${umaas.core.contextPath:}")
+	private String contextPath;
 	@Autowired
 	private RestTemplate restTemplate;
 	private HttpHeaders headers;
@@ -51,6 +53,7 @@ public class AccessCodeDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Null username");
 		}
 		String url = UriComponentsBuilder.fromHttpUrl(coreUrl)
+				.path(contextPath)
 				.path("/domain/domainAccessCodes/")
 				.path(username).build().toUriString();
 		try{

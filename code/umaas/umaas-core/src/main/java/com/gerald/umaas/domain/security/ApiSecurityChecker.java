@@ -86,8 +86,13 @@ public class ApiSecurityChecker {
 				}
 				if(domainId == null)
 					return true;
-				else
-					return permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge);
+				else{
+					
+					if( permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge) == true)
+						return true;
+					return permissionManager.hasDomainCollectionPermission(domainId, AppUser.class.getSimpleName(), priviledge);
+					
+				}
 			}
 			String domainId = request.getParameter("domain");
 			if(domainId == null){
