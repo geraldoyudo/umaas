@@ -155,6 +155,10 @@ angular.module('app')
 	  $scope.fields = fields;
   })
   $scope.newEntity = isNew;
+  $scope.data = {};
+  $scope.data.isNew = isNew;
+  console.log("New")
+  console.log($scope.data.isNew);
   console.log("Entity fields");
   console.log($scope.fields);
   console.log("Entity object");

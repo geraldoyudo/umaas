@@ -121,10 +121,22 @@ angular.module('app')
     	return deferred.promise;
     }
     createMap[DomainConstants.Entity.Group] = function(isNew){
-    	return returnCopy(groupFields);
+    	var deferred = $q.defer();
+    	var fields = angular.copy(groupFields)
+    	if(isNew){
+    		fields.pop();
+    	}
+    	deferred.resolve(fields);
+    	return deferred.promise;
     };
     createMap[DomainConstants.Entity.Role] = function(isNew){
-    	return returnCopy(roleFields);
+    	var deferred = $q.defer();
+    	var fields = angular.copy(roleFields)
+    	if(isNew){
+    		fields.pop();
+    	}
+    	deferred.resolve(fields);
+    	return deferred.promise;
     };
     createMap[DomainConstants.Entity.Field] = function(isNew){
     	return returnCopy(customFieldFields);

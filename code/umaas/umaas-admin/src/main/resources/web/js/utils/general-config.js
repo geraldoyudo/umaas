@@ -41,7 +41,7 @@ angular.module('app')
 				if(error){
 					console.log("Error");
 					console.log(error);
-					$window.location = "/app/login?error=403";
+					$window.location = "./login?error=403";
 					deferred.reject();
 				}else{
 					console.log("Success");
