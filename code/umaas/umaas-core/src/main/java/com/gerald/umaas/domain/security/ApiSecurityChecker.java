@@ -152,8 +152,7 @@ public class ApiSecurityChecker {
 	}
 	
 	public boolean checkNonDomain(Authentication auth, HttpServletRequest request){
-		String url = getURLWithContextPath(request) + "/";
-		String path = request.getRequestURI().replaceAll(url, "");
+		String path = request.getRequestURI().replaceFirst(request.getContextPath(), "");
 		System.out.println(path);
 		String[] segments = path.split("/");
 		String entityType = ResourceEntityMapper.getEntityName( segments[1]);
@@ -206,7 +205,5 @@ public class ApiSecurityChecker {
 
 		return (HttpServletRequest) request;
 	}
-	public static String getURLWithContextPath(HttpServletRequest request) {
-		   return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getServletContext().getContextPath();
-	}
+
 }
