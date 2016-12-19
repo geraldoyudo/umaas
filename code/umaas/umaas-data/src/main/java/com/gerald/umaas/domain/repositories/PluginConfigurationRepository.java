@@ -14,5 +14,6 @@ import com.gerald.umaas.domain.entities.ServiceConfiguration.PluginType;
  * @author Dev7
  */
 public interface PluginConfigurationRepository extends DomainResourceRepository<ServiceConfiguration, String>{
-    public ServiceConfiguration findByPluginIdAndTypeAndDomainId(String pluginId, PluginType type, String domainId);    
+    public ServiceConfiguration findByPluginIdAndTypeAndDomainId(String pluginId, PluginType type, String domainId);
+    public ServiceConfiguration findByPluginIdAndTypeAndDomainIsNull(String pluginId, PluginType type);    
 }

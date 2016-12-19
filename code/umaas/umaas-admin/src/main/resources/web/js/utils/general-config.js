@@ -111,25 +111,3 @@ angular.module('app')
         RoleMapping: "RoleMapping"
     }
 })
-
-
-
-.config(function ($httpProvider) {
-    $httpProvider.interceptors.push(function responseObserver($q, $window) {
-        return {
-            'responseError': function(errorResponse) {
-            	console.log("A response error");
-                switch (errorResponse.status) {
-                case 403:
-                	console.log("Gotten a forbidden!!")
-                	 $window.location = './#forbidden';
-                    break;
-                case 500:
-                	$window.location = './#server-error';
-                    break;
-                }
-                return $q.reject(errorResponse);
-            }
-        };
-        });
-});

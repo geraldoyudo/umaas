@@ -16,15 +16,16 @@ import com.gerald.umaas.domain.entities.ServiceConfiguration;
 import com.gerald.umaas.domain.entities.ServiceConfiguration.PluginType;
 import com.gerald.umaas.domain.repositories.DomainRepository;
 import com.gerald.umaas.domain.repositories.PluginConfigurationRepository;
-import com.gerald.umaas.extensionpoint.TypeSpec;
 import com.gerald.umaas.extensionpoint.CustomDomainService;
 import com.gerald.umaas.extensionpoint.Method;
+import com.gerald.umaas.extensionpoint.TypeSpec;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Component
 public class CustomDomainServiceProxy{
+	private static final String DEFAULT = "default";
 	private Map<String,CustomDomainService> domainServiceMap = new TreeMap<>();
 	@Autowired
 	private PluginConfigurationRepository pluginConfigurationRepository;
@@ -48,14 +49,25 @@ public class CustomDomainServiceProxy{
 	}
 	
 	public void setEnabled(String serviceId, String domainId, boolean enabled){
-		Domain d = checkDomainId(domainId);
+		ServiceConfiguration config = null;
 		checkServiceId(serviceId);
-		ServiceConfiguration config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, domainId);
-		if(config == null){
-			config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
-					d, enabled, new HashMap<>());
+		if(!domainId.equals( DEFAULT)){
+			Domain d = checkDomainId(domainId);
+			 config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, domainId);
+			 if(config == null){
+					config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
+							d, enabled, new HashMap<>());
+			}else{
+				config.setEnabled(enabled);
+			}
 		}else{
-			config.setEnabled(enabled);
+			config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainIsNull(serviceId, PluginType.DOMAIN);
+			if(config == null){
+				config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
+						null, enabled, new HashMap<>());
+			}else{
+				config.setEnabled(enabled);
+			}
 		}
 		pluginConfigurationRepository.save(config);
 	}
@@ -69,17 +81,24 @@ public class CustomDomainServiceProxy{
 	}
 
 	public boolean isEnabled(String serviceId, String domainId){
-		checkDomainId(domainId);
+		ServiceConfiguration config;
 		checkServiceId(serviceId);
-		ServiceConfiguration config = pluginConfigurationRepository
-				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
-						domainId);
-		if(config == null){
-			System.out.println(String.format("Config is null for %s and %s", serviceId, domainId));
-			return false;
-		}else{
+		if(!domainId.equals( DEFAULT)){
+			checkDomainId(domainId);
+			 config = pluginConfigurationRepository
+					.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
+							domainId);
+			if(config != null){
+				return config.isEnabled();
+			}
+		}
+		config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainIsNull(serviceId, PluginType.DOMAIN);
+		if(config != null){
 			return config.isEnabled();
 		}
+		System.out.println(String.format("Config is null for %s and %s", serviceId, domainId));
+		return true;
 	}
 	
 	public Collection<TypeSpec> getConfigurationSpecification(String serviceId){
@@ -87,36 +106,51 @@ public class CustomDomainServiceProxy{
 	}
 	
 	public void setConfiguration(String serviceId, String domainId, Map<String,Object> configuration){
-		Domain d =checkDomainId(domainId);
-		checkServiceId(serviceId);
 		if(configuration == null) throw new NullPointerException("Null Configuration");
+		ServiceConfiguration config = null;
+		checkServiceId(serviceId);
 		CustomDomainService service = getService(serviceId);
-		
 		Collection<TypeSpec> params = service.getConfigurationSpecification();
 		ServiceUtils.checkTypedMap(configuration, params);
-		ServiceConfiguration config = pluginConfigurationRepository
-				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, 
-						domainId);
-		if(config == null){
-			config = new ServiceConfiguration(serviceId, PluginType.DOMAIN,
-					d, false, configuration);
+		if(!domainId.equals( DEFAULT)){
+			Domain d = checkDomainId(domainId);
+			 config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN, domainId);
+			 if(config == null){
+					config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
+							d, false, configuration);
+			}
 		}else{
-			config.setConfiguration(configuration);
+			config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainIsNull(serviceId, PluginType.DOMAIN);
+			if(config == null){
+				config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
+						null, false, configuration);
+			}else{
+				config.setConfiguration(configuration);
+			}
 		}
+		
 		pluginConfigurationRepository.save(config);
 	}
 
 	public Map<String,Object> getConfiguration(String serviceId, String domainId){
-		checkDomainId(domainId);
+		ServiceConfiguration config;
 		checkServiceId(serviceId);
-		ServiceConfiguration config = pluginConfigurationRepository
-				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
-						domainId);
-		if(config == null){
-			return new HashMap<>();
-		}else{
+		if(!domainId.equals( DEFAULT)){
+			checkDomainId(domainId);
+			 config = pluginConfigurationRepository
+					.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
+							domainId);
+			if(config != null){
+				return config.getConfiguration();
+			}
+		}
+		config = pluginConfigurationRepository
+				.findByPluginIdAndTypeAndDomainIsNull(serviceId, PluginType.DOMAIN);
+		if(config != null){
 			return config.getConfiguration();
 		}
+		System.out.println(String.format("Config is null for %s and %s", serviceId, domainId));
+		return new HashMap<>();
 	}
 	
 	public Object execute(String serviceId, String domainId, String method, 
