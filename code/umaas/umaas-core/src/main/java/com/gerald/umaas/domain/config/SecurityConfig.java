@@ -47,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/system", "/endpoint")
+		.antMatchers("/system",	"/system/*/configure","/system/*/name", "/system/*/enabled",
+				"/endpoint", "/endpoint/*/configure", "/endpoint/*/name", "/endpoint/*/enabled")
 		.authenticated()
 		.antMatchers("/domain/**")
 		.access("@apiSecurityChecker.check(authentication,request)")
