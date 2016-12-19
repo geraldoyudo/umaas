@@ -89,9 +89,7 @@ public class ApiSecurityChecker {
 				else{
 					
 					if( permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge) == true)
-						return true;
-					return permissionManager.hasDomainCollectionPermission(domainId, AppUser.class.getSimpleName(), priviledge);
-					
+						return true;					
 				}
 			}
 			String domainId = request.getParameter("domain");
@@ -209,6 +207,6 @@ public class ApiSecurityChecker {
 		return (HttpServletRequest) request;
 	}
 	public static String getURLWithContextPath(HttpServletRequest request) {
-		   return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+		   return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getServletContext().getContextPath();
 	}
 }

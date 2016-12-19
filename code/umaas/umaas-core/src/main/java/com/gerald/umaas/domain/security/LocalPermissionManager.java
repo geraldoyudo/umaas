@@ -101,6 +101,9 @@ public class LocalPermissionManager implements PermissionManager{
 			if(checkEntry(accessCode, entityType, entityId, priviledge)) return true;
 			if(checkEntry(accessCode, entityType, ALL_ITEMS, priviledge)) return true;
 			if(checkEntry(accessCode, ALL_ITEMS, ALL_ITEMS, priviledge)) return true;
+			if(entityClass.equals(Domain.class)){
+				return hasDomainCollectionPermission(entityId, Domain.class.getSimpleName(), priviledge);
+			}
 			return false;
 		}else{
 			log.info("Entity Type not a resource");
