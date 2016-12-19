@@ -7,7 +7,8 @@ angular.module('app')
 })
 
            
-.controller("layoutCtrl", function($mdSidenav, $scope, $state){
+.controller("layoutCtrl", function($mdSidenav, $scope, 
+		$state){
    
     $scope.toggleSidenav =  function(menuId) {
         $mdSidenav(menuId).toggle();
@@ -26,5 +27,4 @@ angular.module('app')
          $state.go(routes[index]);
      };
      $state.go("properties");
-    
   });

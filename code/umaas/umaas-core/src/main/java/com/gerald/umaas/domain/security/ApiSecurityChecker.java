@@ -153,6 +153,24 @@ public class ApiSecurityChecker {
 		}
 	}
 	
+	public boolean checkNonDomain(Authentication auth, HttpServletRequest request){
+		String url = getURLWithContextPath(request) + "/";
+		String path = request.getRequestURI().replaceAll(url, "");
+		System.out.println(path);
+		String[] segments = path.split("/");
+		String entityType = ResourceEntityMapper.getEntityName( segments[1]);
+		String entityId = segments[2];
+		System.out.println(entityType);
+		System.out.println(entityId);
+		Priviledge priviledge = getPriviledge(request);
+		if(entityType.equals("domainAdmin")){
+			String domainId = segments[3];
+			System.out.println(domainId);
+			if(domainId == null) return false;
+			return permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge);
+		}
+		return permissionManager.hasPermission(entityType, entityId, priviledge);
+	}
 	public boolean checkFilePropertyAccess(Authentication auth, HttpServletRequest request){
 		log.info("Checking file property access");
 		try{
@@ -189,5 +207,8 @@ public class ApiSecurityChecker {
 		}
 
 		return (HttpServletRequest) request;
+	}
+	public static String getURLWithContextPath(HttpServletRequest request) {
+		   return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 	}
 }

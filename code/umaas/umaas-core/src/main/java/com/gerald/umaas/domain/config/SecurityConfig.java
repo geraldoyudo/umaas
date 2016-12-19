@@ -47,10 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.httpBasic()
 		.and()
 		.authorizeRequests()
+		.antMatchers("/system", "/endpoint")
+		.authenticated()
 		.antMatchers("/domain/**")
 		.access("@apiSecurityChecker.check(authentication,request)")
 		.antMatchers("/files/user/*/*/*")
 		.access("@apiSecurityChecker.checkFilePropertyAccess(authentication,request)")
+		.antMatchers("/system/*/**", "/endpoint/*/**" )
+		.access("@apiSecurityChecker.checkNonDomain(authentication,request)")
 		.anyRequest()
 		.permitAll();
 	}

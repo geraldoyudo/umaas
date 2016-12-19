@@ -26,6 +26,10 @@
                       <ng-md-icon icon="menu"></ng-md-icon>
                   </md-button>
                   <h1>Domain Administrator</h1>
+                  <span flex=""></span>
+                  <form th:action="@{/app/logout}" action="post" > 
+                 	 <md-button type="submit">Logout</md-button>
+                  </form>
                 </div>
             </md-toolbar>
                <div layout="row" flex="" ng-controller="MainCtrl" layout-fill="">
