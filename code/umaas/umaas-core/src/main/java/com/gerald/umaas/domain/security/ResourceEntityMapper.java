@@ -3,6 +3,7 @@ package com.gerald.umaas.domain.security;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gerald.umaas.domain.entities.AppEvent;
 import com.gerald.umaas.domain.entities.AppUser;
 import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.entities.DomainAccessCode;
@@ -28,6 +29,7 @@ public class ResourceEntityMapper {
 		uriMap.put("domains", Domain.class.getSimpleName());
 		uriMap.put("domainAccessCodes", DomainAccessCode.class.getSimpleName());
 		uriMap.put("domainAccessCodeMappings", DomainAccessCodeMapping.class.getSimpleName());
+		uriMap.put("appEvents", AppEvent.class.getSimpleName());
 		uriMap.put("auth", "auth");
 		uriMap.put("system", "admin");
 		uriMap.put("endpoint", "domainAdmin");
