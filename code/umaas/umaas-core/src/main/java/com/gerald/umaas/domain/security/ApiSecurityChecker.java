@@ -31,8 +31,6 @@ public class ApiSecurityChecker {
 	@Value("${spring.data.rest.basePath}")
 	private String basePath;
 	@Autowired
-	private ObjectMapper objectMapper;
-	@Autowired
 	private DomainRepository domainRepository;
 	
 	public boolean check(Authentication auth, HttpServletRequest request){
