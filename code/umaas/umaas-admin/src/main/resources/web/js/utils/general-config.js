@@ -111,3 +111,22 @@ angular.module('app')
         RoleMapping: "RoleMapping"
     }
 })
+
+.config(function($httpProvider){
+	$httpProvider.interceptors.push(function($q, umaas) {
+		var base = umaas.getBaseUrl();
+		var auth, code;
+		code = umaas.getAccessCode();
+		auth = 'Basic ' + btoa( code.id + ":" +code.code);
+	  return {
+	   'request': function(config) {
+	       console.log(config.url);
+	      if( config.url.indexOf(base) !== -1){
+	    	  console.log("Core request");
+	    	  config.headers["Authorization"] = auth;    	 
+	      }
+	      return config;
+	    }   
+	  };
+});
+})
