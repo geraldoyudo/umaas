@@ -156,13 +156,19 @@ public class ApiSecurityChecker {
 		System.out.println(path);
 		String[] segments = path.split("/");
 		String entityType = ResourceEntityMapper.getEntityName( segments[1]);
-		String entityId = segments[2];
+		String entityId = "ALL";
+		if(segments.length > 2){
+			entityType = segments[2];
+		}
 		System.out.println(entityType);
 		System.out.println(entityId);
 		Priviledge priviledge = getPriviledge(request);
 		if(entityType.equals("domainAdmin")){
-			String domainId = segments[3];
-			System.out.println(domainId);
+			String domainId = entityId;
+			if(segments.length > 3){
+				 domainId = segments[3];
+				 System.out.println(domainId);
+			}
 			if(domainId == null) return false;
 			return permissionManager.hasPermission(Domain.class.getSimpleName(), domainId, priviledge);
 		}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gerald.umaas.domain.entities.AppEvent;
+import com.gerald.umaas.domain.entities.Domain;
 import com.gerald.umaas.domain.repositories.AppEventRepository;
 
 @Component
@@ -23,8 +24,14 @@ public class SystemEventHandler{
 	@EventListener
 	public void onApplicationEvent(AppEvent event) {
 		event.setDate(new Date());
+		Domain d = event.getDomain();
+		String domainId= "system";
+		if(d != null){
+			domainId = d.getId();
+		}
 		AppEvent e = eventRepository.save(event);
-		jmsTemplate.convertAndSend(String.format("%s.%s.topic", NAMESPACE, e.getType()), event);
+		jmsTemplate.convertAndSend(String.format("%s.%s.%s.topic", NAMESPACE, domainId, 
+				e.getType()), event);
 	}
 
 }

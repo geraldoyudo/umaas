@@ -34,6 +34,7 @@ public class ResourceEntityMapper {
 		uriMap.put("system", "admin");
 		uriMap.put("endpoint", "domainAdmin");
 		uriMap.put("domainAdmin", "domainAdmin");
+		uriMap.put("event", "domainAdmin");
 	}
 	public static String getEntityName(String collectionName){
 		return uriMap.get(collectionName);

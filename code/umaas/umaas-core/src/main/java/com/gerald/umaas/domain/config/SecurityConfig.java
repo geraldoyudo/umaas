@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.access("@apiSecurityChecker.check(authentication,request)")
 		.antMatchers("/files/user/*/*/*")
 		.access("@apiSecurityChecker.checkFilePropertyAccess(authentication,request)")
-		.antMatchers("/system/*/**", "/endpoint/*/**" )
+		.antMatchers("/system/*/**", "/endpoint/*/**", "/event", "/event/*" )
 		.access("@apiSecurityChecker.checkNonDomain(authentication,request)")
 		.anyRequest()
 		.permitAll();
