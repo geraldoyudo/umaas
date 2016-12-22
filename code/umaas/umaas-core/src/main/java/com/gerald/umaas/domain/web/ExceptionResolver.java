@@ -21,7 +21,7 @@ public class ExceptionResolver {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
 
-	//@ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)
 	public ResponseEntity<HashMap<String,String>> handleException(Exception ex){
 		HashMap<String,String> values = new HashMap<>();
 		values.put("message", ex.getMessage());
@@ -30,7 +30,8 @@ public class ExceptionResolver {
 	}
 	
 
-	@ExceptionHandler(value = {ClassCastException.class, IllegalArgumentException.class})
+	@ExceptionHandler(value = {ClassCastException.class, 
+			IllegalArgumentException.class, IllegalStateException.class})
 	public ResponseEntity<HashMap<String,String>> handleClassCastException(Exception ex){
 		HashMap<String,String> values = new HashMap<>();
 		values.put("message", ex.getMessage());
