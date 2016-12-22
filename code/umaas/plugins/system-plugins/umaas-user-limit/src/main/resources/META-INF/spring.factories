@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.gerald.umaas.user_limit.service.LocalConfiguration

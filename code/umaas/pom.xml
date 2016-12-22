@@ -28,6 +28,7 @@
     	<module>umaas-data</module>
     	<module>umaas-extension-point</module>
 		<module>plugins/system-plugins/umaas-file-limit</module>
+		<module>plugins/system-plugins/umaas-user-limit</module>
         <module>umaas-core</module>
 		<module>umaas-file</module>
 		<module>umaas-registration</module>

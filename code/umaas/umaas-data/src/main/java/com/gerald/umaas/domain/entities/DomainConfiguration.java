@@ -36,5 +36,6 @@ public class DomainConfiguration extends DomainResource {
 	
 	public static class Properties {
 		public static final String FILE_LIMIT = "fileLImit";
+		public static final String USER_LIMIT = "userLimit";
 	}
 }

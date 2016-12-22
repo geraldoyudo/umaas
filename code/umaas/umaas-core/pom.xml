@@ -73,8 +73,13 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			  <groupId>com.gerald.umaas.file_limit</groupId>
+			  <groupId>com.gerald.umaas.system.plugins</groupId>
 			  <artifactId>umaas-file-limit-service</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			  <groupId>com.gerald.umaas.system.plugins</groupId>
+			  <artifactId>umaas-user-limit-service</artifactId>
 			  <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
