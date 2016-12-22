@@ -32,6 +32,8 @@ public class ApiSecurityChecker {
 	private String basePath;
 	@Autowired
 	private DomainRepository domainRepository;
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	public boolean check(Authentication auth, HttpServletRequest request){
 		try{

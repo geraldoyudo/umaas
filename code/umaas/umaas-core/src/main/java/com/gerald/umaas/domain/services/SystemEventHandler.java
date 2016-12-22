@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +19,10 @@ public class SystemEventHandler{
 	@Autowired
 	private AppEventRepository eventRepository;
 	@Autowired
-	private ObjectMapper objectMapper;
-	@Autowired
 	private JmsTemplate jmsTemplate;
 	private static final String NAMESPACE = "umaas-event";
+	
+	@Order(Ordered.LOWEST_PRECEDENCE)
 	@EventListener
 	public void onApplicationEvent(AppEvent event) {
 		event.setDate(new Date());

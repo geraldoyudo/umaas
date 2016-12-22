@@ -118,7 +118,9 @@ public class CustomDomainServiceProxy{
 			 if(config == null){
 					config = new ServiceConfiguration(serviceId, PluginType.DOMAIN, 
 							d, false, configuration);
-			}
+			 }else{
+				 config.setConfiguration(configuration);
+			 }
 		}else{
 			config = pluginConfigurationRepository.findByPluginIdAndTypeAndDomainIsNull(serviceId, PluginType.DOMAIN);
 			if(config == null){

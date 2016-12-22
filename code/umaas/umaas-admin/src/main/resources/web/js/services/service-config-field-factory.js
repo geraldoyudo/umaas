@@ -13,6 +13,10 @@ angular.module('app')
     	if(spec.type === "Boolean"){
 			field.type = 'checkbox';
 		}
+    	if(spec.inputType === "textarea"){
+    		field.type = 'textarea';
+    		field.templateOptions.rows = 5;
+    	}
     }
     self.create = function(specs){
     	if(!specs) throw "specifications is undefined";
