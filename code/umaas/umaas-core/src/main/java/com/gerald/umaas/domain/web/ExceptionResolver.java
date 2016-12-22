@@ -3,6 +3,7 @@ package com.gerald.umaas.domain.web;
 import java.util.HashMap;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,12 +13,11 @@ import org.springframework.web.multipart.MultipartException;
 
 @ControllerAdvice
 public class ExceptionResolver {
-	@ExceptionHandler(NullPointerException.class)
+	@ExceptionHandler({NullPointerException.class, ResourceNotFoundException.class})
 	public ResponseEntity<HashMap<String,String>> notFoundHandler(Exception ex){
 		HashMap<String,String> result = new HashMap<>();
 		result.put("message" , ex.getMessage());
 		result.put("description", "Not found");
-		ex.printStackTrace();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
 
