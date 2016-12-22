@@ -87,5 +87,24 @@ angular.module("passwordReset")
 			});
 	 }
 	 
+	 vm.complete = function(){
+		 var auth, code;
+		code = umaas.getAccessCode();
+		auth = 'Basic ' + btoa( code.id + ":" +code.code);
+		var url = umaas.getBaseUrl() + '/event/' + domain.id;
+		 $http.post(url, {
+			 type: "com.isslng.reset.success",
+			 data: { 
+				 "userId": savedUser.id,
+				 "mail": savedUser.email
+			 }
+		 }, {
+	           headers: {'Authorization': auth}
+	       }).then(function(result){
+	    	   console.log("Event successfully sent");                    
+	       },function(err){
+	           throw err;
+	       });
+	 }
 	 
 });

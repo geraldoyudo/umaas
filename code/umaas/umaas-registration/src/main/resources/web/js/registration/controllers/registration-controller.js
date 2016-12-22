@@ -54,4 +54,24 @@ angular.module('app')
 			$scope.next($scope.user);
 		}
 	}
+	
+	 $scope.complete = function(){
+		 var auth, code;
+		code = umaas.getAccessCode();
+		auth = 'Basic ' + btoa( code.id + ":" +code.code);
+		var url = umaas.getBaseUrl() + '/event/' + domain.id;
+		 $http.post(url, {
+			 type: "com.isslng.registration.success",
+			 data: { 
+				 "userId": $scope.user.id,
+				 "mail": $scope.user.email
+			 }
+		 }, {
+	           headers: {'Authorization': auth}
+	       }).then(function(result){
+	           console.log("Event successfully sent");            
+	       },function(err){
+	           throw err;
+	       });
+	 }
 })
