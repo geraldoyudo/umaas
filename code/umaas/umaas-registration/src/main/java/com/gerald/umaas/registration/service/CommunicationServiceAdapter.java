@@ -30,6 +30,8 @@ public class CommunicationServiceAdapter {
 	private HttpSession session;
 	@Value("${umaas.core}")
 	private String coreUrl;
+	@Value("${umaas.core.contextPath}")
+	private String contextPath;
 	@Autowired
 	private RestTemplate restTemplate;
 	private HttpHeaders headers;
@@ -82,6 +84,7 @@ public class CommunicationServiceAdapter {
 		input.put("subject","");
 		request.put("input", input);
 		String url= UriComponentsBuilder.fromHttpUrl(coreUrl)
+				.path(contextPath)
 				.path("/endpoint/com.gerald.umaas.domain.services.extensions.SMSService/")
 				.path(domainId)
 				.path("/execute")
@@ -98,6 +101,7 @@ public class CommunicationServiceAdapter {
 			input.put("subject",helper.getSubject());
 			request.put("input" , input);
 			String url= UriComponentsBuilder.fromHttpUrl(coreUrl)
+					.path(contextPath)
 					.path("/endpoint/com.gerald.umaas.domain.services.extensions.EmailService/")
 					.path(domainId)
 					.path("/execute")
@@ -108,6 +112,7 @@ public class CommunicationServiceAdapter {
 	private String getDomainId(String domainName){
 		Map<String,Object> domain= restTemplate.exchange(
 				UriComponentsBuilder.fromHttpUrl(coreUrl)
+				.path(contextPath)
 				.path("/domain/domains/search/findByName")
 				.queryParam("name", domainName)
 				.build().toUriString(),

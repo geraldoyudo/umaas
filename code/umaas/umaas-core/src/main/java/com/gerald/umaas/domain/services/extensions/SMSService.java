@@ -59,7 +59,7 @@ public class SMSService extends AbstractCommunicationService {
 		data.set("password", configuration.get("password").toString());
 		data.set("authType", configuration.getOrDefault("authType", "http-basic").toString());
 		data.set("keys.user", configuration.getOrDefault("keysUser", "username").toString());
-		data.set("keys.password", configuration.get("keysPassword").toString());
+		data.set("keys.password", configuration.getOrDefault("keysPassword", "password").toString());
 		data.set("format", configuration.getOrDefault("format", "json").toString());
 		data.set("parser", configuration.getOrDefault("parser", "").toString());
 		data.set("from", configuration.getOrDefault("from", "APP").toString());
