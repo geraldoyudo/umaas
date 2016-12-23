@@ -33,6 +33,9 @@ public class FieldHandlerFacade implements UserFieldHandler {
 
 	@Override
 	public Object convert(Object value, Field field) {
+		if(value == null){
+			value = field.getDefaultValue();
+		}
 		UserFieldHandler fh = fieldHandlerMap.get(field.getType());
 		if(fh == null) return value;
 		return fh.convert(value, field);

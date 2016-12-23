@@ -1,5 +1,4 @@
-var getFieldTemplate = function(field){
-    var getInputType = function(type){
+var getInputType = function(type){
         if(type === "string"){
             return "text";
         }else if(type === "Date"){
@@ -29,7 +28,8 @@ var getFieldTemplate = function(field){
 		console.log("Converting date " + date)
 		return new Date(date);
 	}
-
+	
+var getFieldTemplate = function(field){
     var ret = {
                  "ngModelElAttrs": {
                     "ng-model": "model['properties']['".concat(field.name).concat("']")
@@ -139,7 +139,11 @@ angular.module('app')
     	return deferred.promise;
     };
     createMap[DomainConstants.Entity.Field] = function(isNew){
-    	return returnCopy(customFieldFields);
+    	var deferred = $q.defer();
+    	var fs = angular.copy(customFieldFields);
+    	var defaultValueField;
+    	deferred.resolve(fs);
+    	return deferred.promise;
     };
     console.log(createMap);
     self.create = function(entityType, isNew){

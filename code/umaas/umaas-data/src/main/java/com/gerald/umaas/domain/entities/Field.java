@@ -31,7 +31,9 @@ public class Field extends DomainResource{
     private boolean registrationItem = true;
     @NotNull
 	private String type = "string";
+    private Object defaultValue = null;
     private Map<String,Object> properties = new HashMap<>();
+   
     public Object get(String key){
     	return properties.get(key);
     }

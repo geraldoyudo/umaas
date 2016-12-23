@@ -977,6 +977,7 @@ var Field = function(resourceObject){
   this.mandatory = false;
   this.registrationItem = false;
   this.type = 'string';
+  this.defaultValue = '';
   var domain = '';
 
 
@@ -988,6 +989,7 @@ var Field = function(resourceObject){
     this.registrationItem = resourceObject.registrationItem;
     this.mandatory = resourceObject.mandatory;
     this.type = resourceObject.type;
+    this.defaultValue = resourceObject.defaultValue;
   }
 
 
@@ -1000,6 +1002,7 @@ var Field = function(resourceObject){
     fieldObject.domain = this.domain;
     fieldObject.mandatory = this.mandatory;
     fieldObject.registrationItem = this.registrationItem;
+    fieldObject.defaultValue = this.defaultValue;
     fieldObject.type = this.type;
     fieldObject.properties = this.properties;
     fieldObject.externalId = this.externalId;
@@ -1016,9 +1019,12 @@ var Field = function(resourceObject){
        self.id = fields.id;
        self.name = fields.name;
        self.domain = fields.domain;
+       self.defaultValue = fields.defaultValue;
+       self.registrationItem = fields.registrationItem;
+       self.mandatory = fields.mandatory;
        self.properties = fields.properties;
        callback();
-     })
+     });
   }
 
 
@@ -1051,6 +1057,7 @@ var Field = function(resourceObject){
        fieldObject.registrationItem = this.registrationItem;
        fieldObject.properties = this.properties;
        fieldObject.domain = "/domain/fields/" + domainId;
+       fieldObject.defaultValue = this.defaultValue;
        utils.insertObject(apiBaseUrl + '/domain/fields', fieldObject, function(error, response, traversal){
          if(error){
            callback(error);

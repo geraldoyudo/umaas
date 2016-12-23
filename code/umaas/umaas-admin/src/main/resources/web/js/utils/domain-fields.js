@@ -3,6 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var convertToDate = function(date){
+		console.log("Converting date " + date)
+		return new Date(date);
+	}
 
 var app = angular.module("app")
 
@@ -114,6 +118,70 @@ var app = angular.module("app")
                         options: [ {name: "Boolean", value: "boolean"}, {name: "Integer", value:"integer"}, 
                             {name: "String", value:"string"}, {name: "Decimal", value:"decimal"}, 
                             {name: "Date", value:"date"},{name: "Email", value:"email"},{name: "Select", value:"select"},{name: "File", value:"file"}],      
+                        required: true
+                    }
+                }, 
+                {
+                    key: 'defaultValue',
+                    type: 'input',
+                    hideExpression: "!((model.type === 'string') || (model.type == 'select' && model.properties.type == 'string'))",
+                    templateOptions: {
+                        type: 'text',
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
+                        required: true
+                    }
+                },
+                {
+                    key: 'defaultValue',
+                    type: 'datepicker',
+                    hideExpression: "!((model.type === 'date') || (model.type == 'select' && model.properties.type == 'date'))",
+                    formatters:  [convertToDate],
+                    templateOptions: {
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
+                        required: true
+                    }
+                },
+                {
+                    key: 'defaultValue',
+                    type: 'checkbox',
+                    hideExpression: "!((model.type === 'boolean') || (model.type == 'select' && model.properties.type == 'boolean'))",
+                    templateOptions: {
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
+                        required: true
+                    }
+                },
+                {
+                    key: 'defaultValue',
+                    type: 'input',
+                    hideExpression: "!((model.type === 'integer') || (model.type === 'number') || (model.type ==='decimal') || (model.type == 'select' && (model.properties.type == 'integer' || model.properties.type == 'number' || model.properties.type == 'decimal'))) ",
+                    templateOptions: {
+                        type: 'number',
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
+                        required: true
+                    }
+                },
+                {
+                    key: 'defaultValue',
+                    type: 'input',
+                    hideExpression: "! ((model.type== 'email') || (model.type == 'select' && model.properties.type == 'email'))",
+                    templateOptions: {
+                        type: 'email',
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
+                        required: true
+                    }
+                },
+                {
+                    key: 'defaultValue',
+                    type: 'file-input',
+                    hideExpression: "model.type !== 'file'",
+                    templateOptions: {
+                        label: 'Default Value',
+                        placeholder: 'Enter default value',
                         required: true
                     }
                 },

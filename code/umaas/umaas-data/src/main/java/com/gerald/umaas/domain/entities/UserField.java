@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 
 @Data
 @CompoundIndexes({
@@ -23,6 +24,14 @@ public class UserField extends DomainResource {
 	private AppUser user;
 	@DBRef
 	private Field field;
+	@Setter
 	private Object value;
 	
+	public Object getValue(){
+		if(value == null){
+			return field.getDefaultValue();
+		}else{
+			return value;
+		}
+	}
 }
