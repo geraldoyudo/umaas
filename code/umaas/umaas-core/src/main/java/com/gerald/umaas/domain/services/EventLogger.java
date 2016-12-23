@@ -13,7 +13,7 @@ public class EventLogger{
 	private static final Logger log = LoggerFactory
 			.getLogger(EventLogger.class);
 	
-	@JmsListener( destination = "umaas-event.*.*.topic")
+	@JmsListener( destination = "${app.namespace}.manager.*.*.topic")
 	public void onEvent(AppEvent event){
 		Domain d = event.getDomain();
 		String domainName = "NULL";

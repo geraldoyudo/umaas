@@ -158,13 +158,16 @@ public class CustomDomainServiceProxy{
 	public Object execute(String serviceId, String domainId, String method, 
 			Map<String,Object> inputParams){
 		checkDomainId(domainId);
+		if(!isEnabled(serviceId, domainId)){
+			throw new IllegalStateException("Service is disabled for this domain");
+		}
 		if(method == null) throw new NullPointerException("Method name is null");
 		CustomDomainService service = getService(serviceId);
 		ServiceConfiguration config = pluginConfigurationRepository
 				.findByPluginIdAndTypeAndDomainId(serviceId, PluginType.DOMAIN,
 						domainId);
-		if(config == null || !config.isEnabled()){
-			throw new IllegalStateException("Service is disabled for this domain");
+		if(config == null ){
+			config = new ServiceConfiguration();
 		}
 		for(Method m: service.getMethods()){
 			if(m.getName().equals(method)){

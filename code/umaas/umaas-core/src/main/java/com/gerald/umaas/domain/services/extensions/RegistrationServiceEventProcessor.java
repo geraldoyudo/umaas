@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.gerald.umaas.domain.entities.AppEvent;
 import com.gerald.umaas.domain.entities.Domain;
-import com.gerald.umaas.domain.security.ApiSecurityChecker;
 import com.gerald.umaas.domain.services.CustomDomainServiceProxy;
 
 @Component
@@ -64,12 +63,12 @@ public class RegistrationServiceEventProcessor {
 		event.set("mailBody", configuration.get("passwordResetSuccessBody"));
 		event.set("compile", compile);
 	}
-	
 	@JmsListeners({
-		@JmsListener( destination = "umaas-event.*.com.isslng.registration.success.topic"),
-		@JmsListener( destination = "umaas-event.*.com.isslng.reset.success.topic")
+		@JmsListener( destination = "${app.namespace}.manager.*.com.isslng.registration.success.topic"),
+		@JmsListener( destination = "${app.namespace}.manager.*.com.isslng.reset.success.topic")
 	})
 	public void sendMail(AppEvent event){
+		System.out.println(event);
 		Domain d = event.getDomain();
 		if(d == null) return;
 		
@@ -80,6 +79,7 @@ public class RegistrationServiceEventProcessor {
 			input.put("subject", event.get("mailSubject"));
 			serviceProxy.execute(EmailService.class.getName(),d.getId(),"send", input);
 		}catch(NullPointerException ex){
+			ex.printStackTrace();
 			log.info("sendMail: Field is null returning");
 		}
 	}
