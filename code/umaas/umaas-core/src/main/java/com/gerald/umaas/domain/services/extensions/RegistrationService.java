@@ -37,7 +37,7 @@ public class RegistrationService  implements CustomDomainService{
 	@Override
 	public Collection<TypeSpec> getConfigurationSpecification() {
 		Map<String,String> textAreaProperties = new HashMap();
-		textAreaProperties.put("inputType", "textarea");
+		textAreaProperties.put("inputType", "richtext");
 		return Arrays.asList(new  TypeSpec(
 				"afterRegistrationUrl", "Redirect to URL after Registration", String.class),
 				new  TypeSpec(

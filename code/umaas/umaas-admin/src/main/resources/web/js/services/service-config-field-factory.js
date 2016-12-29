@@ -17,6 +17,9 @@ angular.module('app')
     		field.type = 'textarea';
     		field.templateOptions.rows = 5;
     	}
+    	if(spec.inputType === "richtext"){
+    		field.type = 'rich-text-area';
+    	}
     }
     self.create = function(specs){
     	if(!specs) throw "specifications is undefined";

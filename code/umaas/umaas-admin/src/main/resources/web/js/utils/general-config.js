@@ -25,6 +25,47 @@ angular.module('app')
 	  name: 'file-input',
 	  templateUrl: globalConfig.basePath + '/app/partials/templates/file-input.htm'
 	});
+	
+	formlyConfig.setType({
+		  name: 'rich-text-area',
+		  templateUrl: globalConfig.basePath + '/app/partials/templates/rich-text-area.htm',
+		  controller: function($scope, $rootScope, $mdDialog){	
+			  var parentEl = angular.element(document.body);
+			  $scope.tinymceOptions = {
+					  };
+			  console.log($scope.model);
+			  console.log($scope.options)
+			  $scope.showEditDialog = function($event){
+				  $mdDialog.show({
+			            parent: parentEl,
+			            targetEvent: $event,
+			            templateUrl: globalConfig.basePath + '/app/partials/templates/rich-text-area-dialog.htm',
+			            controller: function($scope, tinymceOptions,htmlModel, $mdDialog){
+			            	$scope.htmlModel = htmlModel;
+			            	$scope.cancel = function(){
+			            		$mdDialog.cancel();
+			            	}
+			            	$scope.tinymceOptions = tinymceOptions;
+			            	$scope.ok = function(){
+			            		$mdDialog.hide($scope.htmlModel);
+			            	}
+			            },
+			            locals: { 
+			                tinymceOptions: $scope.tinymceOptions,
+			                htmlModel: $scope.model[$scope.options.key]
+			            }
+			           
+			        }).then(function (ret) {
+			        	if(!($scope.model[$scope.options.key] === ret)){
+			        		$scope.form.$setDirty($scope.options.name, false);
+			        	}
+			        	$scope.model[$scope.options.key] = ret;
+			          }, function () {
+			            console.log('Modal dismissed at: ' + new Date());
+			          });
+			  }
+		  }
+	});
     
 })
 
