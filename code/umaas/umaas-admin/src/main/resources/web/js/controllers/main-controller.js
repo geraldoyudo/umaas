@@ -26,5 +26,11 @@ angular.module('app')
     	console.log(routes[index]);
          $state.go(routes[index]);
      };
+     
      $state.go("properties");
+     $scope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
+    	   if($mdSidenav("left").isOpen()){
+    		   $mdSidenav("left").close();
+    	   }
+    	});
   });

@@ -11,3 +11,8 @@ md-input-container{
 	min-width: 350px;
 	width: 50%;
 }
+
+md-card{
+	overflow: scroll;
+	min-width: 350px;
+}
