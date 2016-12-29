@@ -7,3 +7,8 @@ md-input-container{
 .align-center{
 	text-align: center
 }
+
+.main-card {
+	min-width: 350px;
+	width: 50%;
+}
