@@ -6,3 +6,8 @@ md-input-container{
 	left: 50%;
 	top: 50%;
 }
+
+.main-card {
+	min-width: 350px;
+	width: 50%;
+}
