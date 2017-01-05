@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>umaas-core</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>umaas-core</name>
 	<description>Domain Provider for UmaaS</description>
  
